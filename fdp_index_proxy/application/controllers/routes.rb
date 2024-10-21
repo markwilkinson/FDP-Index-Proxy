@@ -2,19 +2,18 @@
 
 def set_routes(classes: allclasses)
   set :server_settings, timeout: 180
-  set :public_folder, 'public'
+  set :public_folder, "public"
 
-  get '/' do
-    redirect '/fdp-index-proxy'
+  get "/" do
+    redirect "/fdp-index-proxy"
   end
 
-  get '/fdp-index-proxy' do
+  get "/fdp-index-proxy" do
     content_type :json
     response.body = JSON.dump(Swagger::Blocks.build_root_json(classes))
   end
 
-
-  get '/flair-gg-vp-server/list' do
+  get "/flair-gg-vp-server/list" do
     @dcats = get_current
     # @message = 'All Resources'
     # request.accept.each do |type|

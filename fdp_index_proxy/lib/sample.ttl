@@ -1,0 +1,49 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ldp: <http://www.w3.org/ns/ldp#> .
+
+<https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33> a dcat:Resource,
+    dcat:Catalog;
+  <http://www.w3.org/2000/01/rdf-schema#label> "Germplasm Bank Collections";
+  dcterms:title "Germplasm Bank Collections";
+  dcterms:hasVersion "1.0";
+  <https://w3id.org/fdp/fdp-o#metadataIssued> "2023-03-17T16:41:56.157439188Z"^^xsd:dateTime;
+  <https://w3id.org/fdp/fdp-o#metadataModified> "2024-06-01T12:01:00.75689408Z"^^xsd:dateTime;
+  dcterms:license <http://rdflicense.appspot.com/rdflicense/cc-by-nc-nd3.0>;
+  dcterms:description "Descriptions of the collections of germplasm available at the BGV";
+  dcterms:conformsTo <https://w3id.org/bgv-fdp/profile/a0949e72-4466-4d53-8900-9436d1049a4b>,
+    <https://w3id.org/bgv-fdp/profile/a0949e72-4466-4d53-8900-9436d1049a4b>;
+  dcterms:language <http://id.loc.gov/vocabulary/iso639-1/en>;
+  <https://w3id.org/fdp/fdp-o#metadataIdentifier> <https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33#identifier>;
+  dcterms:accessRights <https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33#accessRights>;
+  dcterms:publisher [ a foaf:Agent;
+      foaf:name "Mark D. Wilkinson and Santiago Moreno-VÃ¡zquez"
+    ];
+  <http://semanticscience.org/resource/SIO_000628> <https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33/metrics/445c0a70d1e214e545b261559e2842f4>,
+    <https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33/metrics/5d27e854a9e78eb3f663331cd47cdc13>;
+  foaf:homePage <http://www.bancodegermoplasma.upm.es>;
+  dcterms:issued "2023-03-17T16:41:56.157439188Z"^^xsd:dateTime;
+  dcterms:modified "2023-12-26T10:53:58.883527431Z"^^xsd:dateTime;
+  dcat:contactPoint [ a <http://www.w3.org/2006/vcard/ns#Agent>;
+      <http://www.w3.org/2006/vcard/ns#url> <http://www.bancodegermoplasma.upm.es/>
+    ];
+  dcat:theme <https://schema.org/catalog>;
+
+
+  dcat:dataset <https://w3id.org/bgv-fdp/dataset/65ffbf3d-bed1-4a9a-abf9-0116cc35b40a>,
+    <https://w3id.org/bgv-fdp/dataset/f7600b9f-cd18-4122-86c6-b6f5a75ecc03>, <https://w3id.org/bgv-fdp/dataset/03a8b103-a408-4c1d-88c0-5c4e4417f499>;
+
+  
+  dcterms:keyword "Germplasm";
+
+  dcat:service <https://w3id.org/bgv-fdp/dataservice2/f7b84aa1-a834-4c1c-a89e-710b5def6542>;
+
+<https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33#identifier>
+  a <http://purl.org/spar/datacite/Identifier>;
+  dcterms:identifier "https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33" .
+
+<https://w3id.org/bgv-fdp/catalog/3e699f66-6b8a-4c6a-9d06-d8685718cc33#accessRights>
+  a dcterms:RightsStatement;
+  dcterms:description "This resource has no access restriction" .
