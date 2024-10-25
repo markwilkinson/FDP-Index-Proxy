@@ -17,8 +17,9 @@ class FDP
     @toptype = nil  # will be dfdp, catalog, etc.
     warn "refreshing with toptype", toptype
     @suffix = address.gsub(/.*\?/, "")
-    load(address: topaddress)  # THIS IS A RECURSIVE FUNCTION
+    load(address: topaddress)  # THIS IS A RECURSIVE FUNCTION using hydra pages
     # Now @graph has all of the triples for the resource
+    iterate_dcat_record()  # this is alsl a recursive function
     warn "going into post process with", toptype
     post_process
     freezeme
@@ -29,7 +30,7 @@ class FDP
 
     called << address
     unless address =~ /\?/
-      address = "#{address}?#{@suffix}"  # try to add the previous suffix to stay in the syntax
+      address = "#{address}?#{@suffix}" if @suffix # try to add the previous suffix to stay in the syntax
     end
 
     # address = address.gsub(%r{/$}, "")
@@ -45,14 +46,17 @@ class FDP
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
         # headers: {"Accept" => "application/rdf+xml"}
       )
-    rescue StandardError => e
-      warn "#{address} didn't resolve #{e.inspect}"
-      # abort
+    rescue RestClient::ExceptionWithResponse => e 
+      puts "An error occurred: #{e.response}" 
+      return
+    rescue RestClient::Exception, StandardError => e 
+      puts "An error occurred: #{e}"
+      return
     end
     return unless r
     return unless r.respond_to? "body"
 
-    warn "CONTENT #{r.body}"
+    # warn "CONTENT #{r.body}"
 
     dcat = r.body
 
@@ -61,8 +65,13 @@ class FDP
     # warn "dcat", dcat
 
     try = preparse(message: dcat)  # parse all statements that came from the initial call
-    return unless try
+    return if try.is_a? TrueClass
+    return unless try=~/^http/  # found another page!
+    warn "LOADING NEXT PAGE #{try}"
+    load(address: try)
+  end
 
+  def iterate_dcat_record
     toplevel = query_toplevel  # what is the top-level of the DCAT hierarchy from this latest call
     @toptype ||= toplevel  # don't reset if set - this contains the top level of the initial URL that started the cascade
 
@@ -73,6 +82,26 @@ class FDP
     end
   end
 
+  def testresolution(address:)
+    warn "testing #{address}"
+    begin
+      r = RestClient::Request.execute(
+        url: address,
+        method: :get,
+        verify_ssl: false,
+        headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
+        # headers: {"Accept" => "application/rdf+xml"}
+      )
+    rescue RestClient::ExceptionWithResponse => e 
+      warn "An error occurred: #{e.response}" 
+      return false
+    rescue RestClient::Exception, StandardError => e 
+      warn "An error occurred: #{e}"
+      return false
+    end
+    true
+  end
+
   # This will only be called on the top-level DCAT object
   # which should either be an FDP, or a normal DCAT object type
   def preparse(message:)
@@ -81,15 +110,49 @@ class FDP
     return false if RDF::Format.for({ sample: message.force_encoding("UTF-8") }).to_s =~ /RDFa/
 
     read = RDF::Format.for({ sample: message.force_encoding("UTF-8") }).reader
+    # abort "message contains hydra" if message =~ /nextPage/
 
     data = StringIO.new(message)
+    nextpage = false
+
     read.new(data) do |reader|
       reader.each_statement do |statement|
+        if ["http://www.w3.org/ns/dcat#dataset", 
+          "http://www.w3.org/ns/dcat#distribution", 
+          "http://www.w3.org/ns/dcat#service", 
+          "http://www.w3.org/ns/dcat#accessService"].include?(statement.predicate.to_s)
+            next unless testresolution(address: statement.object.to_s)  # filter 404s
+        end
+        # figure out why this isn't working...??
+        # if ["<http://www.w3.org/ns/hydra/core#next>",
+        #   "<http://www.w3.org/ns/hydra/core#nextPage>"].include?(statement.predicate.to_s)
+        if statement.predicate.to_s =~ /nextPage/
+          warn "FOUND ANOTHER PAGE #{statement.predicate.to_s} #{statement.object.to_s}"
+            nextpage = statement.object.to_s.dup
+            # Good lord... the IEPNB has HTML escaped the URLs that appear in their DCAT records.... 
+            # why??  Please, I beg you, tell me WHY?!?!?!   ARRRRGHH
+            # anyway, the string has lost its "&" in the argument list
+            nextpage.gsub!(/page=/, "&page=")
+            warn "FIXED PAGE TOOO #{nextpage}"
+        end
+        next if statement.predicate.to_s =~ /ns\/hydra/   # don't copy control statements
+        next if statement.object.to_s =~ /ns\/hydra/   # don't copy control statements
+
+        # Gobierno has a URL in a distribution (object) that looks like this: <https://doi:10.1016/j.scitotenv.2007.05.038>  :-(
+        # so far, I can't find a URI parser that rejects it!  For now, catch it explicitly
+        next if statement.object.to_s =~ /https?\:\/\/doi\:/
+
+        # next unless apply_filters(statement: statement)
         @graph << statement
       end
     end
-    true
+    # return nextpage if nextpage
+    return true
   end
+
+  # def apply_filters(statement:)
+  #   return true unless statement.predicate.to_s == "http://purl.org/dc/terms/title" || statement.predicate.to_s == "http://purl.org/dc/terms/description"
+  # end
 
   def parse_fdp
     graph.each_statement do |s|
@@ -307,6 +370,7 @@ class FDP
   def freezeme
     warn "freezing"
     warn "GRAPH", @graph.dump(:turtle)
+    File.open("./fgobierno.ttl", 'w') { |file| file.write(@graph.dump(:turtle)) }
     warn; warn; warn
     return
     address = Digest::SHA256.hexdigest @topaddress
