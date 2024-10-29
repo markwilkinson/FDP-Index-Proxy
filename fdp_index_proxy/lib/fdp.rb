@@ -1,7 +1,6 @@
-require "./queries"
 
 class FDP
-  attr_accessor :graph, :topaddress, :called, :toptype, :suffix
+  attr_accessor :graph, :dcat_address, :called, :toptype, :suffix
 
   DCATSTRUCTURE = { "Resource" => "http://www.w3.org/ns/dcat#resource",
                     "DataService1" => "http://www.w3.org/ns/dcat#service",
@@ -12,14 +11,15 @@ class FDP
 
   def initialize(address:)
     @graph = RDF::Graph.new
-    @topaddress = address  # address of this FDP
+    @dcat_address = address  # address of this DCAT record
     @called = []  # has this address already been called?  List of known
     @toptype = nil  # will be dfdp, catalog, etc.
     warn "refreshing with toptype", toptype
-    @suffix = address.gsub(/.*\?/, "")
-    load(address: topaddress)  # THIS IS A RECURSIVE FUNCTION using hydra pages
+    @args = URI(address).query
+    load(address: @dcat_address)  # THIS IS A RECURSIVE FUNCTION using hydra pages
     # Now @graph has all of the triples for the resource
-    iterate_dcat_record()  # this is alsl a recursive function
+
+    iterate_dcat_record()  # this is also a recursive function - iterate over a FDP record or over a normal DCAT record
     warn "going into post process with", toptype
     post_process
     freezeme
@@ -30,11 +30,8 @@ class FDP
 
     called << address
     unless address =~ /\?/
-      address = "#{address}?#{@suffix}" if @suffix # try to add the previous suffix to stay in the syntax
+      address = "#{address}?#{@args}" if @args # try to add the previous query string to stay in the syntax, e.g. ?format=ttl
     end
-
-    # address = address.gsub(%r{/$}, "")
-    # address += "?format=ttl"
 
     # address = "https://ostrails.github.io/sandbox/dataservice.ttl"
     warn "getting #{address}"
@@ -44,7 +41,6 @@ class FDP
         method: :get,
         verify_ssl: false,
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
-        # headers: {"Accept" => "application/rdf+xml"}
       )
     rescue RestClient::ExceptionWithResponse => e 
       puts "An error occurred: #{e.response}" 
@@ -53,10 +49,7 @@ class FDP
       puts "An error occurred: #{e}"
       return
     end
-    return unless r
-    return unless r.respond_to? "body"
-
-    # warn "CONTENT #{r.body}"
+    return unless r&.respond_to? "body"  # abort if it isn't going to behave like a successful web call
 
     dcat = r.body
 
@@ -64,58 +57,34 @@ class FDP
     # dcat = File.read("./sample.ttl")
     # warn "dcat", dcat
 
+    # The rest of this routine will
+    # 1. Load all of the RDF statements in @graph, other than hydra control statements
+    # 2. detect dcat predicates and check that the object resolves - ignore triple if it doesn't 
+    # 3. detect hydra nextPage and call THIS LOADING ROUTINE AGAIN if a next page is found
+    #  None of the LDP logic is here.  All of that is in the post-Process function
+
     try = preparse(message: dcat)  # parse all statements that came from the initial call
-    return if try.is_a? TrueClass
+    # try will be true if parse was successful, false if parse was unsuccessful, or a URL if it found another page
+    # the only thing we care about right now is the new page, so return otherwise
+
+    return if try.is_a?(TrueClass) || try.is_a?(FalseClass)
+
     return unless try=~/^http/  # found another page!
     warn "LOADING NEXT PAGE #{try}"
     load(address: try)
   end
 
-  def iterate_dcat_record
-    toplevel = query_toplevel  # what is the top-level of the DCAT hierarchy from this latest call
-    @toptype ||= toplevel  # don't reset if set - this contains the top level of the initial URL that started the cascade
-
-    if toplevel == "FDP"
-      parse_fdp  # this recursivelhy calls the load function
-    else
-      parse_dcat # this recursivelhy calls the load function
-    end
-  end
-
-  def testresolution(address:)
-    warn "testing #{address}"
-    begin
-      r = RestClient::Request.execute(
-        url: address,
-        method: :get,
-        verify_ssl: false,
-        headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
-        # headers: {"Accept" => "application/rdf+xml"}
-      )
-    rescue RestClient::ExceptionWithResponse => e 
-      warn "An error occurred: #{e.response}" 
-      return false
-    rescue RestClient::Exception, StandardError => e 
-      warn "An error occurred: #{e}"
-      return false
-    end
-    true
-  end
-
-  # This will only be called on the top-level DCAT object
-  # which should either be an FDP, or a normal DCAT object type
+  
   def preparse(message:)
-    # warn "message", message
     warn "format", RDF::Format.for({ sample: message.force_encoding("UTF-8") })
     return false if RDF::Format.for({ sample: message.force_encoding("UTF-8") }).to_s =~ /RDFa/
 
-    read = RDF::Format.for({ sample: message.force_encoding("UTF-8") }).reader
-    # abort "message contains hydra" if message =~ /nextPage/
+    readertype = RDF::Format.for({ sample: message.force_encoding("UTF-8") }).reader
 
     data = StringIO.new(message)
     nextpage = false
 
-    read.new(data) do |reader|
+    readertype.new(data) do |reader|
       reader.each_statement do |statement|
         if ["http://www.w3.org/ns/dcat#dataset", 
           "http://www.w3.org/ns/dcat#distribution", 
@@ -150,9 +119,18 @@ class FDP
     return true
   end
 
-  # def apply_filters(statement:)
-  #   return true unless statement.predicate.to_s == "http://purl.org/dc/terms/title" || statement.predicate.to_s == "http://purl.org/dc/terms/description"
-  # end
+
+  def iterate_dcat_record
+    toplevel = query_toplevel  # what is the top-level of the DCAT hierarchy from this latest call
+    @toptype ||= toplevel  # don't reset if set - this contains the top level of the initial URL that started the cascade
+
+    if toplevel == "FDP"
+      parse_fdp  # this recursivelhy calls the load function
+    else
+      parse_dcat # this recursivelhy calls the load function
+    end
+  end
+
 
   def parse_fdp
     graph.each_statement do |s|
@@ -183,19 +161,22 @@ class FDP
     # e.g. Catalog is higher than Dataset
     query = SPARQL.parse("SELECT distinct ?type WHERE { ?s a ?type }")  # this is called for every objecgt type in the DCAT record
     types = query.execute(@graph).map { |result| result[:type].to_s }
-    # warn "toplevel results", types
+    warn "toplevel results", types
+    toptype = nil
+
     if types.include?("https://w3id.org/fdp/fdp-o#FAIRDataPoint")
-      "FDP"
+      toptype = "FDP"
     elsif types.include?("http://www.w3.org/ns/dcat#Catalog")
-      "Catalog"
+      toptype = "Catalog"
     elsif types.include?("http://www.w3.org/ns/dcat#Dataset")
-      "Dataset"
+      toptype = "Dataset"
     elsif types.include?("http://www.w3.org/ns/dcat#Disgtribution")
-      "Distribution"
+      toptype = "Distribution"
     elsif types.include?("http://www.w3.org/ns/dcat#DataService")
-      "DataService"
+      toptype = "DataService"
     end
-    # warn "final type", thistype
+    warn "final TOP type", toptype
+    toptype
   end
 
   # add the other FDP required stuff via SPARQL and <<statement
@@ -221,7 +202,6 @@ class FDP
 
   def inject_title(subject:, type:)
     objecttype = type.dup.gsub!(%r{^.*[#/]}, "")  # take just suffix
-
     title = lookup_title(graph: @graph, resource: subject)
     return if title
 
@@ -232,7 +212,6 @@ class FDP
   def inject_contact(subject:, type:)
     uuid = SecureRandom.uuid #=> "1ca71cd6-08c4-4855-9381-2f41aeffe59c"
     type.dup.gsub!(%r{^.*[#/]}, "")  # take just suffix
-
     contactresults = lookup_contact(graph: @graph, resource: subject) # SELECT DISTINCT  ?contact ?url ?email ?name WHERE
     contact, url = process_contact_results(results: contactresults)
     return if contact && url  # everythign is fine - already there
@@ -354,30 +333,82 @@ class FDP
     fdp
   end
 
-  # ====================================================== CACHE
+  # ====================================================== CACHE AND UTILITY
 
-  def self.load_from_cache(marshalled:)
+  def self.load_graph_from_cache(url:)
+    address = Digest::SHA256.hexdigest url
+    marshalled = "./cache/#{address}.marsh"
     begin
       warn "thawing file #{marshalled}"
       fdpstring = File.read(marshalled)
       fdp = Marshal.load(fdpstring)
     rescue StandardError => e
       warn "Error #{e.inspect}"
+      return false
     end
-    fdp
+    fdp.graph
   end
 
   def freezeme
     warn "freezing"
-    warn "GRAPH", @graph.dump(:turtle)
-    File.open("./fgobierno.ttl", 'w') { |file| file.write(@graph.dump(:turtle)) }
-    warn; warn; warn
-    return
-    address = Digest::SHA256.hexdigest @topaddress
+    # warn "GRAPH", @graph.dump(:turtle)
+    File.open("/tmp/latestproxyoutput.ttl", 'w') { |file| file.write(@graph.dump(:turtle)) }
+    # warn; warn; warn
+    # return
+    address = Digest::SHA256.hexdigest @dcat_address
     f = File.open("./cache/#{address}.marsh", "w")
     str = Marshal.dump(self).force_encoding("ASCII-8BIT")
     f.puts str
     f.close
+  end
+
+  def self.call_fdp_index(url: )
+    # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
+    index = ENV["FDP_INDEX"]
+    method = ENV["FDP_PROXY_METHOD"]
+    method ||= "http" # default
+
+    address = ENV["FDP_PROXY_HOST"].dup
+    address.gsub!(/.*\/+/, "") # remove trailing slashs
+    address = method + "://" + address + "/fdp-index-proxy/#{url}"
+    warn "calling FDP index with  #{address}"
+    begin
+      r = RestClient::Request.execute(
+        url: index,
+        method: :post,
+        verify_ssl: false,
+        payload: { "clientURL": address }.to_json,
+        headers: { "Content-Type" => "application/json" }
+      )
+    rescue RestClient::ExceptionWithResponse => e 
+      warn "An error occurred: #{e.response}" 
+      return false
+    rescue RestClient::Exception, StandardError => e 
+      warn "An error occurred: #{e}"
+      return false
+    end
+    true  
+  end
+
+
+  def testresolution(address:)
+    warn "testing #{address}"
+    begin
+      r = RestClient::Request.execute(
+        url: address,
+        method: :get,
+        verify_ssl: false,
+        headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
+        # headers: {"Accept" => "application/rdf+xml"}
+      )
+    rescue RestClient::ExceptionWithResponse => e 
+      warn "An error occurred: #{e.response}" 
+      return false
+    rescue RestClient::Exception, StandardError => e 
+      warn "An error occurred: #{e}"
+      return false
+    end
+    true
   end
 
   # I don't think this is used anymore

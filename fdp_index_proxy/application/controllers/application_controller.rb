@@ -1,32 +1,23 @@
 # frozen_string_literal: false
 
-# require_relative '../../config/environment' # for docker
-require "swagger/blocks"
-require "sinatra"
-# require 'sinatra/base'
-require "json"
-require "erb"
-# require 'omniauth'
-# require 'omniauth-openid-connect'
-# require 'jwt'
+# # load all ruby files in the directory "lib" and its subdirectories
+# require_relative '../../lib/cache'
+# require_relative '../../lib/fdp'
+require_relative '../../lib/fdp_index_proxy'
+# require_relative '../../lib/metadata_functions'
+# require_relative '../../lib/queries'
 
-# DO NOT change the order of loading below.  The files contain executable code that builds the overall configuration before this module starts
-# require_relative '../../lib/configuration' # VPConfig and FDPConfig
 require_relative "models"
 require_relative "routes"
 
 class ApplicationController < Sinatra::Application
   include Swagger::Blocks
 
-  set :bind, "0.0.0.0"
   before do
     response.headers["Access-Control-Allow-Origin"] = "*"
   end
 
   configure do
-    set :public_folder, "public"
-    set :views, "app/views"
-    enable :cross_origin
   end
 
   # routes...
