@@ -369,15 +369,17 @@ class FDP
     method ||= "http" # default
 
     address = ENV["FDP_PROXY_HOST"].dup
-    address.gsub!(/.*\/+/, "") # remove trailing slashs
-    address = method + "://" + address + "/fdp-index-proxy/#{url}"
-    warn "calling FDP index with  #{address}"
+    address.gsub!(/\/+$/, "") # remove trailing slashs
+    address = method + "://" + address + "/fdp-index-proxy/proxy?url=#{url}"
+    # example
+    # https://index.bgv.cbgp.upm.es/fdp-index-proxy/proxy?url=https://my.dcat.site.org/test.dcat
+    warn "calling FDP index at #{index} with  #{address}"
     begin
       r = RestClient::Request.execute(
         url: index,
         method: :post,
         verify_ssl: false,
-        payload: { "clientURL": address }.to_json,
+        payload: { "clientUrl": address }.to_json,
         headers: { "Content-Type" => "application/json" }
       )
     rescue RestClient::ExceptionWithResponse => e 

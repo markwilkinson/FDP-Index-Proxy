@@ -1,5 +1,8 @@
 # frozen_string_literal: false
 
+require_relative "../../lib/fdp_index_proxy"
+require_relative "../../lib/fdp"
+
 def set_routes(classes: allclasses)
   set :server_settings, timeout: 180
   set :public_folder, "public"
@@ -10,6 +13,7 @@ def set_routes(classes: allclasses)
 
 
   abort "FDP_PROXY_HOST not set" unless ENV["FDP_PROXY_HOST"]
+  abort "FDP_PROXY_METHOD not set" unless ENV["FDP_PROXY_METHOD"]
   abort "FDP_INDEX not set" unless ENV["FDP_INDEX"]
 
 
@@ -23,7 +27,7 @@ def set_routes(classes: allclasses)
   end
 
   # this is the Index calling us for a record
-  get "/fdp-index-proxy/proxy" do
+  get "/fdp-index-proxy/proxy" do  # ?url=https://....
     unless params[:url]
       error 400
       halt
@@ -46,6 +50,9 @@ def set_routes(classes: allclasses)
       when 'application/json'
         content_type :json
         halt graph.dump(:jsonld)
+      when 'application/ld+json'
+        content_type :json
+        halt graph.dump(:jsonld)
       else  # for the FDP index send turtle by default
         content_type "text/turtle"
         halt graph.dump(:turtle)
@@ -54,27 +61,28 @@ def set_routes(classes: allclasses)
     error 406 
   end
 
-  # this is the DCAT calling us to do a proxy
+  # this is the DCAT site owner calling us to do a proxy
   post "/fdp-index-proxy/proxy" do
     body = request.body.read
-    # warn "body is #{body}"
+    warn "body is #{body}"
     # json = JSON.parse body
     # warn json.inspect
     begin
       # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
       request_payload = JSON.parse body
+      warn request_payload.inspect
     rescue StandardError => e
       error 415
       halt
     end
-    unless request_payload["clientURL"]
+    unless request_payload["clientUrl"]
       error 415
       halt
     end
-    _f = FDP.new(address: request_payload["clientURL"])
+    _f = FDP.new(address: request_payload["clientUrl"])
     warn "record is now frozen, calling fdp index"
     # the record is now frozen
-    result = FDP.call_fdp_index(url: request_payload["clientURL"])
+    result = FDP.call_fdp_index(url: request_payload["clientUrl"])
     warn "called"
     # remove_from_cache(url: url)
     unless result
