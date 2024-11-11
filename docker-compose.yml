@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+
+  fdp-index-proxy:
+    image: markw/fdp-index-proxy:0.0.1
+    restart: always
+    container_name: "fdp-index-proxy"
+    # hostname: "flairgg"
+    ports:
+      - "4567:4567"
+    command: ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
+    volumes:
+      - ./cache:/server/fdp_index_proxy/cache
+    environment:
+      - RUBYOPT=-W0 -KU
+#      - RUBYOPT=-W0 -KU -E utf-8:utf-8
