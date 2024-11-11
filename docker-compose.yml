@@ -1,16 +1,15 @@
-version: "3.0"
+version: "3"
 services:
 
-  fdp-index-proxy:
-    image: markw/fdp-index-proxy:0.0.1
-    restart: always
-    container_name: "fdp-index-proxy"
-    # hostname: "flairgg"
+  fdpindexproxy:
+    image: markw/fdp-index-proxy:0.0.2
+    container_name: indexproxy
     ports:
-      - "4567:4567"
-    command: ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
-    volumes:
-      - ./cache:/server/fdp_index_proxy/cache
+      - 4000:4567
     environment:
-      - RUBYOPT=-W0 -KU
-#      - RUBYOPT=-W0 -KU -E utf-8:utf-8
+      - FDP_INDEX=
+      - FDP_PROXY_METHOD=https
+      - FDP_PROXY_HOST=tools.ostrails.org
+    command: ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
+    restart: always
+

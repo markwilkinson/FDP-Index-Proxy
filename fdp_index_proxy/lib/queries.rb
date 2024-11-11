@@ -45,7 +45,7 @@ def lookup_title(graph:, resource:)
     }
     ")
   result = query.execute(graph)
-  return result.first[:title] if result
+  return result.first[:title] if result&.first
 
   nil
 end

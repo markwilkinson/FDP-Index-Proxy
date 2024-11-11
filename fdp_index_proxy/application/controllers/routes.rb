@@ -3,6 +3,15 @@
 def set_routes(classes: allclasses)
   set :server_settings, timeout: 180
   set :public_folder, "public"
+  set :server, 'webrick' 
+  set :bind, "0.0.0.0"
+  set :views, "app/views"
+  enable :cross_origin
+
+
+  abort "FDP_PROXY_HOST not set" unless ENV["FDP_PROXY_HOST"]
+  abort "FDP_INDEX not set" unless ENV["FDP_INDEX"]
+
 
   get "/" do
     redirect "/fdp-index-proxy"
@@ -13,23 +22,68 @@ def set_routes(classes: allclasses)
     response.body = JSON.dump(Swagger::Blocks.build_root_json(classes))
   end
 
-  get "/flair-gg-vp-server/list" do
-    @dcats = get_current
-    # @message = 'All Resources'
-    # request.accept.each do |type|
-    #   case type.to_s
-    #   when 'text/html'
-    #     halt erb :discovered_layout
-    #   when 'application/json'
-    #     content_type :json
-    #     halt @discoverables.to_json
-    #   end
-    # end
-    # error 406 # @message = "All Resources"
+  # this is the Index calling us for a record
+  get "/fdp-index-proxy/proxy" do
+    unless params[:url]
+      error 400
+      halt
+    end
+
+    graph = FDP.load_graph_from_cache(url: params[:url])
+    warn graph.inspect
+    warn graph.class
+
+    unless graph  # might be false if it doesn't exist
+      error 400
+      halt
+    end
+    # remove_from_cache(url: url)
+    request.accept.each do |type|
+      case type.to_s
+      when 'text/turtle'
+        content_type "text/turtle"
+        halt graph.dump(:turtle)
+      when 'application/json'
+        content_type :json
+        halt graph.dump(:jsonld)
+      else  # for the FDP index send turtle by default
+        content_type "text/turtle"
+        halt graph.dump(:turtle)
+      end
+    end
+    error 406 
+  end
+
+  # this is the DCAT calling us to do a proxy
+  post "/fdp-index-proxy/proxy" do
+    body = request.body.read
+    # warn "body is #{body}"
+    # json = JSON.parse body
+    # warn json.inspect
+    begin
+      # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
+      request_payload = JSON.parse body
+    rescue StandardError => e
+      error 415
+      halt
+    end
+    unless request_payload["clientURL"]
+      error 415
+      halt
+    end
+    _f = FDP.new(address: request_payload["clientURL"])
+    warn "record is now frozen, calling fdp index"
+    # the record is now frozen
+    result = FDP.call_fdp_index(url: request_payload["clientURL"])
+    warn "called"
+    # remove_from_cache(url: url)
+    unless result
+      error 500
+    end
+    status 200
   end
 
   before do
-    @services = VP.current_vp.collect_data_services
   end
 
   # get '/login' do

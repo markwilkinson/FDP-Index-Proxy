@@ -24,3 +24,13 @@ gem "rubocop", "~> 1.67"
 gem "require_all", "~> 3.0"
 
 gem "rdf-vocab", "~> 3.3"
+
+gem "webrick", "~> 1.8"
+
+gem "rackup", "~> 2.1"
+
+gem "uri", "~> 0.13.1"
+
+gem "rest-client", "~> 2.1"
+
+gem "erb", "~> 4.0"

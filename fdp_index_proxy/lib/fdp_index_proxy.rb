@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "fdp_index_proxy/version"
-# require_relative "ontologyservers/bioregistry"
-# require_relative  "ontologyservers/identifiers"
-# require_relative  "ontologyservers/ebi_ontology"
-# require_relative  "ontologyservers/ebi_ontology_v3"
-# require_relative  "ontologyservers/ontobee"
-# require_relative  "ontologyservers/etsi"
-# require_relative  "ontologyservers/bio2rdf"
-# require_relative  "ontologyservers/ncbo"
-# require_relative  "ontologyservers/schema"
-# require_relative  "ontologyservers/edam"
-
+require "swagger/blocks"
+require "sinatra"
+require "json"
+require "erb"
+require 'uri'
+# require 'omniauth'
+# require 'omniauth-openid-connect'
+# require 'jwt'
+require 'require_all'
 require_relative  "cache"
 require_relative  "metadata_functions"
 
