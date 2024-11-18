@@ -12,6 +12,8 @@ require 'uri'
 require 'require_all'
 require_relative  "cache"
 require_relative  "metadata_functions"
+require_relative  "queries"
+require_relative  "fdp"
 
 require "json"
 require "linkeddata"
