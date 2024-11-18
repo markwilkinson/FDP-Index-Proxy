@@ -315,6 +315,11 @@ class FDP
 
     return if subject&.empty?
 
+      # make top level object discoverable
+    triplify(subject, "https://w3id.org/ejp-rd/vocabulary#vpConnection",
+    "https://w3id.org/ejp-rd/vocabulary#VPDiscoverable", @graph)
+
+
     fdp = "#{subject}#fdp"
 
     triplify("#{subject}#container", RDF.type, "http://www.w3.org/ns/ldp#DirectContainer", @graph)
