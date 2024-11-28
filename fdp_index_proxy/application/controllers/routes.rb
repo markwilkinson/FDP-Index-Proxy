@@ -67,18 +67,18 @@ def set_routes(classes: allclasses)
     warn "body is #{body}"
     # json = JSON.parse body
     # warn json.inspect
-    begin
+#    begin
       # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
       request_payload = JSON.parse body
       warn request_payload.inspect
-    rescue StandardError => e
-      error 415
-      halt
-    end
-    unless request_payload["clientUrl"]
-      error 415
-      halt
-    end
+#    rescue StandardError => e
+#      error 415
+#      halt
+#    end
+#    unless request_payload["clientUrl"]
+#      error 415
+#      halt
+#    end
     _f = FDP.new(address: request_payload["clientUrl"])
     warn "record is now frozen, calling fdp index"
     # the record is now frozen
