@@ -20,13 +20,16 @@ def set_routes(classes: allclasses)
   get "/" do
     redirect "/fdp-index-proxy"
   end
+  get "/fdp-index-proxy/" do
+    redirect "/fdp-index-proxy"
+  end
 
   get "/fdp-index-proxy" do
     content_type :json
     response.body = JSON.dump(Swagger::Blocks.build_root_json(classes))
   end
 
-  # this is the Index calling us for a record
+  # this is the FDP Index calling us for a record
   get "/fdp-index-proxy/proxy" do  # ?url=https://....
     unless params[:url]
       error 400
@@ -61,33 +64,27 @@ def set_routes(classes: allclasses)
     error 406 
   end
 
-  # this is the DCAT site owner calling us to do a proxy
+  # this is the DCAT site owner calling us to do a proxy of them
   post "/fdp-index-proxy/proxy" do
     body = request.body.read
     warn "body is #{body}"
-    # json = JSON.parse body
-    # warn json.inspect
-#    begin
-      # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
-      request_payload = JSON.parse body
-      warn request_payload.inspect
-#    rescue StandardError => e
-#      error 415
-#      halt
-#    end
-#    unless request_payload["clientUrl"]
-#      error 415
-#      halt
-#    end
+    # curl -v -X POST   https://my.proxy.server/fdp-index-proxy/proxy   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
+    request_payload = JSON.parse body
+    warn request_payload.inspect
     _f = FDP.new(address: request_payload["clientUrl"])
     warn "record is now frozen, calling fdp index"
     # the record is now frozen
-    result = FDP.call_fdp_index(url: request_payload["clientUrl"])
+    result = FDP.call_fdp_index(address: request_payload["clientUrl"])
     warn "called"
     # remove_from_cache(url: url)
     unless result
       error 500
     end
+    status 200
+  end
+
+  get "/fdp-index-proxy/ping" do  # called by a cron on a weekly basis
+    FDP.ping  # this uses the cache to re-call all FDPs and  re-calls the FDP Index for each one
     status 200
   end
 

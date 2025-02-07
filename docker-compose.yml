@@ -2,7 +2,7 @@ version: "3"
 services:
 
   fdpindexproxy:
-    image: markw/fdp-index-proxy:0.0.3
+    image: markw/fdp-index-proxy:0.0.5
     container_name: indexproxy
     ports:
       - 4000:4567
@@ -10,6 +10,6 @@ services:
       - FDP_INDEX=
       - FDP_PROXY_METHOD=https
       - FDP_PROXY_HOST=tools.ostrails.org
-    command: ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
+    command: cron && ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
     restart: always
 

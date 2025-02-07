@@ -1,6 +1,6 @@
 
 class FDP
-  attr_accessor :graph, :dcat_address, :called, :toptype, :suffix
+  attr_accessor :graph, :address, :called, :toptype, :suffix
 
   DCATSTRUCTURE = { "Resource" => "http://www.w3.org/ns/dcat#resource",
                     "DataService1" => "http://www.w3.org/ns/dcat#service",
@@ -11,16 +11,16 @@ class FDP
 
   def initialize(address:)
     @graph = RDF::Graph.new
-    @dcat_address = address  # address of this DCAT record
+    @address = address  # #address is always the original address of this DCAT record
     @called = []  # has this address already been called?  List of known
     @toptype = nil  # will be dfdp, catalog, etc.
     warn "refreshing with toptype", toptype
     @args = URI(address).query
-    load(address: @dcat_address)  # THIS IS A RECURSIVE FUNCTION using hydra pages
+    load(address: @address)  # THIS IS A RECURSIVE FUNCTION using hydra pages
     # Now @graph has all of the triples for the resource
 
     iterate_dcat_record()  # this is also a recursive function - iterate over a FDP record or over a normal DCAT record
-    warn "going into post process with", toptype
+    warn "going into post process with", toptype  # toptype is the highest level of the DATASTRUCTURE that is found in the DCAT record
     post_process
     freezeme
   end
@@ -333,12 +333,51 @@ class FDP
     triplify(fdp, RDF.type, "http://www.w3.org/ns/dcat#Resource", @graph)
     triplify(fdp, "http://purl.org/dc/terms/title", "Imported DCAT from #{subject}", @graph)
     triplify(fdp, "http://www.w3.org/ns/ldp#contains", "#{subject}", @graph)
-    triplify(fdp, "https://w3id.org/ejp-rd/vocabulary#vpConnection",
-             "https://w3id.org/ejp-rd/vocabulary#VPDiscoverable", @graph)
-    fdp
+    triplify(fdp, "https://w3id.org/ejp-rd/vocabulary#vpConnection", "https://w3id.org/ejp-rd/vocabulary#VPDiscoverable", @graph)
+    triplify(fdp, "http://purl.org/dc/terms/language", "http://id.loc.gov/vocabulary/iso639-1/en", @graph)
+    triplify(fdp, "http://purl.org/dc/terms/publisher", "urn:anonymous:forfdpcompliance", @graph)
+    triplify(fdp, "http://www.w3.org/ns/dcat#landingPage", fdp, @graph)
+    triplify(fdp, "http://www.w3.org/ns/dcat#keyword", "fair data point", @graph)
+    
+
+
+
+
+             fdp
   end
 
   # ====================================================== CACHE AND UTILITY
+
+
+
+
+
+  def self.ping
+    cache_path = "./cache/"
+
+    # Iterate over files in the folder
+    Dir.glob(File.join(cache_path , "*.marsh")).each do |file|
+      # Check if it's a file (optional, but good practice)
+      address = nil
+      if File.file?(file)
+        warn "Processing file: #{file}"
+        begin
+          warn "thawing file #{file}"
+          fdpstring = File.read(file)
+          fdp = Marshal.load(fdpstring)  # this is an FDP object!!
+          address = fdp.address  # the address of the DCAP record of the fdp
+        rescue StandardError => e
+          warn "Error #{e.inspect}"
+          FileUtils.rm_f(file)  # if it is broken, remove it regardless!
+          return false
+        end
+      end
+      FileUtils.rm_f(file) # get ready to re-index
+      _fdp = FDP.new(address: address)  # fully refresh the fdp at thsi address - this will also freeze it
+      _result = FDP.call_fdp_index(address: address)  # this function will add all the proxy address information to the url
+    end
+
+  end
 
   def self.load_graph_from_cache(url:)
     address = Digest::SHA256.hexdigest url
@@ -358,33 +397,32 @@ class FDP
     warn "freezing"
     # warn "GRAPH", @graph.dump(:turtle)
     File.open("/tmp/latestproxyoutput.ttl", 'w') { |file| file.write(@graph.dump(:turtle)) }
-    # warn; warn; warn
-    # return
-    address = Digest::SHA256.hexdigest @dcat_address
-    f = File.open("./cache/#{address}.marsh", "w")
-    str = Marshal.dump(self).force_encoding("ASCII-8BIT")
+
+    digested = Digest::SHA256.hexdigest @address  # remember that @address is the original DCAT URL that the proxy was called with
+    f = File.open("./cache/#{digested}.marsh", "w")
+    str = Marshal.dump(self).force_encoding("ASCII-8BIT")  # dump of THIS OBJECT
     f.puts str
     f.close
   end
 
-  def self.call_fdp_index(url: )
+  def self.call_fdp_index(address: )
     # curl -v -X POST   https://fdps.ejprd.semlab-leiden.nl/   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
     index = ENV["FDP_INDEX"]
     method = ENV["FDP_PROXY_METHOD"]
     method ||= "http" # default
 
-    address = ENV["FDP_PROXY_HOST"].dup
-    address.gsub!(/\/+$/, "") # remove trailing slashs
-    address = method + "://" + address + "/fdp-index-proxy/proxy?url=#{url}"
+    proxyhost = ENV["FDP_PROXY_HOST"].dup
+    proxyhost.gsub!(/\/+$/, "") # remove trailing slashs
+    proxied_address = method + "://" + proxyhost + "/fdp-index-proxy/proxy?url=#{address}"
     # example
     # https://index.bgv.cbgp.upm.es/fdp-index-proxy/proxy?url=https://my.dcat.site.org/test.dcat
-    warn "calling FDP index at #{index} with  #{address}"
+    warn "calling FDP index at #{index} with  #{proxied_address}"
     begin
       r = RestClient::Request.execute(
         url: index,
         method: :post,
         verify_ssl: false,
-        payload: { "clientUrl": address }.to_json,
+        payload: { "clientUrl": proxied_address }.to_json,
         headers: { "Content-Type" => "application/json" }
       )
     rescue RestClient::ExceptionWithResponse => e 

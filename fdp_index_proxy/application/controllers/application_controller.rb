@@ -3,7 +3,7 @@
 # # load all ruby files in the directory "lib" and its subdirectories
 # require_relative '../../lib/cache'
 # require_relative '../../lib/fdp'
-require_relative './lib/fdp_index_proxy'
+require_relative '../..//lib/fdp_index_proxy'
 # require_relative '../../lib/metadata_functions'
 # require_relative '../../lib/queries'
 

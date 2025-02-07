@@ -26,6 +26,7 @@ GEM
       unicode-types (~> 1.8)
     erb (4.0.4)
       cgi (>= 0.3.3)
+    fileutils (1.7.3)
     haml (6.3.0)
       temple (>= 0.8.2)
       thor
@@ -291,6 +292,7 @@ PLATFORMS
 DEPENDENCIES
   erb (~> 4.0)
   fdp_index_proxy!
+  fileutils (~> 1.7)
   json-ld (~> 3.3)
   linkeddata (~> 3.3)
   rackup (~> 2.1)
@@ -302,9 +304,13 @@ DEPENDENCIES
   rubocop (~> 1.67)
   securerandom (~> 0.3.1)
   sinatra (~> 4.0)
+  stringio (~> 3.1.1)
   swagger-blocks (~> 3.0)
   uri (~> 0.13.1)
   webrick (~> 1.8)
 
+RUBY VERSION
+   ruby 3.3.0p0
+
 BUNDLED WITH
-   2.5.3
+   2.5.23

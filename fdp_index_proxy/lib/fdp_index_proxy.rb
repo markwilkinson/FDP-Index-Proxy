@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "fdp_index_proxy/version"
+#require_relative "fdp_index_proxy/version"
 require "swagger/blocks"
 require "sinatra"
 require "json"
 require "erb"
 require 'uri'
+require 'fileutils'
 # require 'omniauth'
 # require 'omniauth-openid-connect'
 # require 'jwt'
