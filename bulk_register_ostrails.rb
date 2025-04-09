@@ -2,12 +2,15 @@ require 'rest-client'
 require 'json'
 p = RestClient.get("https://tests.ostrails.eu/tests")
 
-pattern = /href=\".\/(tests[\S]+\/about)\"/
+pattern = /href="\/(tests\/[^\/]+)"/
+warn "finding pattern #{pattern}"
+
 # Find all matches
 matches = p.scan(pattern)
 
 # Output the matches
 matches.each do |partial|
+  warn "found #{partial}"
   address = "https://tests.ostrails.eu/#{partial.first}"
   warn address
 
