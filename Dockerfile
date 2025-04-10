@@ -16,12 +16,14 @@ WORKDIR /server
 RUN bundle install
 WORKDIR /server/fdp_index_proxy
 
+RUN service cron start
 # Create a cron job file
 # RUN echo "0 0 * * 0 /usr/local/bin/ruby /app/your_script.rb >> /var/log/cron.log 2>&1" > /etc/cron.d/weekly-job
-RUN echo "0 0 * * 0 curl http://localhost:4000/fdp-index-proxy/ping >> /var/log/cron.log 2>&1" > /etc/cron.d/weekly-job
+RUN echo "0 0 * * 0 curl http://localhost:4567/fdp-index-proxy/ping >> /var/log/cron.log 2>&1" > /etc/cron.d/weekly-job
 
 # Install the cron job
 RUN crontab /etc/cron.d/weekly-job
 
 # Create a log file for cron
 RUN touch /var/log/cron.log
+ENTRYPOINT ["sh", "/server/entrypoint.sh"]
