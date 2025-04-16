@@ -6,16 +6,16 @@ require_relative "../../lib/fdp"
 def set_routes(classes: allclasses)
   set :server_settings, timeout: 180
   set :public_folder, "public"
-  set :server, 'webrick' 
+  set :server, "webrick"
   set :bind, "0.0.0.0"
-  set :views, "app/views"
+  # set :views, "app/views"
+  set :environment, :production
   enable :cross_origin
-
+  set :protection, except: :ip_spoofing
 
   abort "FDP_PROXY_HOST not set" unless ENV["FDP_PROXY_HOST"]
   abort "FDP_PROXY_METHOD not set" unless ENV["FDP_PROXY_METHOD"]
   abort "FDP_INDEX not set" unless ENV["FDP_INDEX"]
-
 
   get "/" do
     redirect "/fdp-index-proxy"
@@ -47,13 +47,13 @@ def set_routes(classes: allclasses)
     # remove_from_cache(url: url)
     request.accept.each do |type|
       case type.to_s
-      when 'text/turtle'
+      when "text/turtle"
         content_type "text/turtle"
         halt graph.dump(:turtle)
-      when 'application/json'
+      when "application/json"
         content_type :json
         halt graph.dump(:jsonld)
-      when 'application/ld+json'
+      when "application/ld+json"
         content_type :json
         halt graph.dump(:jsonld)
       else  # for the FDP index send turtle by default
@@ -61,7 +61,7 @@ def set_routes(classes: allclasses)
         halt graph.dump(:turtle)
       end
     end
-    error 406 
+    error 406
   end
 
   # this is the DCAT site owner calling us to do a proxy of them
@@ -77,9 +77,7 @@ def set_routes(classes: allclasses)
     result = FDP.call_fdp_index(address: request_payload["clientUrl"])
     warn "called"
     # remove_from_cache(url: url)
-    unless result
-      error 500
-    end
+    error 500 unless result
     status 200
   end
 
