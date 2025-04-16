@@ -1,14 +1,14 @@
-version: "3"
 services:
 
   fdpindexproxy:
-    image: markw/fdp-index-proxy:0.0.5
-    container_name: indexproxy
+    image: markw/fdp-index-proxy:0.0.7
+    restart: always
     ports:
       - 4000:4567
     environment:
-      - FDP_INDEX=
+      - FDP_INDEX=https://tools.ostrails.eu/fdp-index/
       - FDP_PROXY_METHOD=https
-      - FDP_PROXY_HOST=tools.ostrails.org
-    restart: always
-
+      - FDP_PROXY_HOST=tools.ostrails.eu
+    security_opt:
+      - apparmor:unconfined
+    command: service cron start && ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0

@@ -4,7 +4,7 @@ ENV LANG="en_US.UTF-8" LANGUAGE="en_US:UTF-8" LC_ALL="C.UTF-8"
 
 USER root
 RUN apt-get -y update && apt-get -y upgrade 
-RUN apt-get -y update
+RUN apt-get -y update --fix-missing
 RUN apt-get install -y libraptor2-0 cron
 
 RUN mkdir /server
