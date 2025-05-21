@@ -9,6 +9,8 @@ services:
       - FDP_INDEX=https://tools.ostrails.eu/fdp-index/
       - FDP_PROXY_METHOD=https
       - FDP_PROXY_HOST=tools.ostrails.eu
+    volumes:
+      - $PWD/cache:/server/fdp_index_proxy/cache
     security_opt:
       - apparmor:unconfined
     command: service cron start && ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
