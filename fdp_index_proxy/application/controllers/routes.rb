@@ -41,10 +41,15 @@ def set_routes(classes: allclasses)
     warn graph.class
 
     unless graph  # might be false if it doesn't exist
-      error 400
-      halt
+      # this can happen if the cache has been erased or gone out of sync with the FDP index
+      # try to create the record
+      warn "the FDP endpoint is not found in teh cache, trying to recreate"
+      _f = FDP.new(address: params[:url])
+      warn "record is now frozen, calling attempt to load graph again"
+      graph = FDP.load_graph_from_cache(url: params[:url])
+      halt error 400 unless graph
     end
-    # remove_from_cache(url: url)
+
     request.accept.each do |type|
       case type.to_s
       when "text/turtle"
