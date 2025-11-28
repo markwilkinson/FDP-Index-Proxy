@@ -339,6 +339,10 @@ class FDP
     triplify(fdp, "http://www.w3.org/ns/dcat#landingPage", fdp, @graph)
     triplify(fdp, "http://www.w3.org/ns/dcat#keyword", "fair data point", @graph)
 
+    triplify("urn:anonymous:forfdpcompliance", RDF.type, "http://xmlns.com/foaf/0.1/Agent" , @graph)
+    triplify("urn:anonymous:forfdpcompliance", "http://xmlns.com/foaf/0.1/name", "anonymous" , @graph)
+
+
     fdp
   end
 

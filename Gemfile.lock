@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fdp_index_proxy (0.0.1)
+    fdp_index_proxy (0.0.10)
 
 GEM
   remote: https://rubygems.org/
@@ -329,4 +329,4 @@ RUBY VERSION
    ruby 3.3.0p0
 
 BUNDLED WITH
-   2.6.4
+   4.0.0.beta2

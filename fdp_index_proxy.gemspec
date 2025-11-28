@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "fdp_index_proxy/lib/fdp_index_proxy/version"
+require_relative "lib/fdp_index_proxy/version.rb"
 
 Gem::Specification.new do |spec|
   spec.name = "fdp_index_proxy"
