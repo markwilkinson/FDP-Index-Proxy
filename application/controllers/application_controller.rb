@@ -7,6 +7,8 @@ require_relative "routes"
 
 module FdpIndexProxy
   class Main < Sinatra::Application
+    FileUtils.mkdir_p("./cache") unless Dir.exist?("./cache")
+
     include Swagger::Blocks
 
     before do

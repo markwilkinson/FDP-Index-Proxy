@@ -1,3 +1,6 @@
+require "digest"
+require "fileutils"
+
 class FDP
   attr_accessor :graph, :address, :called, :toptype, :suffix
 
@@ -6,7 +9,7 @@ class FDP
                     "Catalog" => "http://www.w3.org/ns/dcat#catalog",
                     "Dataset" => "http://www.w3.org/ns/ldp#dataset",
                     "Distribution" => "http://www.w3.org/ns/ldp#distribution",
-                    "DataService2" => "http://www.w3.org/ns/ldp#accessService" }
+                    "DataService2" => "http://www.w3.org/ns/ldp#accessService" }.freeze
 
   def initialize(address:)
     @graph = RDF::Graph.new
@@ -55,7 +58,7 @@ class FDP
 
     # for testing
     # dcat = File.read("./sample.ttl")
-    # warn "dcat", dcat
+    warn "dcat", dcat
 
     # The rest of this routine will
     # 1. Load all of the RDF statements in @graph, other than hydra control statements
@@ -66,6 +69,9 @@ class FDP
     try = preparse(message: dcat)  # parse all statements that came from the initial call
     # try will be true if parse was successful, false if parse was unsuccessful, or a URL if it found another page
     # the only thing we care about right now is the new page, so return otherwise
+
+    warn "Try is #{try}"
+    warn "Graph is is #{@graph} #{@graph.size}"
 
     return if try.is_a?(TrueClass) || try.is_a?(FalseClass)
 
@@ -116,8 +122,8 @@ class FDP
         @graph << statement
       end
     end
-    # return nextpage if nextpage
-    true
+    nextpage || true   # this ended up being a disaster... too many realworld failures with hydra
+    # true
   end
 
   def iterate_dcat_record
@@ -156,25 +162,32 @@ class FDP
   end
 
   def query_toplevel
-    # the logic here is to find the "highest level" DCAT object
-    # e.g. Catalog is higher than Dataset
-    query = SPARQL.parse("SELECT distinct ?type WHERE { ?s a ?type }")  # this is called for every objecgt type in the DCAT record
-    types = query.execute(@graph).map { |result| result[:type].to_s }
-    warn "toplevel results", types
-    toptype = nil
+    # Directly collect all rdf:type objects using each_statement (avoids any SPARQL/RDF::Queryable extensions)
+    types = []
+    @graph.each_statement do |statement|
+      types << statement.object.to_s if statement.predicate == RDF.type
+    end
+    types.uniq!
 
+    warn "toplevel results", types
+
+    toptype = nil
     if types.include?("https://w3id.org/fdp/fdp-o#FAIRDataPoint")
       toptype = "FDP"
     elsif types.include?("http://www.w3.org/ns/dcat#Catalog")
       toptype = "Catalog"
     elsif types.include?("http://www.w3.org/ns/dcat#Dataset")
       toptype = "Dataset"
-    elsif types.include?("http://www.w3.org/ns/dcat#Disgtribution")
+    elsif types.include?("http://www.w3.org/ns/dcat#Distribution")  # Fixed typo: was "Disgtribution"
       toptype = "Distribution"
     elsif types.include?("http://www.w3.org/ns/dcat#DataService")
       toptype = "DataService"
     end
+
     warn "final TOP type", toptype
+
+    warn "No rdf:type triples found in graph likely non-RDF response or parsing skipped" if types.empty?
+
     toptype
   end
 
@@ -191,6 +204,7 @@ class FDP
     # warn "\n\n\n\dcat class subjects", dcat_class_subjects
     dcat_class_subjects.each do |s, type|
       # warn "class type for  container is ", type
+      # this should never happen, since it is caught above by @toptype
       next if type == "https://w3id.org/fdp/fdp-o#FAIRDataPoint"
 
       inject_class_container(subject: s, type: type)
@@ -339,9 +353,8 @@ class FDP
     triplify(fdp, "http://www.w3.org/ns/dcat#landingPage", fdp, @graph)
     triplify(fdp, "http://www.w3.org/ns/dcat#keyword", "fair data point", @graph)
 
-    triplify("urn:anonymous:forfdpcompliance", RDF.type, "http://xmlns.com/foaf/0.1/Agent" , @graph)
-    triplify("urn:anonymous:forfdpcompliance", "http://xmlns.com/foaf/0.1/name", "anonymous" , @graph)
-
+    triplify("urn:anonymous:forfdpcompliance", RDF.type, "http://xmlns.com/foaf/0.1/Agent", @graph)
+    triplify("urn:anonymous:forfdpcompliance", "http://xmlns.com/foaf/0.1/name", "anonymous", @graph)
 
     fdp
   end
@@ -360,8 +373,8 @@ class FDP
         begin
           warn "thawing file #{file}"
           fdpstring = File.read(file)
-          fdp = Marshal.load(fdpstring)  # this is an FDP object!!
-          address = fdp.address  # the address of the DCAP record of the fdp
+          fdp = Marshal.load(fdpstring)  # fdpstring is an FDP object, marshalled!!
+          address = fdp.address  # the address of the DCAT record of the fdp
         rescue StandardError => e
           warn "Error #{e.inspect}"
           FileUtils.rm_f(file)  # if it is broken, remove it regardless!
@@ -375,29 +388,54 @@ class FDP
   end
 
   def self.load_graph_from_cache(url:)
-    address = Digest::SHA256.hexdigest url
+    address = Digest::SHA256.hexdigest(url)
     marshalled = "./cache/#{address}.marsh"
-    begin
-      warn "thawing file #{marshalled}"
-      fdpstring = File.read(marshalled)
-      fdp = Marshal.load(fdpstring)
-    rescue StandardError => e
-      warn "Error #{e.inspect}"
-      return false
+    cache_duration = 120  # 2 minutes in seconds
+
+    if File.exist?(marshalled)
+      file_age = Time.now - File.mtime(marshalled)
+
+      if file_age < cache_duration
+        begin
+          warn "CACHE HIT for #{url} (age: #{file_age.to_i}s)"
+          fdpstring = File.read(marshalled)
+          fdp = Marshal.load(fdpstring)
+          return fdp.graph
+        rescue StandardError => e
+          warn "Error loading corrupted cache #{marshalled}: #{e.inspect}"
+          FileUtils.rm_f(marshalled)
+        end
+      else
+        warn "CACHE EXPIRED for #{url} (age: #{file_age.to_i}s) – deleting"
+        FileUtils.rm_f(marshalled)
+      end
+    else
+      warn "CACHE MISS for #{url}"
     end
-    fdp.graph
+
+    false
   end
 
   def freezeme
     warn "freezing"
-    # warn "GRAPH", @graph.dump(:turtle)
     File.write("/tmp/latestproxyoutput.ttl", @graph.dump(:turtle))
 
-    digested = Digest::SHA256.hexdigest @address  # remember that @address is the original DCAT URL that the proxy was called with
-    f = File.open("./cache/#{digested}.marsh", "w")
-    str = Marshal.dump(self).force_encoding("ASCII-8BIT")  # dump of THIS OBJECT
-    f.puts str
-    f.close
+    FileUtils.mkdir_p("./cache")
+
+    digested = Digest::SHA256.hexdigest(@address)
+    marshalled_path = "./cache/#{digested}.marsh"
+
+    str = Marshal.dump(self).force_encoding("ASCII-8BIT")
+    File.write(marshalled_path, str)
+  end
+
+  def self.cleanup_old_cache(max_age_hours: 24)
+    Dir.glob("./cache/*.marsh").each do |file|
+      if Time.now - File.mtime(file) > max_age_hours * 3600
+        warn "Cleaning up old cache #{file}"
+        FileUtils.rm_f(file)
+      end
+    end
   end
 
   def self.call_fdp_index(address:)
@@ -413,7 +451,7 @@ class FDP
     # https://index.bgv.cbgp.upm.es/fdp-index-proxy/proxy?url=https://my.dcat.site.org/test.dcat
     warn "calling FDP index at #{index} with  #{proxied_address}"
     begin
-      r = RestClient::Request.execute(
+      RestClient::Request.execute(
         url: index,
         method: :post,
         verify_ssl: false,
@@ -433,7 +471,7 @@ class FDP
   def testresolution(address:)
     warn "testing #{address}"
     begin
-      r = RestClient::Request.execute(
+      RestClient::Request.execute(
         url: address,
         method: :get,
         verify_ssl: false,
@@ -449,18 +487,4 @@ class FDP
     end
     true
   end
-
-  # I don't think this is used anymore
-  # def parse(message:)
-  #   data = StringIO.new(message)
-  #   RDF::Reader.for(:turtle).new(data) do |reader|
-  #     reader.each_statement do |statement|
-  #       @graph << statement
-  #       if statement.predicate.to_s == "http://www.w3.org/ns/ldp#contains"
-  #         contained_thing = statement.object.to_s
-  #         self.load(address: contained_thing) # this ends up being recursive... careful!
-  #       end
-  #     end
-  #   end
-  # end
 end

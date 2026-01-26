@@ -1,8 +1,11 @@
 #!/bin/sh
 set -e  # Exit on any error
 
+# Ensure cache directory exists
+mkdir -p /server/cache
+
 # Start cron in background
-service cron start
+cron
 
 # Optional: Tail cron logs for debugging (in background)
 tail -f /var/log/cron.log &

@@ -3,8 +3,7 @@ NAMESPACES = "PREFIX ejpold: <http://purl.org/ejp-rd/vocabulary/>
   PREFIX dcat: <http://www.w3.org/ns/dcat#>
   PREFIX dc: <http://purl.org/dc/terms/>
   PREFIX fdp: <https://w3id.org/fdp/fdp-o#>
-  PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
-  ".freeze
+  PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>".freeze
 # VPCONNECTION = "ejpold:vpConnection ejpnew:vpConnection dcat:theme dcat:themeTaxonomy".freeze
 # VPDISCOVERABLE = "ejpold:VPDiscoverable ejpnew:VPDiscoverable".freeze
 # VPANNOTATION = "dcat:theme".freeze
@@ -14,15 +13,22 @@ VPANNOTATION = "dcat:theme".freeze
 
 def find_subject_uri_query(graph:, type:)
   warn "TYPE:", type
+  warn "GRAPH:", graph
 
-  query = SPARQL.parse("
+  # Use full URI to avoid any prefixed name parsing quirks with interpolation
+  type_uri = RDF::URI("http://www.w3.org/ns/dcat##{type}")
+
+  # Clean heredoc for the query – strips indentation and ensures consistent formatting
+  query_str = <<~SPARQL.strip
     #{NAMESPACES}
-    SELECT DISTINCT ?s WHERE
-    {
-     ?s a dcat:#{type}
+    SELECT DISTINCT ?s WHERE {
+      ?s a <#{type_uri}> .
     }
-    ")
-  query.execute(graph).map { |result| result[:s].to_s }
+  SPARQL
+
+  warn "EXECUTING QUERY:\n#{query_str}"  # temporary debug – remove once confirmed working
+
+  SPARQL.parse(query_str).execute(graph).map { |result| result[:s].to_s }
 end
 
 def find_dcat_classes(graph:)
@@ -143,9 +149,9 @@ def triplify(s, p, o, repo, datatype = nil)
           RDF::URI.new(o.to_s)
         elsif o.to_s =~ /^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d/
           RDF::Literal.new(o.to_s, datatype: RDF::XSD.date)
-        elsif o.to_s =~ /^[+-]?\d+\.\d+/ && o.to_s !~ /[^\+\-\d\.]/  # has to only be digits
+        elsif o.to_s =~ /^[+-]?\d+\.\d+/ && o.to_s !~ /[^+\-\d.]/  # has to only be digits
           RDF::Literal.new(o.to_s, datatype: RDF::XSD.float)
-        elsif o.to_s =~ /^[+-]?[0-9]+$/ && o.to_s !~ /[^\+\-\d\.]/  # has to only be digits
+        elsif o.to_s =~ /^[+-]?[0-9]+$/ && o.to_s !~ /[^+\-\d.]/  # has to only be digits
           RDF::Literal.new(o.to_s, datatype: RDF::XSD.int)
         else
           RDF::Literal.new(o.to_s, language: :en)

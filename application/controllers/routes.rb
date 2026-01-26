@@ -71,19 +71,31 @@ def set_routes(classes: allclasses)
 
   # this is the DCAT site owner calling us to do a proxy of them
   post "/fdp-index-proxy/proxy" do
-    body = request.body.read
-    warn "body is #{body}"
-    # curl -v -X POST   https://my.proxy.server/fdp-index-proxy/proxy   -H 'content-type: application/json'   -d '{"clientUrl": "https://w3id.org/duchenne-fdp"}'
-    request_payload = JSON.parse body
-    warn request_payload.inspect
-    _f = FDP.new(address: request_payload["clientUrl"])
-    warn "record is now frozen, calling fdp index"
-    # the record is now frozen
-    result = FDP.call_fdp_index(address: request_payload["clientUrl"])
-    warn "called"
-    # remove_from_cache(url: url)
-    error 500 unless result
+    body_str = request.body.read
+
+    warn "RAW BODY RECEIVED: #{body_str.inspect}"  # debug line
+
+    halt 400, "Empty request body" if body_str.empty?
+
+    begin
+      request_payload = JSON.parse(body_str)
+    rescue JSON::ParserError => e
+      warn "Invalid JSON: #{e.message}"
+      halt 400, "Invalid JSON payload"
+    end
+
+    client_url = request_payload["clientUrl"]
+    halt 400, "Missing 'clientUrl' in payload" unless client_url
+
+    warn "Processing clientUrl: #{client_url}"
+
+    _f = FDP.new(address: client_url)
+    result = FDP.call_fdp_index(address: client_url)
+
+    halt 500, "Failed to register with FDP index" unless result
+
     status 200
+    { status: "success", message: "Registered #{client_url}" }.to_json
   end
 
   get "/fdp-index-proxy/ping" do  # called by a cron on a weekly basis

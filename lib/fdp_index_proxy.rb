@@ -24,5 +24,4 @@ require_all "."
 
 module FdpIndexProxy
   class Error < StandardError; end
-  # Your code goes here...
 end

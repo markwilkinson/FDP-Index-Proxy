@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "FDP Index Proxy"
   spec.description = "Allow FDP index to consume DCAT files"
   spec.homepage = "https://wkilkinsonlab.info"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.2"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
