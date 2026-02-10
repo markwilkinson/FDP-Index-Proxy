@@ -41,3 +41,5 @@ gem "stringio", "~> 3.1.1"
 gem "rubocop", "~> 1.67"
 
 gem "digest", "~> 3.2"
+
+gem "dotenv", "~> 3.2"

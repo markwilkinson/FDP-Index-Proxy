@@ -55,4 +55,3 @@ module FdpIndexProxy
     # VP.new(config: VPConfig.new) # set up index and active sites)
   end
 end
-FdpIndexProxy::Main.run! if __FILE__ == $0
