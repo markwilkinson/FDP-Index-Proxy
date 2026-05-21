@@ -43,13 +43,13 @@ def set_routes
   # Serves the OpenAPI 3 specification as YAML.
   get "/fdp-index-proxy" do
     content_type "application/yaml"
-    send_file File.expand_path("../../../openapi.yaml", __dir__)
+    send_file File.expand_path("../../openapi.yaml", __dir__)
   end
 
   # Canonical permalink for the spec — referenced in the spec's own +servers+ block.
   get "/fdp-index-proxy/openapi.yaml" do
     content_type "application/yaml"
-    send_file File.expand_path("../../../openapi.yaml", __dir__)
+    send_file File.expand_path("../../openapi.yaml", __dir__)
   end
 
   # ------------------------------------------ GET /proxy  (FDP Index → proxy)

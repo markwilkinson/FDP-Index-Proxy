@@ -15,6 +15,7 @@ require_relative  "fdp"
 require "linkeddata"
 require "rest-client"
 require "rdf/vocab"
+require "committee"
 
 require_all "./lib"
 

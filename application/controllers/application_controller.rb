@@ -13,7 +13,7 @@ module FdpIndexProxy
     # the route handlers.  Response validation is intentionally omitted since
     # responses are always opaque RDF blobs.
     use Committee::Middleware::RequestValidation,
-        schema_path: File.expand_path("../../../openapi.yaml", __dir__),
+        schema_path: File.expand_path("../../openapi.yaml", __dir__),
         error_handler: ->(e, _env) { warn "Committee validation error: #{e.message}" },
         ignore_error: false
 
