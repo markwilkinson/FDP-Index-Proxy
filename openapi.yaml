@@ -78,6 +78,7 @@ paths:
           schema:
             type: string
             format: uri
+            pattern: '^https?://'
           example: "https://my.dcat.site.org/catalog"
       responses:
         "200":
@@ -135,6 +136,7 @@ paths:
                 clientUrl:
                   type: string
                   format: uri
+                  pattern: '^https?://'
                   description: URL of the source DCAT record to proxy.
             example:
               clientUrl: "https://my.dcat.site.org/catalog"

@@ -57,11 +57,16 @@ def set_routes
   # +url+ is the original source DCAT URL supplied at registration time.
   #
   # Flow:
-  # 1. Look up the enriched graph in the in-process cache.
-  # 2. On a miss, rebuild by creating a new FDP object (re-fetch + re-enrich).
-  # 3. Negotiate content type and return the graph as Turtle or JSON-LD.
+  # 1. Validate the url parameter is a well-formed http/https URL.
+  # 2. Look up the enriched graph in the in-process cache.
+  # 3. On a miss, rebuild by creating a new FDP object (re-fetch + re-enrich).
+  # 4. Negotiate content type and return the graph as Turtle or JSON-LD.
   get "/fdp-index-proxy/proxy" do
     halt 400 unless params[:url]
+    unless valid_proxy_url?(params[:url])
+      warn "Rejected invalid proxy URL: #{params[:url].inspect}"
+      halt 400, "url must be a valid http or https URL"
+    end
 
     graph = FDP.load_graph_from_cache(url: params[:url])
 
@@ -99,6 +104,10 @@ def set_routes
 
     client_url = request_payload["clientUrl"]
     halt 400, "Missing 'clientUrl' in payload" unless client_url
+    unless valid_proxy_url?(client_url)
+      warn "Rejected invalid clientUrl: #{client_url.inspect}"
+      halt 400, "clientUrl must be a valid http or https URL"
+    end
 
     warn "Processing clientUrl: #{client_url}"
 
@@ -121,6 +130,22 @@ def set_routes
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+# Returns +true+ only if +url+ is a well-formed http/https URL with a
+# recognisable hostname.  Rejects SQL-injection probes, bare numbers, and any
+# other non-URL strings that automated scanners send as the +url+ parameter.
+#
+# @param url [String] the candidate URL
+# @return [Boolean]
+def valid_proxy_url?(url)
+  return false unless url.is_a?(String) && url.match?(%r{\Ahttps?://}i)
+
+  uri = URI.parse(url)
+  # Require a non-empty hostname consisting only of valid DNS characters.
+  !uri.host.nil? && uri.host.match?(/\A[a-zA-Z0-9]([a-zA-Z0-9\-.]*[a-zA-Z0-9])?\z/)
+rescue URI::InvalidURIError
+  false
+end
 
 # Serialises +graph+ in the best format accepted by the client.
 # Defaults to Turtle when the client sends no +Accept+ header or accepts +*/*+,

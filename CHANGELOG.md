@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-05-21
+
+### Added
+- `valid_proxy_url?` helper in `routes.rb` validates that any incoming `url` or
+  `clientUrl` value is a well-formed `http`/`https` URL with a recognisable
+  hostname before the route handler processes it.  Rejects SQL-injection probes
+  and other non-URL strings sent by automated scanners; logs the rejected value
+  and returns 400.
+- `pattern: '^https?://'` constraint added to the `url` query parameter and
+  `clientUrl` body field in `openapi.yaml`, so `committee` middleware rejects
+  non-HTTP values at the Rack layer before they reach route code.
+
 ## [0.5.0] - 2026-05-21
 
 ### Added
