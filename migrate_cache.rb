@@ -32,17 +32,27 @@ marsh_files.each do |file|
   # The @address string (a plain URL) is stored verbatim in the Marshal
   # stream, so a regex scan reliably extracts it without loading any classes.
   content = File.binread(file)
-  urls    = content.scan(%r{https?://[^\x00-\x1F\s"\\]+})
 
-  if urls.empty?
-    errors << "#{file}: no http/https URL found in binary content"
-    puts "  SKIP #{file} — no URL found"
-  else
-    # Take the first URL — that is @address (the source DCAT URL).
-    # Subsequent URLs in the file are graph data, not the address.
-    address = urls.first
+  # Locate @address by its Marshal symbol encoding.
+  # In Marshal 4.8, the symbol :address is stored as:
+  #   \x3a       — symbol type marker
+  #   \x0d       — length 8 encoded as (8+5=13=0x0d)
+  #   "@address" — the ivar name INCLUDING the @ prefix
+  # Immediately after is the string value:
+  #   \x49?     — optional encoding wrapper (I)
+  #   \x22      — string type marker (")
+  #   [1-3 bytes] — Marshal-encoded string length
+  #   [url bytes] — the actual URL
+  # We allow up to 8 bytes between "@address" and "http" to cover all cases.
+  m = content.match(%r{\x3a\x0d@address.{2,8}?(https?://[^\x00-\x1F\s"\\]+)}m)
+
+  if m
+    address = m[1]
     addresses << address
     puts "  OK   #{address}"
+  else
+    errors << "#{file}: @address ivar not found in binary"
+    puts "  SKIP #{file} — could not locate @address ivar"
   end
 rescue StandardError => e
   errors << "#{file}: #{e.message}"
