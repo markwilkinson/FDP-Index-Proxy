@@ -20,8 +20,6 @@ gem "json-ld", "~> 3.3"
 
 gem "securerandom", "~> 0.3.1"
 
-gem "swagger-blocks", "~> 3.0"
-
 gem "require_all", "~> 3.0"
 
 gem "rdf-vocab", "~> 3.3"
@@ -43,3 +41,5 @@ gem "rubocop", "~> 1.67"
 gem "digest", "~> 3.2"
 
 gem "dotenv", "~> 3.2"
+
+gem "committee", "~> 5.0"

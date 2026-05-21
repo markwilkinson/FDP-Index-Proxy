@@ -2,23 +2,25 @@
 
 require_relative "../../lib/fdp_index_proxy"
 
-require_relative "models"
 require_relative "routes"
 
 module FdpIndexProxy
   class Main < Sinatra::Application
     FileUtils.mkdir_p("./cache") unless Dir.exist?("./cache")
 
-    include Swagger::Blocks
+    # Validate incoming requests against the OpenAPI 3 spec.
+    # Rejects malformed query parameters and request bodies before they reach
+    # the route handlers.  Response validation is intentionally omitted since
+    # responses are always opaque RDF blobs.
+    use Committee::Middleware::RequestValidation,
+        schema_path: File.expand_path("../../../openapi.yaml", __dir__),
+        error_handler: ->(e, _env) { warn "Committee validation error: #{e.message}" },
+        ignore_error: false
 
     before do
       response.headers["Access-Control-Allow-Origin"] = "*"
     end
 
-    configure do
-    end
-
-    # routes...
     options "*" do
       response.headers["Allow"] = "GET, PUT, POST, DELETE, OPTIONS"
       response.headers["Access-Control-Allow-Headers"] =
@@ -27,31 +29,6 @@ module FdpIndexProxy
       200
     end
 
-    swagger_root do
-      key :swagger, "2.0"
-      info do
-        key :version, "1.0.0"
-        key :title, "FDP Index Proxy"
-        key :description, "Adds metadata to DCAT so that it can be consumed by FDP Index"
-        key :termsOfService, "https://example.org"
-        contact do
-          key :name, "Mark D. Wilkinson"
-        end
-        license do
-          key :name, "MIT"
-        end
-      end
-
-      key :schemes, ["http"]
-      key :host, ENV.fetch("HARVESTER", nil)
-      key :basePath, "/fdp_index_proxy"
-    end
-
-    # A list of all classes that have swagger_* declarations.
-    SWAGGERED_CLASSES = [ErrorModel, self].freeze
-
-    set_routes(classes: SWAGGERED_CLASSES)
-
-    # VP.new(config: VPConfig.new) # set up index and active sites)
+    set_routes
   end
 end
