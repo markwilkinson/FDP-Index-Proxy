@@ -8,6 +8,18 @@ module FdpIndexProxy
   class Main < Sinatra::Application
     FileUtils.mkdir_p("./cache") unless Dir.exist?("./cache")
 
+    # WEBrick's rack.input does not implement rewind, which committee requires
+    # after reading the body for validation.  Buffer it into a StringIO first
+    # so that the route handler can read it again afterwards.
+    use(Class.new do
+      def initialize(app) = @app = app
+
+      def call(env)
+        env["rack.input"] = StringIO.new(env["rack.input"].read)
+        @app.call(env)
+      end
+    end)
+
     # Validate incoming requests against the OpenAPI 3 spec.
     # Rejects malformed query parameters and request bodies before they reach
     # the route handlers.  Response validation is intentionally omitted since

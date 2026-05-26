@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-05-21
+
+### Fixed
+- 500 error on all POST requests caused by `committee` calling `rewind` on
+  WEBrick's `rack.input`, which does not implement that method.  A small
+  body-buffering middleware now wraps `rack.input` in a `StringIO` before
+  `committee` reads it, so both the validator and the route handler can read
+  the body without conflict.
+
 ## [0.6.0] - 2026-05-21
 
 ### Added
