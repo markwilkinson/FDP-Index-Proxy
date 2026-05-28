@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-05-28
+
+### Fixed
+- All three `RestClient::Request.execute` calls (`load`, `testresolution`,
+  `call_fdp_index`) lacked timeout parameters, causing `/ping` to hang
+  indefinitely whenever a source URL was slow or unreachable.  Added
+  `timeout: 30` and `open_timeout: 10` to each call so a stuck URL skips
+  after at most 30 seconds rather than blocking the WEBrick thread forever.
+- Volume mount in `docker-compose.yml` pointed to
+  `/server/fdp_index_proxy/cache` instead of `/server/cache`, so
+  `registry.json` was never persisted to the host and was lost on every
+  container restart.
+
+### Changed
+- Cron schedule changed from weekly (`0 0 * * 0`) to daily (`0 0 * * *`)
+  so registrations are refreshed before the FDP Index marks them inactive.
+- Removed dead `command:` override from `docker-compose.yml` (the
+  Dockerfile `ENTRYPOINT` made it a no-op; it also referenced a
+  non-existent path).
+
 ## [0.7.0] - 2026-05-21
 
 ### Fixed

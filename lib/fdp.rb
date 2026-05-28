@@ -107,6 +107,8 @@ class FDP
         url: address,
         method: :get,
         verify_ssl: false,
+        timeout: 30,
+        open_timeout: 10,
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
       )
     rescue RestClient::ExceptionWithResponse => e
@@ -604,6 +606,8 @@ class FDP
         url: index,
         method: :post,
         verify_ssl: false,
+        timeout: 30,
+        open_timeout: 10,
         payload: { clientUrl: proxied_address }.to_json,
         headers: { "Content-Type" => "application/json" }
       )
@@ -631,6 +635,8 @@ class FDP
         url: address,
         method: :get,
         verify_ssl: false,
+        timeout: 30,
+        open_timeout: 10,
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
       )
     rescue RestClient::ExceptionWithResponse => e

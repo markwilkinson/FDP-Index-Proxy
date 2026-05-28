@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libraptor2-0 \
         cron \
+        curl \
         git && \
     rm -rf /var/lib/apt/lists/*
 
@@ -26,9 +27,9 @@ RUN bundle config set --local without 'development test' && \
 COPY . /server/
 
 # Set up cron job...
-RUN echo "0 0 * * 0 curl http://localhost:4567/fdp-index-proxy/ping >> /var/log/cron.log 2>&1" > /etc/cron.d/weekly-job && \
-    chmod 0644 /etc/cron.d/weekly-job && \
-    crontab /etc/cron.d/weekly-job && \
+RUN echo "0 0 * * * curl http://localhost:4567/fdp-index-proxy/ping >> /var/log/cron.log 2>&1" > /etc/cron.d/daily-ping && \
+    chmod 0644 /etc/cron.d/daily-ping && \
+    crontab /etc/cron.d/daily-ping && \
     touch /var/log/cron.log
 
 ENTRYPOINT ["sh", "/server/entrypoint.sh"]
