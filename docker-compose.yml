@@ -9,6 +9,7 @@ services:
       - FDP_INDEX=https://tools.ostrails.eu/fdp-index/
       - FDP_PROXY_METHOD=https
       - FDP_PROXY_HOST=tools.ostrails.eu
+      - FDP_CACHE_TTL=600
     volumes:
       - $PWD/cache:/server/cache
     security_opt:

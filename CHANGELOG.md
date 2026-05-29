@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-05-29
+
+### Changed
+- `FDP_CACHE_TTL` set to `600` (10 minutes) in `docker-compose.yml`.
+  Previously the default of 86 400 s (24 h) meant a modified source record
+  would not be reflected by the proxy until the next day.  With a 10-minute
+  TTL, changes propagate within one FDP Index polling cycle.
+
 ## [0.8.0] - 2026-05-28
 
 ### Fixed
