@@ -1,0 +1,230 @@
+openapi: "3.0.3"
+
+info:
+  title: FDP Index Proxy
+  version: "0.3.0"
+  description: |
+    Bridges plain DCAT records and the FAIR Data Point (FDP) ecosystem.
+
+    A DCAT publisher POSTs their record URL to this proxy, which:
+
+    1. Fetches the source DCAT record and enriches it with the triples that the
+       FDP specification requires but that plain DCAT records do not contain:
+       - An `fdp-o:FAIRDataPoint` root node at the apex of the LDP hierarchy
+       - LDP `DirectContainer` nodes for each DCAT class, enabling navigation
+       - `ejp-rd:vpConnection / VPDiscoverable` annotations on every resource,
+         making them discoverable in the Virtual Platform (VP) network
+       - Fallback `dc:title` and `dcat:contactPoint` metadata where missing
+    2. Registers a proxy URL with the configured FDP Index so the Index knows
+       where to dereference the enriched record.
+    3. Serves the enriched RDF graph when the FDP Index calls back.
+    4. Re-registers and refreshes all known records on a weekly ping.
+
+    ## Environment variables
+
+    | Variable           | Required | Description |
+    |--------------------|----------|-------------|
+    | `FDP_INDEX`        | Yes      | URL of the FDP Index to register with |
+    | `FDP_PROXY_HOST`   | Yes      | Public hostname of this proxy service |
+    | `FDP_PROXY_METHOD` | Yes      | `http` or `https` |
+    | `FDP_CACHE_TTL`    | No       | Cache TTL in seconds (default: 86400) |
+
+  contact:
+    name: Mark D. Wilkinson
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: "{scheme}://{host}"
+    description: Proxy host (set via FDP_PROXY_HOST / FDP_PROXY_METHOD env vars)
+    variables:
+      scheme:
+        default: https
+        enum: [http, https]
+      host:
+        default: localhost
+
+tags:
+  - name: proxy
+    description: Core proxy operations — register a DCAT URL and serve enriched RDF
+  - name: maintenance
+    description: Operational endpoints for cache refresh and API discovery
+
+paths:
+
+  /fdp-index-proxy/proxy:
+
+    get:
+      summary: Serve enriched RDF graph
+      operationId: getProxiedGraph
+      tags: [proxy]
+      description: |
+        Called by the FDP Index to dereference a registered proxy URL.  Returns
+        the enriched RDF graph for the source DCAT record identified by `url`.
+
+        If the graph is not in the in-process cache (e.g. after a service
+        restart), the proxy will automatically re-fetch and re-enrich the source
+        record before responding.
+
+        Supports content negotiation: send `Accept: text/turtle` or
+        `Accept: application/ld+json`.  Defaults to Turtle when no preference is
+        expressed, since the FDP Index always accepts it.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The original source DCAT URL that was supplied at registration time.
+          schema:
+            type: string
+            format: uri
+            pattern: '^https?://'
+          example: "https://my.dcat.site.org/catalog"
+      responses:
+        "200":
+          description: Enriched RDF graph, serialised in the negotiated format.
+          content:
+            text/turtle:
+              schema:
+                type: string
+              example: |
+                @prefix dcat: <http://www.w3.org/ns/dcat#> .
+                @prefix fdp:  <https://w3id.org/fdp/fdp-o#> .
+                @prefix ldp:  <http://www.w3.org/ns/ldp#> .
+
+                <https://my.dcat.site.org/catalog#fdp>
+                    a fdp:FAIRDataPoint, fdp:MetadataService, dcat:Resource ;
+                    ldp:contains <https://my.dcat.site.org/catalog> .
+
+                <https://my.dcat.site.org/catalog> a dcat:Catalog .
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  type: object
+        "400":
+          description: |
+            Missing or invalid `url` parameter, or the source record could not
+            be fetched and enriched.
+          content:
+            text/plain:
+              schema:
+                type: string
+        "406":
+          description: None of the client's accepted content types can be served.
+
+    post:
+      summary: Register a DCAT URL for proxying
+      operationId: registerProxy
+      tags: [proxy]
+      description: |
+        Called by a DCAT publisher to register their record with the FDP Index
+        via this proxy.
+
+        The proxy fetches the source record, enriches it with FDP-required
+        triples, caches the result, and POSTs a proxy URL to the configured
+        FDP Index.  Subsequent GET requests from the FDP Index for that proxy
+        URL will be served from cache.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [clientUrl]
+              properties:
+                clientUrl:
+                  type: string
+                  format: uri
+                  pattern: '^https?://'
+                  description: URL of the source DCAT record to proxy.
+            example:
+              clientUrl: "https://my.dcat.site.org/catalog"
+      responses:
+        "200":
+          description: Source record successfully enriched and registered with the FDP Index.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Registered https://my.dcat.site.org/catalog"
+        "400":
+          description: Missing, empty, or malformed request body.
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: |
+            The source record was fetched and enriched, but registration with
+            the FDP Index failed.
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /fdp-index-proxy/ping:
+    get:
+      summary: Refresh all registered proxies
+      operationId: ping
+      tags: [maintenance]
+      description: |
+        Intended to be called on a weekly cron schedule.  Iterates over every
+        URL in the persistent registry, evicts its cache entry, re-fetches and
+        re-enriches the source record, and re-registers the proxy URL with the
+        FDP Index.
+
+        Per-URL failures are caught and logged without aborting the run, so a
+        single unreachable source does not prevent the remaining records from
+        being refreshed.
+
+        After a process restart the registry is re-read from disk
+        (`./cache/registry.json`) before processing begins, so the ping is
+        effective even on a cold start.
+      responses:
+        "200":
+          description: |
+            Ping completed.  Individual per-URL errors are logged server-side
+            and are not surfaced in the response.
+
+  /fdp-index-proxy/openapi.yaml:
+    get:
+      summary: OpenAPI 3 specification
+      operationId: getOpenApiSpec
+      tags: [maintenance]
+      description: Returns this OpenAPI 3 specification as YAML.
+      responses:
+        "200":
+          description: The OpenAPI 3 YAML document.
+          content:
+            application/yaml:
+              schema:
+                type: string
+
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [clientUrl]
+      properties:
+        clientUrl:
+          type: string
+          format: uri
+          description: URL of the source DCAT record to proxy.
+          example: "https://my.dcat.site.org/catalog"
+
+    RegisterResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: "Registered https://my.dcat.site.org/catalog"

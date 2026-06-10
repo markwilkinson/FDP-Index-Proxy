@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libraptor2-0 \
         cron \
+        curl \
         git && \
     rm -rf /var/lib/apt/lists/*
 

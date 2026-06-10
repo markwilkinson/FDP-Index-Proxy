@@ -39,6 +39,6 @@ matches.each do |partial|
     puts "An unexpected error occurred: #{e.message}"
   end
 end
-# curl -v -d '{"clientUrl": "https://tests.ostrails.eu/tests/fc_data_authorization/about"}'
+# curl -v -d '{"clientUrl": "https://tests.ostrails.eu/tests/fc_data_authorization"}'
 # -H "Content-type: application/json"
 # https://tools.ostrails.eu/fdp-index-proxy/proxy
