@@ -1,7 +1,8 @@
+version: "3"
 services:
 
   fdpindexproxy:
-    image: markw/fdp-index-proxy:0.0.9
+    image: markw/fdp-index-proxy:0.3.0
     restart: always
     ports:
       - 4000:4567
@@ -9,8 +10,13 @@ services:
       - FDP_INDEX=https://tools.ostrails.eu/fdp-index/
       - FDP_PROXY_METHOD=https
       - FDP_PROXY_HOST=tools.ostrails.eu
+      - FDP_CACHE_TTL=600
     volumes:
-      - $PWD/cache:/server/fdp_index_proxy/cache
+      - $PWD/cache:/server/cache
     security_opt:
       - apparmor:unconfined
-    command: service cron start && ruby /server/fdp_index_proxy/application/controllers/application_controller.rb -o 0.0.0.0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

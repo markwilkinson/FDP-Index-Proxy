@@ -98,9 +98,10 @@ def set_routes(classes: allclasses)
     { status: "success", message: "Registered #{client_url}" }.to_json
   end
 
-  get "/fdp-index-proxy/ping" do  # called by a cron on a weekly basis
-    FDP.ping  # this uses the cache to re-call all FDPs and  re-calls the FDP Index for each one
+  get "/fdp-index-proxy/ping" do  # called by a cron on a daily basis
+    Thread.new { FDP.ping }  # run in background so the cron curl gets an immediate response
     status 200
+    "pong"
   end
 
   before do

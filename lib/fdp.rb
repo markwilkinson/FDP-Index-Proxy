@@ -43,6 +43,8 @@ class FDP
         url: address,
         method: :get,
         verify_ssl: false,
+        timeout: 30,
+        open_timeout: 10,
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
       )
     rescue RestClient::ExceptionWithResponse => e
@@ -378,7 +380,7 @@ class FDP
         rescue StandardError => e
           warn "Error #{e.inspect}"
           FileUtils.rm_f(file)  # if it is broken, remove it regardless!
-          return false
+          next
         end
       end
       FileUtils.rm_f(file) # get ready to re-index
@@ -475,8 +477,9 @@ class FDP
         url: address,
         method: :get,
         verify_ssl: false,
+        timeout: 30,
+        open_timeout: 10,
         headers: { "Accept" => "application/ld+json, text/turtle, application/rdf+xml" }
-        # headers: {"Accept" => "application/rdf+xml"}
       )
     rescue RestClient::ExceptionWithResponse => e
       warn "An error occurred: #{e.response}"
