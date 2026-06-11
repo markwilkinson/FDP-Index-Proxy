@@ -120,13 +120,10 @@ def set_routes
     { status: "success", message: "Registered #{client_url}" }.to_json
   end
 
-  # ------------------------------------------------- GET /ping  (cron trigger)
-  # Intended for weekly cron calls.  Re-fetches every registered source URL,
-  # rebuilds its enriched graph, and re-registers each proxy with the FDP Index.
-  # Per-URL failures are caught inside FDP.ping and logged without aborting the run.
-  get "/fdp-index-proxy/ping" do
-    FDP.ping
+  get "/fdp-index-proxy/ping" do  # called by a cron on a daily basis
+    Thread.new { FDP.ping }  # run in background so the cron curl gets an immediate response
     status 200
+    "pong"
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
