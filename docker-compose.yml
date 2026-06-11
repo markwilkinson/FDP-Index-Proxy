@@ -1,7 +1,7 @@
 services:
 
   fdpindexproxy:
-    image: markw/fdp-index-proxy:0.0.9
+    image: markw/fdp-index-proxy:0.9.0
     restart: always
     ports:
       - 4000:4567
@@ -14,3 +14,8 @@ services:
       - $PWD/cache:/server/cache
     security_opt:
       - apparmor:unconfined
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
