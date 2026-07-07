@@ -7,6 +7,94 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-07-07
+
+### Fixed
+- The v0.10.0 percent-encoding fix for `clientUrl` (`URI.encode_www_form_component`)
+  changed the exact byte string of every already-registered entry's `clientUrl`
+  (raw/unencoded before, percent-encoded after). Since the FDP Index matches
+  `clientUrl` by **exact string** (`findByClientUrl`), every pre-existing
+  registration was silently orphaned the moment this proxy started sending the
+  new encoded form on its daily ping — the Index no longer recognised the
+  incoming ping as belonging to the existing entry, so `lastRetrievalTime`
+  stopped advancing for it and it eventually flipped to Inactive. Confirmed in
+  production: an entry registered 2026-05-13 stopped receiving automated
+  `IncomingPing`/`MetadataRetrieval` events after this proxy's encoding fix
+  went live, despite the daily cron demonstrably still running.
+- Separately, live logs showed the Index's own HTTP client re-encoding an
+  already-percent-encoded `url` query value on (at least) one of its internal
+  request paths, doubly mangling it (`%3A` → `%253A`) and getting rejected by
+  this proxy's own validation — a second, independent failure mode layered on
+  top of the same root cause: embedding an encoded URL in the `clientUrl`
+  query string is fragile against any encode/decode assumption mismatch
+  between this proxy and the Index.
+
+### Changed
+- `FDP.call_fdp_index` now registers `clientUrl` as
+  `.../fdp-index-proxy/proxy?id=<sha256(address)>` — an opaque SHA-256 hex
+  digest of the source address — instead of embedding the (encoded) address
+  itself. A hex digest has no characters that ever need escaping, so it can't
+  be corrupted by any encode/decode step on either side, and it depends only
+  on the source address, not on this proxy's escaping logic — so it can never
+  again drift out of sync with a previously-registered Index entry the way
+  the v0.10.0 encoding change did.
+- `GET /fdp-index-proxy/proxy` now accepts `id=<sha256 hex>` (preferred,
+  resolved against the on-disk registry via new `FDP.address_for_id`) and
+  still accepts the legacy `url=<address>` form, so already-registered
+  clientUrls continue to resolve until they're naturally replaced.
+- `openapi.yaml` updated: `id` and `url` are now both optional query
+  parameters on `GET /fdp-index-proxy/proxy` (exactly one required at the
+  application level).
+
+**Migration note:** entries registered before this release (any entry whose
+Index-side `clientUrl` still contains `?url=...`) are orphaned regardless —
+they stopped receiving automated retrievals as soon as v0.10.0 shipped. They
+won't self-heal; re-run `FDP.ping` (or `GET /fdp-index-proxy/ping`) to
+re-register them under the new `?id=...` form, and manually remove the stale
+duplicate entries left behind in the Index admin UI.
+
+### Added
+- First real spec suite for this project (`spec/fdp_spec.rb`,
+  `spec/routes_helpers_spec.rb`; `spec/spec_helper.rb` now actually loads the
+  app and resets `FDP`'s cache/registry class variables between examples).
+  Covers: `FDP.address_for_id` registry lookups; `FDP.call_fdp_index`
+  producing an id-based `clientUrl` that never contains the source address
+  (including addresses with their own query string — the case that motivated
+  the original, broken encoding fix); the cache-preservation-on-failed-rebuild
+  regression from v0.10.0; and the `id`/`url` query-parameter validators used
+  by `GET /fdp-index-proxy/proxy`. All outbound HTTP (`RestClient::Request`)
+  is stubbed — no real network calls or writes to the tracked
+  `cache/registry.json`.
+- `.rubocop.yml`: excluded `spec/**/*` from `Metrics/BlockLength` (standard
+  RSpec convention — example groups routinely exceed the default block-length
+  limit).
+
+## [0.10.0] - 2026-07-03
+
+### Fixed
+- `FDP.call_fdp_index` interpolated the source `address` raw into the
+  `clientUrl` query string with no escaping. Any source URL containing its
+  own query string (`&`, `=`, `#`, `+`, spaces) corrupted the round trip: the
+  FDP Index's callback `GET /fdp-index-proxy/proxy?url=...` would receive a
+  truncated `url` param that no longer matched the SHA-256 cache key computed
+  at registration time, forcing a rebuild against a truncated (possibly
+  non-resolving) URL. Now uses `URI.encode_www_form_component(address)`.
+- `FDP#initialize` ran `cache_store` unconditionally even when the origin
+  fetch failed or returned unparseable content, silently overwriting a
+  previously-cached good graph with an empty one under the same key (the
+  next Index callback would then see an empty Turtle body and flip the
+  record to `Invalid`). `cache_store` is now skipped whenever `@graph` is
+  empty or `@toptype` could not be resolved, preserving the last good cached
+  graph; the URL is still added to the registry either way so cron keeps
+  retrying it.
+
+### Changed
+- Corrected `FDP.ping`'s docstring, which claimed the refresh was "intended
+  to be triggered weekly" — the actual configured cron (Dockerfile,
+  `cron instructions`) has always been daily (`0 0 * * *`).
+- Filled in the previously-empty `cron instructions` file with the actual
+  cron schedule and process/replica-count notes.
+
 ## [0.9.0] - 2026-05-29
 
 ### Changed

@@ -10,7 +10,8 @@ require_relative "../../lib/fdp"
 #
 #   GET  /fdp-index-proxy                → OpenAPI 3 specification (YAML)
 #   GET  /fdp-index-proxy/openapi.yaml   → OpenAPI 3 specification (YAML)
-#   GET  /fdp-index-proxy/proxy?url=<u>  → serve enriched RDF graph (FDP Index → proxy)
+#   GET  /fdp-index-proxy/proxy?id=<h>   → serve enriched RDF graph (FDP Index → proxy)
+#   GET  /fdp-index-proxy/proxy?url=<u>  → same, legacy form (pre-0.11.0 registrations)
 #   POST /fdp-index-proxy/proxy          → register a DCAT URL (publisher → proxy)
 #   GET  /fdp-index-proxy/ping           → refresh all registered proxies (cron)
 #
@@ -54,27 +55,47 @@ def set_routes
 
   # ------------------------------------------ GET /proxy  (FDP Index → proxy)
   # Called by the FDP Index when it dereferences a registered proxy URL.
-  # +url+ is the original source DCAT URL supplied at registration time.
+  # +id+ (a SHA-256 hex digest of the source URL) is the current, preferred
+  # form — it's what {FDP.call_fdp_index} now registers, since it never needs
+  # escaping and can't be corrupted by re-encoding on the Index's side.
+  # +url+ (the raw/percent-encoded source URL) is accepted as a legacy
+  # fallback for any already-registered clientUrl still using the old form.
   #
   # Flow:
-  # 1. Validate the url parameter is a well-formed http/https URL.
+  # 1. Resolve the source address from +id+ or +url+.
   # 2. Look up the enriched graph in the in-process cache.
   # 3. On a miss, rebuild by creating a new FDP object (re-fetch + re-enrich).
   # 4. Negotiate content type and return the graph as Turtle or JSON-LD.
   get "/fdp-index-proxy/proxy" do
-    halt 400 unless params[:url]
-    unless valid_proxy_url?(params[:url])
-      warn "Rejected invalid proxy URL: #{params[:url].inspect}"
-      halt 400, "url must be a valid http or https URL"
-    end
+    address =
+      if params[:id]
+        unless valid_proxy_id?(params[:id])
+          warn "Rejected malformed id: #{params[:id].inspect}"
+          halt 400, "id must be a 64-character SHA-256 hex digest"
+        end
+        found = FDP.address_for_id(params[:id])
+        unless found
+          warn "Unknown id: #{params[:id].inspect}"
+          halt 400, "id not found in registry"
+        end
+        found
+      elsif params[:url]
+        unless valid_proxy_url?(params[:url])
+          warn "Rejected invalid proxy URL: #{params[:url].inspect}"
+          halt 400, "url must be a valid http or https URL"
+        end
+        params[:url]
+      else
+        halt 400, "id or url parameter required"
+      end
 
-    graph = FDP.load_graph_from_cache(url: params[:url])
+    graph = FDP.load_graph_from_cache(url: address)
 
     unless graph
       # Cache miss — rebuild from source (also re-caches via FDP.new).
-      warn "Graph not found in cache for #{params[:url]}, attempting to rebuild"
-      FDP.new(address: params[:url])
-      graph = FDP.load_graph_from_cache(url: params[:url])
+      warn "Graph not found in cache for #{address}, attempting to rebuild"
+      FDP.new(address: address)
+      graph = FDP.load_graph_from_cache(url: address)
       halt 400 unless graph
     end
 
@@ -142,6 +163,16 @@ def valid_proxy_url?(url)
   !uri.host.nil? && uri.host.match?(/\A[a-zA-Z0-9]([a-zA-Z0-9\-.]*[a-zA-Z0-9])?\z/)
 rescue URI::InvalidURIError
   false
+end
+
+# Returns +true+ only if +id+ looks like a SHA-256 hex digest (64 lowercase
+# hex characters), as produced by {FDP.call_fdp_index} for the +id+ query
+# parameter.
+#
+# @param id [String] the candidate id
+# @return [Boolean]
+def valid_proxy_id?(id)
+  id.is_a?(String) && id.match?(/\A[a-f0-9]{64}\z/)
 end
 
 # Serialises +graph+ in the best format accepted by the client.

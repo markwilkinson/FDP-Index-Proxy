@@ -61,7 +61,8 @@ paths:
       tags: [proxy]
       description: |
         Called by the FDP Index to dereference a registered proxy URL.  Returns
-        the enriched RDF graph for the source DCAT record identified by `url`.
+        the enriched RDF graph for the source DCAT record identified by `id`
+        (preferred) or `url` (legacy).
 
         If the graph is not in the in-process cache (e.g. after a service
         restart), the proxy will automatically re-fetch and re-enrich the source
@@ -71,10 +72,24 @@ paths:
         `Accept: application/ld+json`.  Defaults to Turtle when no preference is
         expressed, since the FDP Index always accepts it.
       parameters:
+        - name: id
+          in: query
+          required: false
+          description: |
+            SHA-256 hex digest of the original source DCAT URL, as registered
+            in the clientUrl POSTed to the FDP Index. Preferred over `url`
+            since it never needs escaping and can't be corrupted by
+            re-encoding. Exactly one of `id` or `url` must be supplied.
+          schema:
+            type: string
+            pattern: '^[a-f0-9]{64}$'
+          example: "3a7bd3e2360a3d29eea436fcfb7e44c735d117c42d1c1835420b6b9942dd4f1"
         - name: url
           in: query
-          required: true
-          description: The original source DCAT URL that was supplied at registration time.
+          required: false
+          description: |
+            Legacy form: the original source DCAT URL that was supplied at
+            registration time. Exactly one of `id` or `url` must be supplied.
           schema:
             type: string
             format: uri
@@ -104,8 +119,8 @@ paths:
                   type: object
         "400":
           description: |
-            Missing or invalid `url` parameter, or the source record could not
-            be fetched and enriched.
+            Missing or invalid `id`/`url` parameter, or the source record
+            could not be fetched and enriched.
           content:
             text/plain:
               schema:

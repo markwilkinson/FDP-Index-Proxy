@@ -39,6 +39,10 @@ class FDP
   attr_accessor :graph, :address, :called, :toptype, :suffix
 
   # @!visibility private
+  # NOTE: process-local, not shared across workers/replicas. Current deployment
+  # (docker-compose.yml) runs a single container/single WEBrick process, so
+  # this is safe today; if that ever changes to multiple processes/replicas,
+  # this needs a shared store (e.g. Redis/Mongo, or a properly-locked file).
   @@cache = {}         # { sha256 => { graph: RDF::Graph, cached_at: Time } }
   # @!visibility private
   @@url_registry = [] # original DCAT URLs; persisted to REGISTRY_PATH for ping
@@ -81,7 +85,21 @@ class FDP
     iterate_dcat_record      # step 2 — determine resource type, traverse hierarchy
     warn "going into post process with", toptype
     post_process             # step 3 — inject FDP-required triples
-    cache_store              # step 4 — store enriched graph in memory
+
+    # A failed/unparseable origin fetch leaves @graph empty and @toptype nil.
+    # Don't let that silently overwrite a previously-cached good graph under
+    # the same key — skip the cache write and keep serving the last good one.
+    # Still register the URL either way, so a failed *first* build doesn't
+    # drop the address from the registry and stop future cron pings from
+    # retrying it.
+    if @graph.empty? || @toptype.nil?
+      warn "SKIPPING CACHE STORE for #{@address}: empty graph or unresolved " \
+           "toptype after build (origin fetch likely failed) — preserving " \
+           "any previously cached graph"
+      self.class.register_url(@address)
+    else
+      cache_store             # step 4 — store enriched graph in memory
+    end
   end
 
   # Fetches +address+ via HTTP and merges its statements into {#graph}.
@@ -549,8 +567,9 @@ class FDP
   end
 
   # Re-fetches, re-enriches, and re-registers every URL in the registry with the
-  # FDP Index.  Intended to be triggered weekly by an external cron so that the
-  # Index always holds up-to-date metadata.
+  # FDP Index.  Triggered daily by an external cron (see +/etc/cron.d/daily-ping+
+  # in the Dockerfile, and +cron instructions+) so that the Index always holds
+  # up-to-date metadata.
   #
   # On a cold start (empty +@@url_registry+), reads {REGISTRY_PATH} from disk
   # before processing begins, so the ping survives process restarts.  Errors for
@@ -580,11 +599,40 @@ class FDP
     end
   end
 
+  # Looks up the original source URL for a given SHA-256 hex digest, by
+  # scanning {@@url_registry}. Used by +GET /fdp-index-proxy/proxy+ to resolve
+  # the +id+ query parameter back to a real address.
+  #
+  # @param id [String] SHA-256 hex digest of a registered source URL
+  # @return [String, nil] the matching source URL, or +nil+ if none found
+  def self.address_for_id(id)
+    if @@url_registry.empty? && File.exist?(REGISTRY_PATH)
+      begin
+        @@url_registry = JSON.parse(File.read(REGISTRY_PATH))
+      rescue JSON::ParserError => e
+        warn "Could not parse URL registry: #{e.message}"
+      end
+    end
+
+    @@url_registry.find { |url| Digest::SHA256.hexdigest(url) == id }
+  end
+
   # POSTs the proxy URL for +address+ to the configured FDP Index, telling the
   # Index to dereference this proxy when it wants the enriched graph.
   #
   # The proxy URL takes the form:
-  #   <FDP_PROXY_METHOD>://<FDP_PROXY_HOST>/fdp-index-proxy/proxy?url=<address>
+  #   <FDP_PROXY_METHOD>://<FDP_PROXY_HOST>/fdp-index-proxy/proxy?id=<sha256(address)>
+  #
+  # An opaque SHA-256 digest is used instead of embedding +address+ itself so
+  # that the clientUrl never needs escaping and can't be corrupted by any
+  # encode/decode step on the Index's side (the Index's own HTTP client was
+  # observed re-encoding an already-percent-encoded `url` param, doubly
+  # mangling it — a hex digest has no characters that need encoding at all,
+  # so this class of bug can't recur). It also means the clientUrl string
+  # depends only on the source address, not on this proxy's escaping logic —
+  # so it stays byte-for-byte stable across future code changes here, and
+  # never again silently orphans a previously-registered Index entry the way
+  # switching to percent-encoding once did.
   #
   # Required environment variables: +FDP_INDEX+, +FDP_PROXY_HOST+,
   # +FDP_PROXY_METHOD+.
@@ -598,7 +646,8 @@ class FDP
 
     proxyhost = ENV["FDP_PROXY_HOST"].dup
     proxyhost.gsub!(%r{/+$}, "")  # strip any trailing slashes
-    proxied_address = "#{method}://#{proxyhost}/fdp-index-proxy/proxy?url=#{address}"
+    id = Digest::SHA256.hexdigest(address)
+    proxied_address = "#{method}://#{proxyhost}/fdp-index-proxy/proxy?id=#{id}"
 
     warn "calling FDP index at #{index} with #{proxied_address}"
     begin

@@ -1,0 +1,18 @@
+Cron is configured inside the Docker image itself (Dockerfile), not on the host:
+
+    0 0 * * * curl http://localhost:4567/fdp-index-proxy/ping >> /var/log/cron.log 2>&1
+
+i.e. daily at 00:00, inside the container. `entrypoint.sh` starts the `cron`
+daemon and tails `/var/log/cron.log` alongside the main Ruby/Sinatra process
+in the same container.
+
+`GET /fdp-index-proxy/ping` (application/controllers/routes.rb) runs
+`FDP.ping` in a background thread and returns "pong" immediately, so the curl
+call itself always succeeds even if the refresh takes a while. `FDP.ping`
+evicts each registered URL's cache entry, rebuilds it (`FDP.new`), and
+re-POSTs it to the FDP Index (`FDP.call_fdp_index`).
+
+Deployment is single-container / single-process (see docker-compose.yml — no
+replica scaling), so the in-process `@@cache` / `@@url_registry` class
+variables in lib/fdp.rb are safe as-is. If this is ever scaled to multiple
+replicas, that assumption breaks and needs revisiting.
