@@ -1,0 +1,83 @@
+[
+  {
+    "uuid": "0b2775f7-e0aa-4423-8656-bc82be19b0b0",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https://beta.services.openaire.eu/osTrails/tests/I1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-05-24T00:00:17.443Z",
+    "modificationTime": "2026-06-27T00:01:51.393Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/I1_data"
+  },
+  {
+    "uuid": "38d50af6-98f6-4a2c-a74a-4d6d93508a23",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=http://88.197.87.183:65192/osTrails/tests/F1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-05-25T09:22:26.969Z",
+    "modificationTime": "2026-07-07T12:06:23.718Z",
+    "address": "http://88.197.87.183:65192/osTrails/tests/F1_data"
+  },
+  {
+    "uuid": "617c80e0-9ee5-4a94-9c6c-ce5dd9e72f41",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https://beta.services.openaire.eu/osTrails/tests/F1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-06-16T11:56:33.324Z",
+    "modificationTime": "2026-06-27T00:02:18.786Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/F1_data"
+  },
+  {
+    "uuid": "de8ccfb1-e1e8-4e6a-b3a2-976704889eee",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fbeta.services.openaire.eu%2FosTrails%2Ftests%2FI1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:17.591Z",
+    "modificationTime": "2026-07-07T08:57:17.591Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/I1_data"
+  },
+  {
+    "uuid": "6e431760-6a4b-41fe-86fe-677efd36b526",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=http%3A%2F%2F88.197.87.183%3A65192%2FosTrails%2Ftests%2FF1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:18.035Z",
+    "modificationTime": "2026-07-07T08:57:18.035Z",
+    "address": "http://88.197.87.183:65192/osTrails/tests/F1_data"
+  },
+  {
+    "uuid": "e7e38d1f-5b46-4aa8-af16-97189299e4f5",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fbeta.services.openaire.eu%2FosTrails%2Ftests%2FF1_data",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:41.756Z",
+    "modificationTime": "2026-07-07T08:57:41.756Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/F1_data"
+  },
+  {
+    "uuid": "f951b50b-d33c-4e4e-90b1-9ee6b56a5142",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?id=dbbb177b0aeb343eea8f20411c30e320f2fca414ca18f7b7af51a22ecac16aed",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T09:08:02.355Z",
+    "modificationTime": "2026-07-07T09:08:02.355Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/I1_data"
+  },
+  {
+    "uuid": "8f59572d-a8ea-4a5d-99ff-3ee6df3f7eb6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?id=1d50ea099fa8b860f0210b478c9b9096e837e101e9553370db778e955f41f0df",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T09:08:02.754Z",
+    "modificationTime": "2026-07-07T09:08:02.754Z",
+    "address": "http://88.197.87.183:65192/osTrails/tests/F1_data"
+  },
+  {
+    "uuid": "49b31e5b-90bf-4e46-b1b7-ba246a119075",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?id=54ecd4f9a192fe8d2ff9b238ec36c42d098870294a1041b0e261da0723bd9a57",
+    "state": "INVALID",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T09:08:27.083Z",
+    "modificationTime": "2026-07-07T12:06:02.079Z",
+    "address": "https://beta.services.openaire.eu/osTrails/tests/F1_data"
+  }
+]
