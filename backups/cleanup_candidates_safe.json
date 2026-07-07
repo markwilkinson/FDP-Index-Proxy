@@ -1,0 +1,1742 @@
+[
+  {
+    "uuid": "edd2d7bd-e6c5-4588-a0d7-38c39e56b0a5",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-07-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:20.698Z",
+    "modificationTime": "2026-07-07T08:55:30.959Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-07-1",
+    "replacement_uuid": "bf92ef86-87b8-42f4-88ef-c2a6d7b6b86f"
+  },
+  {
+    "uuid": "8c420c73-b206-4788-a074-fdcb3a22ad21",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-08-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:22.313Z",
+    "modificationTime": "2026-07-07T08:55:52.973Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-08-1",
+    "replacement_uuid": "26fe9002-ba36-475d-b063-3506c12a6266"
+  },
+  {
+    "uuid": "9fb46450-0dab-4eb3-ae6e-dcc0cfd568d6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:49.122Z",
+    "modificationTime": "2026-07-07T08:55:34.220Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-1",
+    "replacement_uuid": "54f9c713-9220-4ad9-9731-2e918d97e220"
+  },
+  {
+    "uuid": "91e93aee-43f8-4283-8fca-cdb952d27ee4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-18-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:56.398Z",
+    "modificationTime": "2026-07-07T08:55:56.320Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-18-1",
+    "replacement_uuid": "5f25f906-45e1-4194-b119-5946e9429427"
+  },
+  {
+    "uuid": "db619cda-b442-4611-9c7d-3765a700d33f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-16-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:57.430Z",
+    "modificationTime": "2026-07-07T08:55:57.986Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-16-1",
+    "replacement_uuid": "2dd1c3e5-80b7-4d27-bb13-ec069b4c0261"
+  },
+  {
+    "uuid": "44423ee6-b057-41af-9d9c-683d72553fa6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM5.2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-03-15T00:00:59.240Z",
+    "modificationTime": "2026-07-07T08:55:17.883Z",
+    "address": "https://w3id.org/foops/test/OM5.2",
+    "replacement_uuid": "08070a6d-766e-4561-8a87-b9d70d7c4af5"
+  },
+  {
+    "uuid": "40cb42f4-3673-4706-89b1-ec2bb5977667",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_F3_M_DataIdent",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T06:52:53.127Z",
+    "modificationTime": "2026-07-07T08:54:57.935Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_F3_M_DataIdent",
+    "replacement_uuid": "87d6284c-1861-4c90-8762-051242eda562"
+  },
+  {
+    "uuid": "1b1150b8-3775-49cc-8e32-e32a25decee1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_data_identifier_in_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:54:58.458Z",
+    "modificationTime": "2026-07-07T08:54:58.458Z",
+    "address": "https://tests.ostrails.eu/tests/fc_data_identifier_in_metadata",
+    "replacement_uuid": "f9c7abe6-dc4c-493a-9c45-30707746168a"
+  },
+  {
+    "uuid": "99fb88c8-fdcd-42e7-86e1-b086e78db073",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_data_kr_language_strong",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:54:59.008Z",
+    "modificationTime": "2026-07-07T08:54:59.008Z",
+    "address": "https://tests.ostrails.eu/tests/fc_data_kr_language_strong",
+    "replacement_uuid": "945f038b-2b53-4c02-aeec-5aa048fd0771"
+  },
+  {
+    "uuid": "356e0b84-9ef1-4b4b-b602-2c24d3e06c98",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_data_protocol",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:54:59.614Z",
+    "modificationTime": "2026-07-07T08:54:59.614Z",
+    "address": "https://tests.ostrails.eu/tests/fc_data_protocol",
+    "replacement_uuid": "a0cc2411-6b1e-4df6-b5ba-1e7e83b34fb1"
+  },
+  {
+    "uuid": "5783985b-3f77-4913-b4f8-11dc5dff9514",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_grounded_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:00.125Z",
+    "modificationTime": "2026-07-07T08:55:00.125Z",
+    "address": "https://tests.ostrails.eu/tests/fc_grounded_metadata",
+    "replacement_uuid": "894202f4-aea3-487b-bcdd-3f95cfaa05f5"
+  },
+  {
+    "uuid": "b8507d87-08bc-46df-8f03-9e60c5770a59",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_authorization",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:00.646Z",
+    "modificationTime": "2026-07-07T08:55:00.646Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_authorization",
+    "replacement_uuid": "b10c0246-8c46-42e3-87a2-f0a1a40c127a"
+  },
+  {
+    "uuid": "0ba25111-5dd2-4770-844a-36a21aa3e779",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_includes_license",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:01.168Z",
+    "modificationTime": "2026-07-07T08:55:01.168Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_includes_license",
+    "replacement_uuid": "258ab1a3-b240-444d-83ae-f6e9775bc808"
+  },
+  {
+    "uuid": "714a7f8f-8405-4752-8fcd-5ea682ab90c0",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_includes_license_weak",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:01.722Z",
+    "modificationTime": "2026-07-07T08:55:01.722Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_includes_license_weak",
+    "replacement_uuid": "35b88be8-d73d-4e20-af72-ab044d4881cb"
+  },
+  {
+    "uuid": "0c9e2f42-aa8c-4cc7-899f-6d54c788c9c6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_kr_language_strong",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:02.238Z",
+    "modificationTime": "2026-07-07T08:55:02.238Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_kr_language_strong",
+    "replacement_uuid": "8daed581-8efd-4e7f-aad8-09ff8d30139c"
+  },
+  {
+    "uuid": "2175407a-476a-4880-885d-8f4c70b4be25",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_kr_language_weak",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:02.769Z",
+    "modificationTime": "2026-07-07T08:55:02.769Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_kr_language_weak",
+    "replacement_uuid": "5c572d57-d3a5-427d-9c8f-d4fd888aee31"
+  },
+  {
+    "uuid": "be1ed84d-c1fb-4f23-b2dd-a95d6c8c7312",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_outward_links",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:03.310Z",
+    "modificationTime": "2026-07-07T08:55:03.310Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_outward_links",
+    "replacement_uuid": "71ad2dcb-66eb-447b-b3ef-1db427fc165e"
+  },
+  {
+    "uuid": "f8d9b4f8-2962-4674-aa2d-dc015b77058f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_persistence",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:03.934Z",
+    "modificationTime": "2026-07-07T08:55:03.934Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_persistence",
+    "replacement_uuid": "1e272bbf-92c4-4a9e-8cdf-1b6b11116366"
+  },
+  {
+    "uuid": "97113c05-3c94-475e-80bb-8263a6c39718",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_protocol",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:04.679Z",
+    "modificationTime": "2026-07-07T08:55:04.679Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_protocol",
+    "replacement_uuid": "8c83797b-757f-498f-bca7-71117a296aa6"
+  },
+  {
+    "uuid": "2727d2b6-0260-45d8-86de-48cea018e65c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_uses_fair_vocabularies",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:05.188Z",
+    "modificationTime": "2026-07-07T08:55:05.188Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_uses_fair_vocabularies",
+    "replacement_uuid": "c459f95b-9e5e-4d65-ba9b-24452f2f683e"
+  },
+  {
+    "uuid": "2a71573b-7709-4e81-84c0-26b7df5ed6b8",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_searchable",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:06.201Z",
+    "modificationTime": "2026-07-07T08:55:06.201Z",
+    "address": "https://tests.ostrails.eu/tests/fc_searchable",
+    "replacement_uuid": "987e86ae-6ca9-4513-83e6-dc540df0f73d"
+  },
+  {
+    "uuid": "a455ab49-c7a4-42a9-acf3-7564173cdeae",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_structured_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:06.693Z",
+    "modificationTime": "2026-07-07T08:55:06.693Z",
+    "address": "https://tests.ostrails.eu/tests/fc_structured_metadata",
+    "replacement_uuid": "7082503a-3d0f-4298-920b-a035d6e8f863"
+  },
+  {
+    "uuid": "32018de1-de97-4aef-8c6a-c450f0424891",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_unique_identifier",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:08.187Z",
+    "modificationTime": "2026-07-07T08:55:08.187Z",
+    "address": "https://tests.ostrails.eu/tests/fc_unique_identifier",
+    "replacement_uuid": "1b91e8c9-0589-4a5c-a949-ac53cf741980"
+  },
+  {
+    "uuid": "ea3e9a99-d470-4e9a-8f8f-08b9518bc05f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:09.062Z",
+    "modificationTime": "2026-07-07T08:55:09.062Z",
+    "address": "https://w3id.org/foops/test/OM1",
+    "replacement_uuid": "267354e4-7f4f-4697-a996-ba32f37f11d3"
+  },
+  {
+    "uuid": "9565f207-5492-4a47-93cd-df8ca0885224",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FPURL1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:09.948Z",
+    "modificationTime": "2026-07-07T08:55:09.948Z",
+    "address": "https://w3id.org/foops/test/PURL1",
+    "replacement_uuid": "e9455fc5-51ca-417a-b83b-237c364858e5"
+  },
+  {
+    "uuid": "46f6eafa-9239-4461-825e-0aaa2c680e13",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FHTTP1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:10.771Z",
+    "modificationTime": "2026-07-07T08:55:10.771Z",
+    "address": "https://w3id.org/foops/test/HTTP1",
+    "replacement_uuid": "077da6b8-e102-45fa-b9c1-eaf4d8906c2d"
+  },
+  {
+    "uuid": "d754ee11-af93-4b1f-b184-6494b7002fc7",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVER1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:11.562Z",
+    "modificationTime": "2026-07-07T08:55:11.562Z",
+    "address": "https://w3id.org/foops/test/VER1",
+    "replacement_uuid": "ec2a8513-26ad-409d-9ea3-ffacbbb1ec11"
+  },
+  {
+    "uuid": "b464b3ff-7152-471c-a9b1-6699d5cba773",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FURI1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:12.599Z",
+    "modificationTime": "2026-07-07T08:55:12.599Z",
+    "address": "https://w3id.org/foops/test/URI1",
+    "replacement_uuid": "531d5b47-003f-483c-b352-716e2f63e0c6"
+  },
+  {
+    "uuid": "abc3f0d6-9cdb-46e0-81ca-462c23ab30c4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM4.1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:13.401Z",
+    "modificationTime": "2026-07-07T08:55:13.401Z",
+    "address": "https://w3id.org/foops/test/OM4.1",
+    "replacement_uuid": "a85468c2-5f1d-4bdb-b9d4-3ddb56e0e24f"
+  },
+  {
+    "uuid": "1fbd832e-faa7-4ad8-8feb-b97e96d482c2",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVOC1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:14.298Z",
+    "modificationTime": "2026-07-07T08:55:14.298Z",
+    "address": "https://w3id.org/foops/test/VOC1",
+    "replacement_uuid": "f518501f-2df6-4497-9e33-ceb63474f932"
+  },
+  {
+    "uuid": "6743e397-f525-4e2d-a6f3-a2e64e7b26ec",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FFIND2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:15.163Z",
+    "modificationTime": "2026-07-07T08:55:15.163Z",
+    "address": "https://w3id.org/foops/test/FIND2",
+    "replacement_uuid": "d589ea3d-603a-4c57-bd28-2977c93b6117"
+  },
+  {
+    "uuid": "7273df40-7c8b-4f3a-8916-43e672db3534",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FFIND3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:15.967Z",
+    "modificationTime": "2026-07-07T08:55:15.967Z",
+    "address": "https://w3id.org/foops/test/FIND3",
+    "replacement_uuid": "4d47c8f7-6116-496e-974c-29226b141e0a"
+  },
+  {
+    "uuid": "106b2017-9e7c-4ef9-8da6-67650fdc13be",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FRDF1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:16.761Z",
+    "modificationTime": "2026-07-07T08:55:16.761Z",
+    "address": "https://w3id.org/foops/test/RDF1",
+    "replacement_uuid": "038b2c5f-9313-4f65-95d9-a1823460125c"
+  },
+  {
+    "uuid": "cc31e35a-c8ff-4ea9-b614-e5b6af5b478e",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FDOC1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:18.739Z",
+    "modificationTime": "2026-07-07T08:55:18.739Z",
+    "address": "https://w3id.org/foops/test/DOC1",
+    "replacement_uuid": "23766b27-a964-4f0b-97b8-91c0a3857ff5"
+  },
+  {
+    "uuid": "62b2811b-876c-4977-86dc-a403cb3abcfc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:19.545Z",
+    "modificationTime": "2026-07-07T08:55:19.545Z",
+    "address": "https://w3id.org/foops/test/OM2",
+    "replacement_uuid": "87d26d5b-01f1-43da-93b2-a93d2a36e42e"
+  },
+  {
+    "uuid": "3020fa1f-556b-4a78-b2dc-90f70ff2209e",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FCN1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:20.365Z",
+    "modificationTime": "2026-07-07T08:55:20.365Z",
+    "address": "https://w3id.org/foops/test/CN1",
+    "replacement_uuid": "fec80c49-11fd-4870-811e-c17a6ea23c88"
+  },
+  {
+    "uuid": "64c761b4-d169-4f87-be43-1631c93984bf",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:21.192Z",
+    "modificationTime": "2026-07-07T08:55:21.192Z",
+    "address": "https://w3id.org/foops/test/OM3",
+    "replacement_uuid": "ea1ed4af-a63d-4dda-9f32-b3fce0c9b3d4"
+  },
+  {
+    "uuid": "258faa58-b75d-4966-b9c7-21914859cffb",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVER2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:22.012Z",
+    "modificationTime": "2026-07-07T08:55:22.012Z",
+    "address": "https://w3id.org/foops/test/VER2",
+    "replacement_uuid": "dff16562-59fe-4104-a7d4-16da272d7ae4"
+  },
+  {
+    "uuid": "c106c0df-c0f7-4061-956b-ca413d711d7f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVOC3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:22.831Z",
+    "modificationTime": "2026-07-07T08:55:22.831Z",
+    "address": "https://w3id.org/foops/test/VOC3",
+    "replacement_uuid": "694907af-aa48-4ac0-b054-9960718b6881"
+  },
+  {
+    "uuid": "5af89db3-8ac0-4245-853e-da3ccd6a0ef0",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVOC4",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:23.654Z",
+    "modificationTime": "2026-07-07T08:55:23.654Z",
+    "address": "https://w3id.org/foops/test/VOC4",
+    "replacement_uuid": "22b52451-54ef-48c7-ad27-2788f0695cd4"
+  },
+  {
+    "uuid": "a7983b0d-3950-4354-8489-5529272179b1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM4.2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:24.474Z",
+    "modificationTime": "2026-07-07T08:55:24.474Z",
+    "address": "https://w3id.org/foops/test/OM4.2",
+    "replacement_uuid": "a226570f-5695-4e4f-8de6-c8f0cd2d0021"
+  },
+  {
+    "uuid": "ddc2de20-454a-4b2c-b503-a61e70d5f187",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FURI2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:25.338Z",
+    "modificationTime": "2026-07-07T08:55:25.338Z",
+    "address": "https://w3id.org/foops/test/URI2",
+    "replacement_uuid": "16414ab8-da63-420a-b341-5543d5e3e382"
+  },
+  {
+    "uuid": "cee04429-83a2-433f-9049-99e232f9830c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FVOC2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:26.558Z",
+    "modificationTime": "2026-07-07T08:55:26.558Z",
+    "address": "https://w3id.org/foops/test/VOC2",
+    "replacement_uuid": "802dfd1b-b781-4c2f-b3d7-2a3bdcae6644"
+  },
+  {
+    "uuid": "c4355d37-a825-483b-9076-192342388ea5",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FFIND_3_BIS",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:27.437Z",
+    "modificationTime": "2026-07-07T08:55:27.437Z",
+    "address": "https://w3id.org/foops/test/FIND_3_BIS",
+    "replacement_uuid": "75f4acfb-a766-4fce-88f6-267640bcb314"
+  },
+  {
+    "uuid": "80bdf00d-c47b-42dc-b590-7b69dcbdf710",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FFIND1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:28.248Z",
+    "modificationTime": "2026-07-07T08:55:28.248Z",
+    "address": "https://w3id.org/foops/test/FIND1",
+    "replacement_uuid": "98d878e8-cb1f-4a57-9268-63dfea85718d"
+  },
+  {
+    "uuid": "97cb5411-f759-4b9b-9921-7ecf4d50adbe",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Ffoops%2Ftest%2FOM5.1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:29.062Z",
+    "modificationTime": "2026-07-07T08:55:29.062Z",
+    "address": "https://w3id.org/foops/test/OM5.1",
+    "replacement_uuid": "27e8e9c1-2d2c-4096-8a61-4ef7b759e909"
+  },
+  {
+    "uuid": "56a97839-2e81-4c48-8abf-5c692abba2b6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-01-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:29.899Z",
+    "modificationTime": "2026-07-07T08:55:29.899Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-01-3",
+    "replacement_uuid": "12764a39-8c4e-4b51-af96-5c389fc9408f"
+  },
+  {
+    "uuid": "c5c31ac3-820e-41e0-b0eb-295cecaa89a9",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-05-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:31.778Z",
+    "modificationTime": "2026-07-07T08:55:31.778Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-05-2",
+    "replacement_uuid": "8b034a28-88e8-4907-82de-4c5fa83bb1d3"
+  },
+  {
+    "uuid": "46879f9a-dc31-454f-8b28-3f7b20eb0ff2",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-01-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:32.578Z",
+    "modificationTime": "2026-07-07T08:55:32.578Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-01-2",
+    "replacement_uuid": "95b1d908-4f10-4aa8-ac7a-167630e6b060"
+  },
+  {
+    "uuid": "2f0686b9-d3c1-4ede-9330-333290cf2cd6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-09-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:33.400Z",
+    "modificationTime": "2026-07-07T08:55:33.400Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-09-1",
+    "replacement_uuid": "0877e3e7-fe8e-4f03-a4c1-6d1a582db88e"
+  },
+  {
+    "uuid": "9b464fe7-ebc8-48ec-a2e0-2dbdcab6f516",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-05-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:35.150Z",
+    "modificationTime": "2026-07-07T08:55:35.150Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-05-3",
+    "replacement_uuid": "5bbd67c0-b600-409b-ba3b-521c7f5a67dc"
+  },
+  {
+    "uuid": "ef4bf05e-0b9c-4632-8c75-76442ff149b1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-19-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:35.981Z",
+    "modificationTime": "2026-07-07T08:55:35.981Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-19-1",
+    "replacement_uuid": "899a31e0-c073-4957-815a-b516ffd62292"
+  },
+  {
+    "uuid": "4d2575db-134f-450a-b8b9-72a023370687",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-13-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:36.807Z",
+    "modificationTime": "2026-07-07T08:55:36.807Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-13-1",
+    "replacement_uuid": "33da1a60-5e2e-4bd6-bc1b-8e903589466f"
+  },
+  {
+    "uuid": "0319024e-0261-4614-a161-ce5ce0824c3d",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-15-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:38.423Z",
+    "modificationTime": "2026-07-07T08:55:38.423Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-15-2",
+    "replacement_uuid": "c59c321d-33ae-4a4c-bb17-b2619b0186cf"
+  },
+  {
+    "uuid": "4ac4c49f-68c3-485c-9a43-1ae3f5e63905",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-04-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:40.283Z",
+    "modificationTime": "2026-07-07T08:55:40.283Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-04-1",
+    "replacement_uuid": "ddb066d4-030c-43ec-831c-e83a3c91299d"
+  },
+  {
+    "uuid": "70d0156c-7236-49cf-93a9-95d125280202",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-06-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:41.122Z",
+    "modificationTime": "2026-07-07T08:55:41.122Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-06-3",
+    "replacement_uuid": "447b966e-be38-4014-8774-23c6e416418c"
+  },
+  {
+    "uuid": "750a65b8-68a9-46d2-b7a4-58c6017e5026",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-07-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:41.961Z",
+    "modificationTime": "2026-07-07T08:55:41.961Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-07-2",
+    "replacement_uuid": "40e1061c-8735-43d6-ba41-5b4b292202f4"
+  },
+  {
+    "uuid": "195aed7c-1d3d-4335-a43a-05936bf8c0ae",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-05-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:42.784Z",
+    "modificationTime": "2026-07-07T08:55:42.784Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-05-1",
+    "replacement_uuid": "8b64eebb-cfdb-4c4d-9444-35d217284ccc"
+  },
+  {
+    "uuid": "5cc5c259-3d4f-43d9-8f3e-9368893e78bf",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-4",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:43.643Z",
+    "modificationTime": "2026-07-07T08:55:43.643Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-4",
+    "replacement_uuid": "c93d38db-b2eb-48e2-bea3-b180c3a2a3b6"
+  },
+  {
+    "uuid": "9909ff7b-6787-4160-917c-a11b8c8c645b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:44.525Z",
+    "modificationTime": "2026-07-07T08:55:44.525Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-3",
+    "replacement_uuid": "40cd438e-f6f1-4f98-bdaf-fcdf7d10bdb3"
+  },
+  {
+    "uuid": "5f7d6e5b-d023-477c-9667-7cdd27dc0905",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-01-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:45.404Z",
+    "modificationTime": "2026-07-07T08:55:45.404Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-01-1",
+    "replacement_uuid": "020a0606-398f-46fc-9f8c-43ea92bc9d74"
+  },
+  {
+    "uuid": "31b5257b-f8bd-4d7c-99ae-a44cc5fe17af",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-5",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:46.245Z",
+    "modificationTime": "2026-07-07T08:55:46.245Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-5",
+    "replacement_uuid": "7bfdd542-0516-4b6c-8bf7-316139298e0f"
+  },
+  {
+    "uuid": "643de729-ae96-4e56-a779-089b9a44b556",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-13-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:47.075Z",
+    "modificationTime": "2026-07-07T08:55:47.075Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-13-2",
+    "replacement_uuid": "8a13f350-4e02-4f5a-a229-10bb9092432d"
+  },
+  {
+    "uuid": "a8878224-007f-43f9-aa23-6ede996ca3b2",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-15-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:47.976Z",
+    "modificationTime": "2026-07-07T08:55:47.976Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-15-1",
+    "replacement_uuid": "ae276d0b-c12b-4877-9d00-b346711051a9"
+  },
+  {
+    "uuid": "0c029d0e-6c53-4520-95c6-bea6d2a2cb96",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-13-4",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:48.814Z",
+    "modificationTime": "2026-07-07T08:55:48.814Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-13-4",
+    "replacement_uuid": "c059b9ca-716c-4902-83c2-05e881c897b9"
+  },
+  {
+    "uuid": "40af378c-3d23-4437-bef4-1f91f4cf3066",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-13-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:49.640Z",
+    "modificationTime": "2026-07-07T08:55:49.640Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-13-3",
+    "replacement_uuid": "ca02ce3e-8d11-4e7b-af0f-ba89f29c585c"
+  },
+  {
+    "uuid": "2f57d573-a05b-425d-bf01-c4be5dfdf2a3",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-04-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:50.480Z",
+    "modificationTime": "2026-07-07T08:55:50.480Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-04-2",
+    "replacement_uuid": "b3043260-64d3-458c-804e-460f47fae883"
+  },
+  {
+    "uuid": "b61083d4-3bf1-4686-81c6-114e1cb12f85",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-04-5",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:51.317Z",
+    "modificationTime": "2026-07-07T08:55:51.317Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-04-5",
+    "replacement_uuid": "885aaa7b-1b5f-4272-8d28-ec85de241045"
+  },
+  {
+    "uuid": "02361dea-7ca5-4f9a-81c5-b13ffaa9be74",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-06-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:52.138Z",
+    "modificationTime": "2026-07-07T08:55:52.138Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-06-1",
+    "replacement_uuid": "8a7f9fca-33cd-4e72-8e72-11814e90e8cd"
+  },
+  {
+    "uuid": "c0c866c4-45a3-4cf5-90b3-4fc9472f8666",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-04-4",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:53.825Z",
+    "modificationTime": "2026-07-07T08:55:53.825Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-04-4",
+    "replacement_uuid": "53b25df7-2ff2-437b-88d5-a6b936e87409"
+  },
+  {
+    "uuid": "54acd534-b4bc-4a50-a2b9-46105d372d83",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-04-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:54.666Z",
+    "modificationTime": "2026-07-07T08:55:54.666Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-04-3",
+    "replacement_uuid": "0aba53d5-8d8f-42f4-909a-7333f069c9ea"
+  },
+  {
+    "uuid": "11641e21-cdf7-44b7-adfb-d8a888617be4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-12-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:55.499Z",
+    "modificationTime": "2026-07-07T08:55:55.499Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-12-1",
+    "replacement_uuid": "bc59ff28-30f9-4602-9c7b-f17add75d0c2"
+  },
+  {
+    "uuid": "dbb87d71-ee1f-4398-a802-fbd605f3f3a7",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-14-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:55:57.153Z",
+    "modificationTime": "2026-07-07T08:55:57.153Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-14-2",
+    "replacement_uuid": "a7b1e361-3207-4d21-a01c-d7c90e09a659"
+  },
+  {
+    "uuid": "99a8ab1a-3c54-44ad-8456-947ca549c32b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1GnUr6YiFaqGwoK2-RywnojlwGkgIsY7g1KR4eWCVdlM",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:00.548Z",
+    "modificationTime": "2026-07-07T08:56:00.548Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1GnUr6YiFaqGwoK2-RywnojlwGkgIsY7g1KR4eWCVdlM",
+    "replacement_uuid": "154db2df-f38b-4b0c-a5e7-98fb1d49ba79"
+  },
+  {
+    "uuid": "4bc21d92-7628-43f7-a29c-3c6ec3711afd",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fsandbox%2Fdataservice.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:01.453Z",
+    "modificationTime": "2026-07-07T08:56:01.453Z",
+    "address": "https://ostrails.github.io/sandbox/dataservice.ttl",
+    "replacement_uuid": "4bcde63d-5a29-4d5d-8d1d-e68365e7e146"
+  },
+  {
+    "uuid": "2e06c608-e9f7-463f-b51e-48deb2bd1967",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fsandbox%2Feprovide.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:01.927Z",
+    "modificationTime": "2026-07-07T08:56:01.927Z",
+    "address": "https://ostrails.github.io/sandbox/eprovide.ttl",
+    "replacement_uuid": "572984c3-057c-4b5f-a664-ef27f0a6abef"
+  },
+  {
+    "uuid": "4e85c0aa-1583-4c03-9447-4086b08e50a9",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFTARKTA2Preservation.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:02.875Z",
+    "modificationTime": "2026-07-07T08:56:02.875Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FTARKTA2Preservation.ttl",
+    "replacement_uuid": "b21a7cb5-7004-4f5b-bd17-4fbeb93fea01"
+  },
+  {
+    "uuid": "8360cbb5-bb62-4a7b-aaa7-c543f87d1102",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Falgorithm%2FFAIR_LS_ARK_Alg.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:03.342Z",
+    "modificationTime": "2026-07-07T08:56:03.342Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/algorithm/FAIR_LS_ARK_Alg.ttl",
+    "replacement_uuid": "0bef4045-ad63-43a0-83ca-31c929023f55"
+  },
+  {
+    "uuid": "c83648e3-3595-4fae-be1e-876c394dd842",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F16s2klErdtZck2b6i2Zp_PjrgpBBnnrBKaAvTwrnMB4w",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:05.699Z",
+    "modificationTime": "2026-07-07T08:56:05.699Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/16s2klErdtZck2b6i2Zp_PjrgpBBnnrBKaAvTwrnMB4w",
+    "replacement_uuid": "7de24602-9609-49a1-b1f4-7b11d35f6d91"
+  },
+  {
+    "uuid": "e2ae266e-beb9-43ac-9624-1b43e3ed6eac",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_license_information",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:06.309Z",
+    "modificationTime": "2026-07-07T08:56:06.309Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_license_information",
+    "replacement_uuid": "847c1176-2483-4cf0-9cef-df67fc770870"
+  },
+  {
+    "uuid": "4aab4271-1433-4cff-8360-ac444000b566",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-6",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:07.163Z",
+    "modificationTime": "2026-07-07T08:56:07.163Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-6",
+    "replacement_uuid": "afdd6c77-041b-477e-bdc2-48d3e3f85efe"
+  },
+  {
+    "uuid": "bcdef565-144a-4df0-8fb0-0eeec38d380f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-20-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:09.053Z",
+    "modificationTime": "2026-07-07T08:56:09.053Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-20-1",
+    "replacement_uuid": "f2b0599e-c3bd-4cf6-95eb-1e42e8c7ef27"
+  },
+  {
+    "uuid": "4512e541-0060-47a5-93a3-c22587f83c66",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-17-3",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:09.880Z",
+    "modificationTime": "2026-07-07T08:56:09.880Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-17-3",
+    "replacement_uuid": "e4a3eaf8-ba11-4b54-8259-3e0faf68140b"
+  },
+  {
+    "uuid": "56e7b594-df6d-4dae-b86e-99b76d3d5b97",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-17-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:10.714Z",
+    "modificationTime": "2026-07-07T08:56:10.714Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-17-2",
+    "replacement_uuid": "f99518f0-41ac-497c-9020-83bb6c2ccfff"
+  },
+  {
+    "uuid": "ab25f89c-0b5e-4864-b0ab-cfe595ba9653",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1-2_M_CPI.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:11.175Z",
+    "modificationTime": "2026-07-07T08:56:11.175Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1-2_M_CPI.ttl",
+    "replacement_uuid": "ccc572ab-78d8-4b8e-9f3a-75a1138a433f"
+  },
+  {
+    "uuid": "2e67c389-98cd-46c1-9389-22e6fa61d25c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_Gen2-MI-I2A_M_DTMV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:11.653Z",
+    "modificationTime": "2026-07-07T08:56:11.653Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_Gen2-MI-I2A_M_DTMV.ttl",
+    "replacement_uuid": "8be3ab79-ab72-4946-97e0-b5ab03844440"
+  },
+  {
+    "uuid": "bd4dd89b-8646-4b37-8223-b97a5360f25b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_Gen2-MI-I2A_M_DMOCV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:12.135Z",
+    "modificationTime": "2026-07-07T08:56:12.135Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_Gen2-MI-I2A_M_DMOCV.ttl",
+    "replacement_uuid": "51a4be2e-c1d7-43a8-8dcf-cf22bb2ee70a"
+  },
+  {
+    "uuid": "45249fd2-883b-475b-9008-dcd84568f9e3",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFM_Gen2-MI-I2A_M_DSPV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:12.605Z",
+    "modificationTime": "2026-07-07T08:56:12.605Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FM_Gen2-MI-I2A_M_DSPV.ttl",
+    "replacement_uuid": "55d4fc8f-7cf3-4baf-8fcf-8d1ef7dacefe"
+  },
+  {
+    "uuid": "e37a5ef5-598a-42c1-90ce-7a28c241ede6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_Gen2-MI-I2A_M_DAUV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:13.063Z",
+    "modificationTime": "2026-07-07T08:56:13.063Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_Gen2-MI-I2A_M_DAUV.ttl",
+    "replacement_uuid": "2dc8d3c9-4323-40aa-a821-54a372b8a27a"
+  },
+  {
+    "uuid": "511d3551-034b-4e6f-9a57-7a4c0bb28ccf",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_Gen2-MI-I2A_M_CTV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:13.531Z",
+    "modificationTime": "2026-07-07T08:56:13.531Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_Gen2-MI-I2A_M_CTV.ttl",
+    "replacement_uuid": "2463bd9c-d964-451e-a89d-a953ac561734"
+  },
+  {
+    "uuid": "293d9f9e-ccd8-47ce-96f5-861cb190104f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I2_M_CEK.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:13.991Z",
+    "modificationTime": "2026-07-07T08:56:13.991Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I2_M_CEK.ttl",
+    "replacement_uuid": "394bbc59-2303-4771-8f10-571fc3c8f339"
+  },
+  {
+    "uuid": "67219bec-6134-4f80-b3c5-f516a65249e4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFM_Gen2-MI-A1.2_M_CARV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:14.462Z",
+    "modificationTime": "2026-07-07T08:56:14.462Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FM_Gen2-MI-A1.2_M_CARV.ttl",
+    "replacement_uuid": "53524e98-f56d-4a5e-86ba-8561fc7e73b3"
+  },
+  {
+    "uuid": "55defe58-7df6-43b0-894e-2bb9e2ca1544",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT-F1-PID_M_CESSDA.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:14.920Z",
+    "modificationTime": "2026-07-07T08:56:14.920Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT-F1-PID_M_CESSDA.ttl",
+    "replacement_uuid": "6522ac50-c230-4d65-822e-eaebd83c132b"
+  },
+  {
+    "uuid": "101962fd-e91f-45a1-95ac-d3b9605f4abc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1Nk0vM4yBpVQTo_UbB62NY_fz93aRZRHBZGh5fG-khOw",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:20.401Z",
+    "modificationTime": "2026-07-07T08:56:20.401Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1Nk0vM4yBpVQTo_UbB62NY_fz93aRZRHBZGh5fG-khOw",
+    "replacement_uuid": "105d04b5-0421-4a2f-929c-53d9275f3a48"
+  },
+  {
+    "uuid": "f4b4bf50-bfd1-475a-bc83-8e2eb12f8e69",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1VhizqEDrzFOzQAxlJpF95ZhbiLWWZyfOgJ-gUo1tQlI",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:22.353Z",
+    "modificationTime": "2026-07-07T08:56:22.353Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1VhizqEDrzFOzQAxlJpF95ZhbiLWWZyfOgJ-gUo1tQlI",
+    "replacement_uuid": "1fdc2394-4f12-4e84-8b4e-8d0ab0ab2605"
+  },
+  {
+    "uuid": "d3c25956-16bd-4ec8-971c-d2cac9dea23d",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1KVEtC7iT-Fl6-hy3QKsl9FBUNCBk40d121Cl-viake8",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:24.673Z",
+    "modificationTime": "2026-07-07T08:56:24.673Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1KVEtC7iT-Fl6-hy3QKsl9FBUNCBk40d121Cl-viake8",
+    "replacement_uuid": "fe5d604f-56b6-43ae-ae6d-6a52e1d802da"
+  },
+  {
+    "uuid": "a4687a46-3a91-4ba1-b847-9063fb30b13f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1fJOdNDLt2T5soevj3ijiCSdoXvC9-2DavgR8d9Q_wC8",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:26.647Z",
+    "modificationTime": "2026-07-07T08:56:26.647Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1fJOdNDLt2T5soevj3ijiCSdoXvC9-2DavgR8d9Q_wC8",
+    "replacement_uuid": "e8a54cdb-a082-43a4-a823-88263007b54c"
+  },
+  {
+    "uuid": "b1b4dab4-ed5b-434a-bcc7-9e12283200ad",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_open_access_publication",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:27.216Z",
+    "modificationTime": "2026-07-07T08:56:27.216Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_open_access_publication",
+    "replacement_uuid": "0b6b4ac9-f0d0-4f52-b1e1-e37b3773ee94"
+  },
+  {
+    "uuid": "e6dd306e-56a2-413e-a68d-8a3cdb4b7dcc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_funding_information_registered",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:27.751Z",
+    "modificationTime": "2026-07-07T08:56:27.751Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_funding_information_registered",
+    "replacement_uuid": "004ed0f1-185d-45cd-8dac-d9f22708b59a"
+  },
+  {
+    "uuid": "4908d707-7e0c-4618-9e27-9fe72338a802",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_IdGloballyUnique.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:38.526Z",
+    "modificationTime": "2026-07-07T08:56:38.526Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_IdGloballyUnique.ttl",
+    "replacement_uuid": "1cb8ba68-2df6-4a64-ae42-e18ed792ee4f"
+  },
+  {
+    "uuid": "d30889c5-fb9b-4cfb-984a-c380f3ba34fc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_metadata_includes_author_affiliation",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:40.141Z",
+    "modificationTime": "2026-07-07T08:56:40.141Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_metadata_includes_author_affiliation",
+    "replacement_uuid": "b666e8fe-7a98-44b5-bd82-21a9e929a2e0"
+  },
+  {
+    "uuid": "17b9d49a-01e3-489b-a543-d4e1348a2d84",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Ferdera_core_vp_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:40.672Z",
+    "modificationTime": "2026-07-07T08:56:40.672Z",
+    "address": "https://tests.ostrails.eu/community-tests/erdera_core_vp_metadata",
+    "replacement_uuid": "46246e22-3e45-4d8d-ae64-5d3719893db3"
+  },
+  {
+    "uuid": "1ba3c8ea-1b5d-4e30-a91e-801c045b4e93",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Ferdera_vp_l2_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:41.203Z",
+    "modificationTime": "2026-07-07T08:56:41.203Z",
+    "address": "https://tests.ostrails.eu/community-tests/erdera_vp_l2_metadata",
+    "replacement_uuid": "b99a9003-d775-47a9-b081-0072a98a834b"
+  },
+  {
+    "uuid": "bca94280-b8cd-4070-8343-f3ae6fafe694",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F16F0HtG88qvXWM5TYza5PegpfQn_b_dr4lEeUTxEgbs8",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:43.455Z",
+    "modificationTime": "2026-07-07T08:56:43.455Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/16F0HtG88qvXWM5TYza5PegpfQn_b_dr4lEeUTxEgbs8",
+    "replacement_uuid": "ac2b4315-3acb-482b-b228-bfebc2231e7a"
+  },
+  {
+    "uuid": "65e3e2ce-1ac2-445e-927e-2976291d868f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFTA2MDbPersistencepolicy.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:43.937Z",
+    "modificationTime": "2026-07-07T08:56:43.937Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FTA2MDbPersistencepolicy.ttl",
+    "replacement_uuid": "51188bf9-0124-4e6f-ba7e-0101d35de35f"
+  },
+  {
+    "uuid": "a239a7cb-d6b9-4ea4-8f2a-9fcb7bed7476",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I1_M_DbKnowledgeSemantic.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:44.406Z",
+    "modificationTime": "2026-07-07T08:56:44.406Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I1_M_DbKnowledgeSemantic.ttl",
+    "replacement_uuid": "8ceb4afe-b44f-4f69-aa80-8ad369096516"
+  },
+  {
+    "uuid": "fa13811a-7fed-4f95-9511-b929d1a468e7",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I1_M_DbKnowledgeSyntactic.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:44.874Z",
+    "modificationTime": "2026-07-07T08:56:44.874Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I1_M_DbKnowledgeSyntactic.ttl",
+    "replacement_uuid": "499a8127-b8d1-4f5f-bc74-bbfe4b73677e"
+  },
+  {
+    "uuid": "bea1323f-6eb8-4032-92e4-a4518dae03e6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F2_M_Discoveryfields.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:45.340Z",
+    "modificationTime": "2026-07-07T08:56:45.340Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F2_M_Discoveryfields.ttl",
+    "replacement_uuid": "706dec55-45e3-4256-99e2-c6d3d3732c6a"
+  },
+  {
+    "uuid": "56de733b-9cde-47e8-8bb9-9c7112d0983c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F2_M_Discoverytags.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:45.798Z",
+    "modificationTime": "2026-07-07T08:56:45.798Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F2_M_Discoverytags.ttl",
+    "replacement_uuid": "f59838f2-5cb5-4f35-a6ec-654fec9d6760"
+  },
+  {
+    "uuid": "8790e1f6-bc72-4de9-8999-1a881c78f682",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F2_M_Discoverypublisher.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:46.280Z",
+    "modificationTime": "2026-07-07T08:56:46.280Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F2_M_Discoverypublisher.ttl",
+    "replacement_uuid": "43414a63-0660-4a3a-a2d0-316a873216f6"
+  },
+  {
+    "uuid": "0725f8e6-bb0b-48ea-8dde-d36468d1d9e5",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1rUAwqgOqZiQqCh2rZpLvlJ24xMYD3jHKeHhv6_c4C-A",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:49.328Z",
+    "modificationTime": "2026-07-07T08:56:49.328Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1rUAwqgOqZiQqCh2rZpLvlJ24xMYD3jHKeHhv6_c4C-A",
+    "replacement_uuid": "c49217cf-b44a-4e1a-a0ec-3b544724c26a"
+  },
+  {
+    "uuid": "1c738f7a-6751-4ff8-a947-1b1ba0835a84",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Falgorithm%2FGFBSA_M_CESSDA.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:49.797Z",
+    "modificationTime": "2026-07-07T08:56:49.797Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/algorithm/GFBSA_M_CESSDA.ttl",
+    "replacement_uuid": "a4d21612-c1a6-4748-a990-bb302b272476"
+  },
+  {
+    "uuid": "9046c9a4-efee-4142-9b30-f66d6a231b03",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Falgorithm%2FSFBSA_M_CESSDA.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:50.274Z",
+    "modificationTime": "2026-07-07T08:56:50.274Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/algorithm/SFBSA_M_CESSDA.ttl",
+    "replacement_uuid": "c999d247-e8d3-4c8c-8760-a5606aa5fc04"
+  },
+  {
+    "uuid": "989e40cf-714b-4ae5-9e60-51c4f58ddcda",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_data_authorization",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:50.789Z",
+    "modificationTime": "2026-07-07T08:56:50.789Z",
+    "address": "https://tests.ostrails.eu/tests/fc_data_authorization",
+    "replacement_uuid": "5fbdc2f6-0376-4031-aff0-68765dff02bc"
+  },
+  {
+    "uuid": "adda8ce7-3876-4d2d-ab06-8e42b267496a",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_data_kr_language_weak",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:51.320Z",
+    "modificationTime": "2026-07-07T08:56:51.320Z",
+    "address": "https://tests.ostrails.eu/tests/fc_data_kr_language_weak",
+    "replacement_uuid": "4d852fbb-68a5-44d7-9445-16a388c6caeb"
+  },
+  {
+    "uuid": "e0a143d4-b51b-40ca-b8a6-d1c8f10cc3a1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_data_cited_in_pub",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:51.852Z",
+    "modificationTime": "2026-07-07T08:56:51.852Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_data_cited_in_pub",
+    "replacement_uuid": "a3cdff24-7179-4f02-8c60-e3c5bbd6533a"
+  },
+  {
+    "uuid": "df2bc472-2fbc-4816-877e-c0ada566dd15",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Fcommunity-tests%2Fcommunity_panet_vocabulary_in_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:52.369Z",
+    "modificationTime": "2026-07-07T08:56:52.369Z",
+    "address": "https://tests.ostrails.eu/community-tests/community_panet_vocabulary_in_metadata",
+    "replacement_uuid": "8027f64b-ad29-4b3b-9d02-9d7de96bd005"
+  },
+  {
+    "uuid": "f385a04b-5d43-42ac-8066-66761a0560b8",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_IdPersistent.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:52.830Z",
+    "modificationTime": "2026-07-07T08:56:52.830Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_IdPersistent.ttl",
+    "replacement_uuid": "5cba34b0-8bcc-467a-8e54-b2b4f5d41737"
+  },
+  {
+    "uuid": "3927c8af-47ea-4c6b-903a-5e9c4cd587ed",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_identifier_in_metadata",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:53.340Z",
+    "modificationTime": "2026-07-07T08:56:53.340Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_identifier_in_metadata",
+    "replacement_uuid": "9b53eef0-65a3-4c0c-b165-282b9a7680d0"
+  },
+  {
+    "uuid": "40c96d4a-e9fe-4546-ae4c-8706ee9e37e9",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_IdResolvable.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:53.809Z",
+    "modificationTime": "2026-07-07T08:56:53.809Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_IdResolvable.ttl",
+    "replacement_uuid": "50863ca5-a4fc-43ea-ad8e-566b320fe108"
+  },
+  {
+    "uuid": "16604b15-786a-4cd7-9fcf-3fafd30dc25b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_harvest_only",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:54.343Z",
+    "modificationTime": "2026-07-07T08:56:54.343Z",
+    "address": "https://tests.ostrails.eu/tests/fc_harvest_only",
+    "replacement_uuid": "9c8a98e7-a065-4048-bc0a-7b2b1e7bb402"
+  },
+  {
+    "uuid": "f781b7d9-1d16-4067-a245-91cd59d9c594",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_A1_1_M_OpenProt",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:54.851Z",
+    "modificationTime": "2026-07-07T08:56:54.851Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_A1_1_M_OpenProt",
+    "replacement_uuid": "ae21e188-1462-4954-95c5-fe01d32e6373"
+  },
+  {
+    "uuid": "9dbf2e2f-7357-4f94-b6e0-94efee33c00b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_A1_1_M_OpenProt_Data",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:55.379Z",
+    "modificationTime": "2026-07-07T08:56:55.379Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_A1_1_M_OpenProt_Data",
+    "replacement_uuid": "fb900515-2d85-4ae4-802f-f503cf98b8f0"
+  },
+  {
+    "uuid": "f5c4402e-a03d-4c33-8a09-2ec4ed03bbfd",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_A1_2_M_Auth",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:55.921Z",
+    "modificationTime": "2026-07-07T08:56:55.921Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_A1_2_M_Auth",
+    "replacement_uuid": "e686ae2a-e65b-4c75-9eed-04d572d75db6"
+  },
+  {
+    "uuid": "ef95371e-b8f0-413d-bb39-3b988efd6618",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_A1_2_M_DataAuth",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:56.446Z",
+    "modificationTime": "2026-07-07T08:56:56.446Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_A1_2_M_DataAuth",
+    "replacement_uuid": "aea92c03-13fe-411e-8d7f-4b4f21d8a435"
+  },
+  {
+    "uuid": "6bd26d17-506f-439d-8812-a8f9be7b0e04",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_A2_M_MetaLong",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:56.960Z",
+    "modificationTime": "2026-07-07T08:56:56.960Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_A2_M_MetaLong",
+    "replacement_uuid": "fe882e58-42e6-472a-b734-7f2aa60a2438"
+  },
+  {
+    "uuid": "0cd2cf31-e531-498f-b2e2-8874e76864ae",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_F1_M_IdentPersistent",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:57.479Z",
+    "modificationTime": "2026-07-07T08:56:57.479Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_F1_M_IdentPersistent",
+    "replacement_uuid": "a44a05f1-6fc6-4ff8-b6b6-65b61e89af41"
+  },
+  {
+    "uuid": "1a72696c-6392-4282-a350-6ce8a261bb09",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_F1_M_IdentUnique",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:58.013Z",
+    "modificationTime": "2026-07-07T08:56:58.013Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_F1_M_IdentUnique",
+    "replacement_uuid": "ffe378d3-2feb-4936-943d-721ebf878556"
+  },
+  {
+    "uuid": "4f70f7a8-5525-499b-ae34-dfa2b3d1fb83",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_F3_M_MetaIdent",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:56:59.502Z",
+    "modificationTime": "2026-07-07T08:56:59.502Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_F3_M_MetaIdent",
+    "replacement_uuid": "8bc9f8ac-458d-4325-a869-3c2225d98bc6"
+  },
+  {
+    "uuid": "0c9d50ec-91c7-47ee-b097-1f3ed7315464",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_F4_M_MetaIndexed",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:00.026Z",
+    "modificationTime": "2026-07-07T08:57:00.026Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_F4_M_MetaIndexed",
+    "replacement_uuid": "f94ff116-e357-42f7-aa48-f713e1171ed4"
+  },
+  {
+    "uuid": "4f63ed38-7252-46c8-99c1-9c4b143d97f1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_I1_M_FormLangSemantic_Data",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:00.541Z",
+    "modificationTime": "2026-07-07T08:57:00.541Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_I1_M_FormLangSemantic_Data",
+    "replacement_uuid": "e80e67f2-badc-4027-a690-9bad74f36e85"
+  },
+  {
+    "uuid": "54716449-d7a0-4e7e-a172-b17170419516",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_I1_M_FormalLangSyntax",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:01.066Z",
+    "modificationTime": "2026-07-07T08:57:01.066Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_I1_M_FormalLangSyntax",
+    "replacement_uuid": "bbc08c76-cee7-43fb-8d3e-e660d9887fea"
+  },
+  {
+    "uuid": "915e806b-6d50-45b3-9d16-059d49616ccc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_I3_M_QualRef",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:01.661Z",
+    "modificationTime": "2026-07-07T08:57:01.661Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_I3_M_QualRef",
+    "replacement_uuid": "723ab8fb-bd4d-413e-ab42-6ee603bcd8b0"
+  },
+  {
+    "uuid": "21a09602-769e-4a50-94f9-5574170364b4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_R1_1_M_StdLic",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:02.253Z",
+    "modificationTime": "2026-07-07T08:57:02.253Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_R1_1_M_StdLic",
+    "replacement_uuid": "6cb41b37-319f-447e-9139-183c908e4484"
+  },
+  {
+    "uuid": "6024d8f1-de49-4997-bc7d-3bf65ef5da4f",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ftest_FM_R1_1_M_StdLic_strong",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:02.772Z",
+    "modificationTime": "2026-07-07T08:57:02.772Z",
+    "address": "https://tests.ostrails.eu/tests/test_FM_R1_1_M_StdLic_strong",
+    "replacement_uuid": "e2101d96-2547-425a-bc28-655189d20bba"
+  },
+  {
+    "uuid": "a7d1221d-1e67-4b17-8ebf-b3ea84917fbc",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1Lbo0KzlN-RPRJ5POqHKh8YE2GXSv0bnaKZzwkaCOP9M",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:11.222Z",
+    "modificationTime": "2026-07-07T08:57:11.222Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1Lbo0KzlN-RPRJ5POqHKh8YE2GXSv0bnaKZzwkaCOP9M",
+    "replacement_uuid": "3fa0fb49-a42b-4dd7-9391-afc83292d7e4"
+  },
+  {
+    "uuid": "455f7eb6-9f1f-4545-a7ca-ddbe0076ae5e",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT-F2B_M_GM_CESSDA.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:11.941Z",
+    "modificationTime": "2026-07-07T08:57:11.941Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT-F2B_M_GM_CESSDA.ttl",
+    "replacement_uuid": "53687525-741e-46a7-be8c-b34a8b94b815"
+  },
+  {
+    "uuid": "0cf64b7c-fabf-4979-9eea-c8c043694efb",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_RID-ARK.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:12.379Z",
+    "modificationTime": "2026-07-07T08:57:12.379Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_RID-ARK.ttl",
+    "replacement_uuid": "1e954b8b-1390-4ef4-aacd-69e8899382a2"
+  },
+  {
+    "uuid": "b6068ae9-599e-4bde-8ca7-46334d9befc4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_PID-ARK.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:12.847Z",
+    "modificationTime": "2026-07-07T08:57:12.847Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_PID-ARK.ttl",
+    "replacement_uuid": "fe8fceeb-e2c4-482c-be9e-2aa151877f1b"
+  },
+  {
+    "uuid": "dda112ce-dd7d-48d6-8299-90427e12be57",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_GUID-ARK.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:13.290Z",
+    "modificationTime": "2026-07-07T08:57:13.290Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_GUID-ARK.ttl",
+    "replacement_uuid": "59929956-9f5a-4f2f-8245-7b2b5b1cf4d7"
+  },
+  {
+    "uuid": "6d589d71-9b42-4c5d-b721-9f9fafc13d36",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT-F4_M_SE.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:13.768Z",
+    "modificationTime": "2026-07-07T08:57:13.768Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT-F4_M_SE.ttl",
+    "replacement_uuid": "afe7a7cf-0641-46a7-a50f-41f8c0a722de"
+  },
+  {
+    "uuid": "81665336-b74b-4b12-aa64-f8b1b66a8ed6",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT-F2A_M_SM.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:14.218Z",
+    "modificationTime": "2026-07-07T08:57:14.218Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT-F2A_M_SM.ttl",
+    "replacement_uuid": "8baadf1b-ad23-4bf5-9462-992b5cef850e"
+  },
+  {
+    "uuid": "406cf445-7d0b-48e7-a5bb-66f89595c5ca",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_Gen2_MI_A1.1_M_RP.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:14.698Z",
+    "modificationTime": "2026-07-07T08:57:14.698Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_Gen2_MI_A1.1_M_RP.ttl",
+    "replacement_uuid": "59a88deb-bc4e-46dd-bb4e-7bdcf3a08b6a"
+  },
+  {
+    "uuid": "5d7457a8-6b8a-4551-925d-ddc9fe5719c8",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I2A_M_FV.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:15.169Z",
+    "modificationTime": "2026-07-07T08:57:15.169Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I2A_M_FV.ttl",
+    "replacement_uuid": "d2460f2e-d085-410e-90c8-36e49df9b32c"
+  },
+  {
+    "uuid": "46ecded3-903f-4031-a5d4-63b589247d5c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I1A_M_FKRL.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:15.660Z",
+    "modificationTime": "2026-07-07T08:57:15.660Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I1A_M_FKRL.ttl",
+    "replacement_uuid": "0e2dd9c9-b3d6-4de7-92c9-ac0791901c28"
+  },
+  {
+    "uuid": "b4b07135-4581-4262-afb7-4a48a2a52e6d",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_MetadataIdPersistent.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:16.133Z",
+    "modificationTime": "2026-07-07T08:57:16.133Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_MetadataIdPersistent.ttl",
+    "replacement_uuid": "5f5aafd4-b886-4e56-974c-06bdf5e29f0b"
+  },
+  {
+    "uuid": "5d5db3b3-ee46-4e5e-afc6-15f966236836",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_MetadataIdResolvable.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:16.587Z",
+    "modificationTime": "2026-07-07T08:57:16.587Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_MetadataIdResolvable.ttl",
+    "replacement_uuid": "7306364f-68ad-4c00-8d50-4d4f86c625d3"
+  },
+  {
+    "uuid": "7ba1feda-0208-40cf-9ea0-e35bf5366659",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F1_M_MetadataIdUnique.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:17.050Z",
+    "modificationTime": "2026-07-07T08:57:17.050Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F1_M_MetadataIdUnique.ttl",
+    "replacement_uuid": "b1fae18a-e145-47d2-a8cd-b1defa0b1d18"
+  },
+  {
+    "uuid": "8e7df7a2-6f94-4914-b12c-3a529699575b",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-14-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:19.806Z",
+    "modificationTime": "2026-07-07T08:57:19.806Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-14-1",
+    "replacement_uuid": "0293762a-33fa-45ba-9966-efa7871fbc44"
+  },
+  {
+    "uuid": "641a3f1d-3c80-4efe-9d80-3889f19c36c3",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fpyfat.sd.di.huc.knaw.nl%2Fapi%2Fv1%2Ftests%2FCLFIP-F1-01M-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:21.571Z",
+    "modificationTime": "2026-07-07T08:57:21.571Z",
+    "address": "https://pyfat.sd.di.huc.knaw.nl/api/v1/tests/CLFIP-F1-01M-1",
+    "replacement_uuid": "ed660473-357d-4f5f-b121-c690de9194bc"
+  },
+  {
+    "uuid": "6c312ace-68b2-454d-8954-4e6c36c1d5d9",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftests.ostrails.eu%2Ftests%2Ffc_metadata_identifier_persistence",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:24.696Z",
+    "modificationTime": "2026-07-07T08:57:24.696Z",
+    "address": "https://tests.ostrails.eu/tests/fc_metadata_identifier_persistence",
+    "replacement_uuid": "77faded7-292a-4d14-9d95-33a1ea290454"
+  },
+  {
+    "uuid": "cd759824-bfd0-40fb-8ba7-ca119c7b9918",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1_2_M_FundROR.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:26.616Z",
+    "modificationTime": "2026-07-07T08:57:26.616Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1_2_M_FundROR.ttl",
+    "replacement_uuid": "00880ec6-2285-4cbd-8f23-58b45ccf7a83"
+  },
+  {
+    "uuid": "fd72358e-be44-4856-9bf4-40a7cfde7a7d",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1_3_M_UseStuctGenericFormat.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:27.093Z",
+    "modificationTime": "2026-07-07T08:57:27.093Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1_3_M_UseStuctGenericFormat.ttl",
+    "replacement_uuid": "84a11587-8549-4368-99b3-b19057035ea4"
+  },
+  {
+    "uuid": "a8e27778-e3ab-4548-87eb-b034e91e3d74",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1UvHnRkKy3KZMlWdIdB7rz0LrBZJXpPibAgmTXJwRO_0",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:32.329Z",
+    "modificationTime": "2026-07-07T08:57:32.329Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1UvHnRkKy3KZMlWdIdB7rz0LrBZJXpPibAgmTXJwRO_0",
+    "replacement_uuid": "235df8dd-df77-491b-9799-4212dbdf5539"
+  },
+  {
+    "uuid": "cdcbe94d-cbca-4178-9455-d7b9333a6d3c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1_2_M_CreatorORCID.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:32.799Z",
+    "modificationTime": "2026-07-07T08:57:32.799Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1_2_M_CreatorORCID.ttl",
+    "replacement_uuid": "375fb113-1977-41f9-bfe9-05296ec6a83e"
+  },
+  {
+    "uuid": "06de5460-d397-441e-8238-38e50271aa64",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_A1.1_M_HTTPSRetrievalProtocol.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:33.253Z",
+    "modificationTime": "2026-07-07T08:57:33.253Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_A1.1_M_HTTPSRetrievalProtocol.ttl",
+    "replacement_uuid": "289ceecc-63e8-4a8d-aff3-d315e3399150"
+  },
+  {
+    "uuid": "a8980def-3683-4035-a456-b33a91843c49",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-06-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:34.091Z",
+    "modificationTime": "2026-07-07T08:57:34.091Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-06-2",
+    "replacement_uuid": "06f2a605-a65b-418e-87c3-36543e3f7d49"
+  },
+  {
+    "uuid": "6b4c1e71-2468-4fff-b4f1-87def1712da1",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-03-2",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:34.952Z",
+    "modificationTime": "2026-07-07T08:57:34.952Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-03-2",
+    "replacement_uuid": "6d9e3d1c-46b1-4786-8981-6eb1ceed2042"
+  },
+  {
+    "uuid": "4febff97-dc98-4db7-a947-574671bb2d72",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1.3_M_UsesISO639.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:35.422Z",
+    "modificationTime": "2026-07-07T08:57:35.422Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1.3_M_UsesISO639.ttl",
+    "replacement_uuid": "ccd911ec-180c-4281-b7dd-a900b577a807"
+  },
+  {
+    "uuid": "3f736a58-9636-481a-a54b-c694283c84c5",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_A1-2_M_Auth.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:36.343Z",
+    "modificationTime": "2026-07-07T08:57:36.343Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_A1-2_M_Auth.ttl",
+    "replacement_uuid": "b5d49c88-c736-4927-981f-9c8dd22c3fa4"
+  },
+  {
+    "uuid": "b3e25684-5892-471f-bd01-a573af37814c",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1_2_M_LinkedPublications.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:36.815Z",
+    "modificationTime": "2026-07-07T08:57:36.815Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1_2_M_LinkedPublications.ttl",
+    "replacement_uuid": "a9fa23f8-0b14-44a9-a419-0f0cf9187f9f"
+  },
+  {
+    "uuid": "6b6542b6-44da-4b85-b975-09ac25ca4b30",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2Fft_f1_m_metadata_id_unique.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:37.356Z",
+    "modificationTime": "2026-07-07T08:57:37.356Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/ft_f1_m_metadata_id_unique.ttl",
+    "replacement_uuid": "5e74e684-b2c4-4bc1-8c93-42403755bc69"
+  },
+  {
+    "uuid": "e7ee00da-1c62-4cfd-ad91-baf65fd9aa07",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_R1_1_M_DatabaseLevelLicenses.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:38.891Z",
+    "modificationTime": "2026-07-07T08:57:38.891Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_R1_1_M_DatabaseLevelLicenses.ttl",
+    "replacement_uuid": "e003cfc0-203f-461d-a76d-2c3f04e5bff2"
+  },
+  {
+    "uuid": "de720515-902e-44ac-9ae1-323cb4b8a317",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1BMyN6qO5JIs25kMMhBjC-SqL96XC-JuJUNFCoxDlpwo",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:41.376Z",
+    "modificationTime": "2026-07-07T08:57:41.376Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1BMyN6qO5JIs25kMMhBjC-SqL96XC-JuJUNFCoxDlpwo",
+    "replacement_uuid": "8ea2ad1b-fca8-4290-ae2f-0d47e03b3ac5"
+  },
+  {
+    "uuid": "b10a3340-2308-4cae-b8f2-fe6ec6a4b554",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Ftools.ostrails.eu%2Fchampion%2Falgorithms%2Fd%2F1bWAthKUhxVer61y9p4eKXD9pKxk1-ULajcQgTODNcc8",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:47.682Z",
+    "modificationTime": "2026-07-07T08:57:47.682Z",
+    "address": "https://tools.ostrails.eu/champion/algorithms/d/1bWAthKUhxVer61y9p4eKXD9pKxk1-ULajcQgTODNcc8",
+    "replacement_uuid": "cb5895cb-7b83-4d44-a674-cf19ce5e8d67"
+  },
+  {
+    "uuid": "0715e122-2d4c-41cf-bb21-ba93e4b13b85",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_I3_M_ReferenceResearchObjects.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:48.160Z",
+    "modificationTime": "2026-07-07T08:57:48.160Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_I3_M_ReferenceResearchObjects.ttl",
+    "replacement_uuid": "7a4dcfbf-a82a-4f8b-89cd-53be4dfc98e4"
+  },
+  {
+    "uuid": "3c8896ee-c011-44e9-a8a8-cec8b8c282e7",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFt_F2_M_FsLsDiscoveryFields.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:48.645Z",
+    "modificationTime": "2026-07-07T08:57:48.645Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/Ft_F2_M_FsLsDiscoveryFields.ttl",
+    "replacement_uuid": "da085d80-39d2-4f85-a325-92d3179c466b"
+  },
+  {
+    "uuid": "48f6f1be-d40a-4007-a64e-10b143941459",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFt_F2_M_FsDiscoveryFields.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:49.538Z",
+    "modificationTime": "2026-07-07T08:57:49.538Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/Ft_F2_M_FsDiscoveryFields.ttl",
+    "replacement_uuid": "fac50e99-8267-4603-b268-ebb62cca8d2b"
+  },
+  {
+    "uuid": "669ad186-5a0f-4815-9bb7-262ec4bb25ba",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F3_M_FsIdentifierUse.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:50.010Z",
+    "modificationTime": "2026-07-07T08:57:50.010Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F3_M_FsIdentifierUse.ttl",
+    "replacement_uuid": "79c029de-4f6d-4489-87af-acfaddc833e1"
+  },
+  {
+    "uuid": "7be6376e-64d9-4218-84b7-393e7dccf073",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-22-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:51.639Z",
+    "modificationTime": "2026-07-07T08:57:51.639Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-22-1",
+    "replacement_uuid": "2416f836-1f7b-4826-a295-b60df2c3f3d2"
+  },
+  {
+    "uuid": "43ccd85d-f976-43e6-ad91-5e6aab412bd4",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fw3id.org%2Frsfc%2Ftest%2FRSFC-21-1",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:52.737Z",
+    "modificationTime": "2026-07-07T08:57:52.737Z",
+    "address": "https://w3id.org/rsfc/test/RSFC-21-1",
+    "replacement_uuid": "74354719-c13a-45f9-a90b-feb23ac50f60"
+  },
+  {
+    "uuid": "612da9da-59f0-4ea5-8489-1339e044938a",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F4_M_FS_providesUserSearch.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:53.315Z",
+    "modificationTime": "2026-07-07T08:57:53.315Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_providesUserSearch.ttl",
+    "replacement_uuid": "8804d858-d317-4075-8e55-9f23ec7f840e"
+  },
+  {
+    "uuid": "98aa17b7-8b86-4243-a777-3d07f515cfad",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F4_M_FS_providesMachineSearch.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:53.776Z",
+    "modificationTime": "2026-07-07T08:57:53.776Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_providesMachineSearch.ttl",
+    "replacement_uuid": "0f41d9dd-b6dc-4e82-9c41-c40aad256aff"
+  },
+  {
+    "uuid": "93bb434e-52e6-4233-b34b-09cd14ea8926",
+    "clientUrl": "https://tools.ostrails.eu/fdp-index-proxy/proxy?url=https%3A%2F%2Fostrails.github.io%2Fassessment-component-metadata-records%2Ftest%2FFT_F4_M_FS_hasFSrecord.ttl",
+    "state": "ACTIVE",
+    "permit": "ACCEPTED",
+    "registrationTime": "2026-07-07T08:57:54.702Z",
+    "modificationTime": "2026-07-07T08:57:54.702Z",
+    "address": "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_hasFSrecord.ttl",
+    "replacement_uuid": "7dd9929a-ab40-4542-9b4e-53e94802acf7"
+  }
+]
