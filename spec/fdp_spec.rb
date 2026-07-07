@@ -102,4 +102,67 @@ RSpec.describe FDP do
       expect(FDP.address_for_id(Digest::SHA256.hexdigest(address))).to eq(address)
     end
   end
+
+  describe "FTR core type recognition (regression)" do
+    def graph_has_type?(graph, subject, type)
+      graph.has_statement?(RDF::Statement(RDF::URI(subject), RDF.type, RDF::URI(type)))
+    end
+
+    def build_from_ttl(address, ttl)
+      allow(RestClient::Request).to receive(:execute).and_return(
+        instance_double(RestClient::Response, body: ttl.dup)
+      )
+      FDP.new(address: address)
+      FDP.load_graph_from_cache(url: address)
+    end
+
+    # Real-world case: OpenAIRE test records typed only ftr:Test, with no
+    # accompanying dcat:DataService, used to build an empty graph (toptype
+    # nil) and never get served. ftr:Test is rdfs:subClassOf dcat:DataService
+    # per the FTR ontology, so it should be treated as a DataService.
+    it "builds a record typed only ftr:Test as a DataService" do
+      ttl = <<~TURTLE
+        @prefix ftr: <https://w3id.org/ftr#> .
+        <http://example.org/test1> a ftr:Test .
+      TURTLE
+
+      graph = build_from_ttl(address, ttl)
+
+      expect(graph).not_to eq(false)
+      expect(graph_has_type?(graph, "http://example.org/test1#fdp",
+                             "https://w3id.org/fdp/fdp-o#MetadataService")).to be true
+    end
+
+    # ftr:Metric and ftr:Benchmark aren't services themselves (no confirmed
+    # dcat:DataService superclass in the FTR ontology), so they're treated as
+    # a generic dcat:Resource instead.
+    it "builds a record typed only ftr:Metric as a generic Resource" do
+      ttl = <<~TURTLE
+        @prefix ftr: <https://w3id.org/ftr#> .
+        <http://example.org/metric1> a ftr:Metric .
+      TURTLE
+
+      graph = build_from_ttl(address, ttl)
+
+      expect(graph).not_to eq(false)
+      expect(graph_has_type?(graph, "http://example.org/metric1#fdp",
+                             "https://w3id.org/fdp/fdp-o#MetadataService")).to be true
+    end
+
+    # The Index's findRepository() accepts EITHER fdp-o:MetadataService or
+    # r3d:Repository. Inject both so this keeps working if the Index's
+    # requirements are ever tightened to R3D only.
+    it "injects both fdp-o:MetadataService and r3d:Repository on the FDP root" do
+      ttl = <<~TURTLE
+        @prefix dcat: <http://www.w3.org/ns/dcat#> .
+        <http://example.org/dataset1> a dcat:Dataset .
+      TURTLE
+
+      graph = build_from_ttl(address, ttl)
+      fdp_root = "http://example.org/dataset1#fdp"
+
+      expect(graph_has_type?(graph, fdp_root, "https://w3id.org/fdp/fdp-o#MetadataService")).to be true
+      expect(graph_has_type?(graph, fdp_root, "http://www.re3data.org/schema/3-0#Repository")).to be true
+    end
+  end
 end

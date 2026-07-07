@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-07-07
+
+### Fixed
+- `query_toplevel` only recognized `dcat:Catalog`/`Dataset`/`Distribution`/
+  `DataService` as top-level types. Records typed *only* with an FTR
+  (`https://w3id.org/ftr#`) core class and no accompanying `dcat:*` type
+  (e.g. OpenAIRE's `ftr:Test` test records) resolved to `toptype = nil`,
+  which correctly (per the v0.10.0 fix) skipped caching entirely — so these
+  live, well-formed records could never be served through the proxy at all.
+- `find_subject_uri_query` reconstructed a `dcat:` URI from a short type
+  name (e.g. `"DataService"` → `dcat:DataService`), which can't find a
+  subject typed only with a non-`dcat:`-namespaced equivalent class. Changed
+  to accept the full candidate type URIs directly and match any of them via
+  a SPARQL `VALUES` clause.
+
+### Added
+- `ftr:Test` and `ftr:ScoringAlgorithm` are now recognized as DataService
+  equivalents (`ftr:Test` is formally `rdfs:subClassOf dcat:DataService` per
+  the FTR ontology); `ftr:Metric` and `ftr:Benchmark` are recognized as
+  generic `dcat:Resource` equivalents (see `FDP::FTR_TYPE_EQUIVALENTS` in
+  `lib/fdp.rb`). `find_dcat_classes` (`lib/queries.rb`) extended to include
+  all four in its LDP-container-injection query, and `inject_class_container`
+  normalizes them to their mapped category.
+- `inject_FDP_root` now also injects `r3d:Repository`
+  (`http://www.re3data.org/schema/3-0#Repository`) on the synthetic FDP root,
+  alongside the existing `fdp-o:MetadataService` — the Index's
+  `findRepository()` accepts either, so this is future-proofing in case the
+  Index's requirements are ever tightened to R3D only.
+- Regression tests in `spec/fdp_spec.rb` covering: an `ftr:Test`-only record
+  building as a DataService, an `ftr:Metric`-only record building as a
+  Resource, and both `fdp-o:MetadataService`/`r3d:Repository` being present
+  on the FDP root.
+
 ## [0.11.0] - 2026-07-07
 
 ### Fixed

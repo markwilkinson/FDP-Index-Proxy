@@ -4,7 +4,9 @@ NAMESPACES = "PREFIX ejpold: <http://purl.org/ejp-rd/vocabulary/>
   PREFIX dcat: <http://www.w3.org/ns/dcat#>
   PREFIX dc: <http://purl.org/dc/terms/>
   PREFIX fdp: <https://w3id.org/fdp/fdp-o#>
-  PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>".freeze
+  PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+  PREFIX ftr: <https://w3id.org/ftr#>
+  PREFIX r3d: <http://www.re3data.org/schema/3-0#>".freeze
 
 # Predicate that marks a resource as participating in VP (Virtual Platform) discovery.
 # Only the current EJP-RD vocabulary URI is active; legacy variants are retained
@@ -19,25 +21,28 @@ VPDISCOVERABLE = "ejpnew:VPDiscoverable".freeze
 # Annotation predicate used for ontology-based VP discovery.
 VPANNOTATION   = "dcat:theme".freeze
 
-# Finds all subject URIs of a given DCAT type within +graph+.
-# The +type+ argument is the local class name (e.g. +"Catalog"+, +"Dataset"+)
-# and is expanded to the full +dcat:+ URI before querying.
+# Finds all subjects in +graph+ whose +rdf:type+ matches any of +type_uris+.
+# Accepting the full candidate URIs directly (rather than reconstructing a
+# +dcat:+ URI from a short name) lets callers match subjects typed with a
+# non-DCAT-namespaced equivalent class (e.g. +ftr:Test+, which is
+# +rdfs:subClassOf dcat:DataService+ but isn't itself a +dcat:+ URI).
 #
-# @param graph [RDF::Graph] the graph to query
-# @param type  [String]     local name of the DCAT class (e.g. +"Catalog"+)
-# @return [Array<String>]   subject URIs as plain strings
-def find_subject_uri_query(graph:, type:)
-  warn "TYPE:", type
+# @param graph     [RDF::Graph]    the graph to query
+# @param type_uris [Array<String>] full candidate type URIs
+# @return [Array<String>] subject URIs as plain strings
+def find_subject_uri_query(graph:, type_uris:)
+  warn "TYPE_URIS:", type_uris
   warn "GRAPH:", graph
 
-  # Build a full URI rather than relying on prefix expansion to avoid any
-  # SPARQL parser quirks with interpolated prefixed names.
-  type_uri = RDF::URI("http://www.w3.org/ns/dcat##{type}")
+  return [] if type_uris.empty?
+
+  values = type_uris.map { |u| "<#{u}>" }.join(" ")
 
   query_str = <<~SPARQL.strip
     #{NAMESPACES}
     SELECT DISTINCT ?s WHERE {
-      ?s a <#{type_uri}> .
+      VALUES ?type { #{values} }
+      ?s a ?type .
     }
   SPARQL
 
@@ -46,9 +51,11 @@ def find_subject_uri_query(graph:, type:)
   SPARQL.parse(query_str).execute(graph).map { |result| result[:s].to_s }
 end
 
-# Returns every DCAT-typed resource in +graph+, covering the standard DCAT
-# hierarchy plus the FDP root class.  Used by {FDP#post_process} to iterate over
-# all resources that need LDP container injection.
+# Returns every DCAT-typed (or DCAT-equivalent) resource in +graph+, covering
+# the standard DCAT hierarchy, the FDP root class, and the FTR core classes
+# that are recognized as DCAT equivalents (see {FDP::FTR_TYPE_EQUIVALENTS}).
+# Used by {FDP#post_process} to iterate over all resources that need LDP
+# container injection.
 #
 # @param graph [RDF::Graph] the graph to query
 # @return [Array<Array(String, String)>] pairs of +[subject_uri, type_uri]+
@@ -56,7 +63,8 @@ def find_dcat_classes(graph:)
   query = SPARQL.parse("
     #{NAMESPACES}
     SELECT DISTINCT ?s ?type WHERE
-    { VALUES ?type {fdp:FAIRDataPoint dcat:Catalog dcat:Dataset dcat:Distribution dcat:DataService}
+    { VALUES ?type {fdp:FAIRDataPoint dcat:Catalog dcat:Dataset dcat:Distribution dcat:DataService
+                     ftr:Test ftr:Metric ftr:Benchmark ftr:ScoringAlgorithm}
      ?s a ?type
     }
     ")

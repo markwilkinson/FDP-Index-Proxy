@@ -68,6 +68,32 @@ class FDP
     "DataService2" => "http://www.w3.org/ns/ldp#accessService"
   }.freeze
 
+  # FTR (https://w3id.org/ftr#) core classes recognized as equivalent to a
+  # DCAT class for top-level type detection and LDP container injection,
+  # since a record may be typed with only the FTR class and no accompanying
+  # +dcat:+ type. +ftr:Test+ and +ftr:ScoringAlgorithm+ are DataServices
+  # (+ftr:Test+ is formally +rdfs:subClassOf dcat:DataService+); +ftr:Metric+
+  # and +ftr:Benchmark+ are not services themselves, so they're treated as a
+  # generic +dcat:Resource+ instead.
+  FTR_TYPE_EQUIVALENTS = {
+    "https://w3id.org/ftr#Test" => "DataService",
+    "https://w3id.org/ftr#ScoringAlgorithm" => "DataService",
+    "https://w3id.org/ftr#Metric" => "Resource",
+    "https://w3id.org/ftr#Benchmark" => "Resource"
+  }.freeze
+
+  # Full candidate type URIs for each top-level category {#query_toplevel} can
+  # return (excluding +"FDP"+, which {#post_process} never queries for).
+  TOPLEVEL_TYPE_URIS = {
+    "Catalog" => ["http://www.w3.org/ns/dcat#Catalog"],
+    "Dataset" => ["http://www.w3.org/ns/dcat#Dataset"],
+    "Distribution" => ["http://www.w3.org/ns/dcat#Distribution"],
+    "DataService" => ["http://www.w3.org/ns/dcat#DataService",
+                      "https://w3id.org/ftr#Test", "https://w3id.org/ftr#ScoringAlgorithm"],
+    "Resource" => ["http://www.w3.org/ns/dcat#Resource",
+                   "https://w3id.org/ftr#Metric", "https://w3id.org/ftr#Benchmark"]
+  }.freeze
+
   # Builds a fully enriched FDP graph for +address+ and stores it in cache.
   # This is the sole entry point; all pipeline steps are driven from here.
   #
@@ -256,11 +282,14 @@ class FDP
   end
 
   # Inspects all +rdf:type+ statements in {#graph} and returns the highest-level
-  # DCAT class present, in descending priority order:
-  # FDP > Catalog > Dataset > Distribution > DataService.
+  # DCAT (or DCAT-equivalent) class present, in descending priority order:
+  # FDP > Catalog > Dataset > Distribution > DataService > Resource, where an
+  # {FTR_TYPE_EQUIVALENTS} match (e.g. +ftr:Test+, +ftr:Metric+) counts as
+  # whichever DCAT category it's mapped to.
   #
   # @return [String, nil] one of +"FDP"+, +"Catalog"+, +"Dataset"+,
-  #   +"Distribution"+, +"DataService"+, or +nil+ if no known type is found
+  #   +"Distribution"+, +"DataService"+, +"Resource"+, or +nil+ if no known
+  #   type is found
   def query_toplevel
     types = []
     @graph.each_statement do |statement|
@@ -281,6 +310,11 @@ class FDP
       toptype = "Distribution"
     elsif types.include?("http://www.w3.org/ns/dcat#DataService")
       toptype = "DataService"
+    elsif types.include?("http://www.w3.org/ns/dcat#Resource")
+      toptype = "Resource"
+    else
+      ftr_type = types.find { |t| FTR_TYPE_EQUIVALENTS.key?(t) }
+      toptype = FTR_TYPE_EQUIVALENTS[ftr_type] if ftr_type
     end
 
     warn "final TOP type", toptype
@@ -298,7 +332,7 @@ class FDP
     return if @toptype == "FDP"
 
     # Build the synthetic FAIRDataPoint root above the top-level DCAT resource.
-    subjects = find_subject_uri_query(graph: @graph, type: @toptype)
+    subjects = find_subject_uri_query(graph: @graph, type_uris: TOPLEVEL_TYPE_URIS.fetch(@toptype, []))
     inject_FDP_root(subject: subjects.first.to_s)
 
     # For every DCAT resource, add the LDP container structure and ensure that
@@ -423,7 +457,7 @@ class FDP
   # @param type    [String] full URI of the resource's RDF type
   # @return [void]
   def inject_class_container(subject:, type:)
-    objecttype = type.dup.gsub!(%r{^.*[#/]}, "")
+    objecttype = FTR_TYPE_EQUIVALENTS.fetch(type) { type.dup.gsub!(%r{^.*[#/]}, "") }
     parent     = lookup_parent(graph: @graph, resource: subject)
     return unless parent
 
@@ -491,6 +525,10 @@ class FDP
     # Declare the FDP root node and its mandatory metadata.
     triplify(fdp, RDF.type, "https://w3id.org/fdp/fdp-o#FAIRDataPoint", @graph)
     triplify(fdp, RDF.type, "https://w3id.org/fdp/fdp-o#MetadataService", @graph)
+    # The Index's own findRepository() accepts EITHER fdp-o:MetadataService OR
+    # r3d:Repository (re3data.org schema, prefix "r3d") — inject both so this
+    # keeps working if the Index's requirements are ever tightened to R3D only.
+    triplify(fdp, RDF.type, "http://www.re3data.org/schema/3-0#Repository", @graph)
     triplify(fdp, RDF.type, "http://www.w3.org/ns/dcat#Resource", @graph)
     triplify(fdp, "http://purl.org/dc/terms/title",
              "Imported DCAT from #{subject}", @graph)
