@@ -175,5 +175,6 @@
   "https://w3id.org/rsfc/test/RSFC-21-1",
   "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_providesUserSearch.ttl",
   "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_providesMachineSearch.ttl",
-  "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_hasFSrecord.ttl"
+  "https://ostrails.github.io/assessment-component-metadata-records/test/FT_F4_M_FS_hasFSrecord.ttl",
+  "https://tools.ostrails.eu/champion/algorithms/1Nk0vM4yBpVQTo_UbB62NY_fz93aRZRHBZGh5fG-khOw"
 ]
