@@ -93,8 +93,11 @@ def set_routes
 
     unless graph
       # Cache miss — rebuild from source (also re-caches via FDP.new).
+      # register: false — a GET must never mutate the persistent registry
+      # (scanner ?url= probes pass the URL-shape validation above); only
+      # POST /proxy and the cron ping register addresses.
       warn "Graph not found in cache for #{address}, attempting to rebuild"
-      FDP.new(address: address)
+      FDP.new(address: address, register: false)
       graph = FDP.load_graph_from_cache(url: address)
       halt 400 unless graph
     end

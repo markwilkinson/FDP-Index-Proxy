@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+require "tmpdir"
+require "fileutils"
+
+# Must be set before lib/fdp.rb is loaded — FDP::REGISTRY_PATH is resolved at
+# require time.  Points the persistent URL registry at a throwaway temp file
+# so the suite can exercise real read-merge-write behaviour without ever
+# touching the git-tracked cache/registry.json.
+ENV["FDP_REGISTRY_PATH"] ||= File.join(Dir.mktmpdir("fdp-index-proxy-spec"), "registry.json")
+
 require "fdp_index_proxy"
 
 RSpec.configure do |config|
@@ -13,13 +22,12 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  # FDP's cache/registry are process-global class variables; reset them
-  # between examples so tests don't leak state into each other, and never
-  # let a test write into the real (git-tracked) cache/registry.json.
+  # FDP's cache/registry are process-global class variables (plus a persisted
+  # registry file); reset all of them between examples so tests don't leak
+  # state into each other.
   config.before do
     FDP.class_variable_set(:@@cache, {})
     FDP.class_variable_set(:@@url_registry, [])
-    allow(File).to receive(:write)
-    allow(FileUtils).to receive(:mkdir_p)
+    FileUtils.rm_f(FDP::REGISTRY_PATH)
   end
 end

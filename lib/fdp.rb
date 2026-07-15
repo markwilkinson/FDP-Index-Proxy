@@ -46,10 +46,17 @@ class FDP
   @@cache = {}         # { sha256 => { graph: RDF::Graph, cached_at: Time } }
   # @!visibility private
   @@url_registry = [] # original DCAT URLs; persisted to REGISTRY_PATH for ping
+  # @!visibility private
+  # Serializes all read-merge-write access to @@url_registry/REGISTRY_PATH.
+  # Needed because FDP.ping runs in a background thread (see routes.rb) while
+  # request handlers may register new URLs concurrently.
+  @@registry_mutex = Mutex.new
 
   # Path to the JSON file that lists all registered source URLs.
   # Read by {.ping} to rebuild the in-process cache after a process restart.
-  REGISTRY_PATH = "./cache/registry.json"
+  # Overridable via +FDP_REGISTRY_PATH+ (used by the spec suite to point at a
+  # temp file instead of the real, git-tracked registry).
+  REGISTRY_PATH = ENV.fetch("FDP_REGISTRY_PATH", "./cache/registry.json")
 
   # Cache time-to-live in seconds.  Configurable via the +FDP_CACHE_TTL+
   # environment variable; defaults to +86_400+ (24 hours).
@@ -98,11 +105,18 @@ class FDP
   # This is the sole entry point; all pipeline steps are driven from here.
   #
   # @param address [String] URL of the source DCAT record to proxy
-  def initialize(address:)
-    @graph   = RDF::Graph.new
-    @address = address
-    @called  = []    # guards against circular references when following links
-    @toptype = nil   # resolved by the first call to iterate_dcat_record
+  # @param register [Boolean] whether to add +address+ to the persistent URL
+  #   registry.  +true+ for publisher registrations (POST /proxy) and cron
+  #   refreshes; +false+ for on-demand rebuilds triggered by a GET callback,
+  #   so that arbitrary +?url=+ requests (legacy Index entries, but also
+  #   automated scanners) can never insert junk into — or, on a freshly
+  #   restarted process, wipe — the registry.
+  def initialize(address:, register: true)
+    @graph    = RDF::Graph.new
+    @address  = address
+    @register = register
+    @called   = []   # guards against circular references when following links
+    @toptype  = nil  # resolved by the first call to iterate_dcat_record
 
     warn "refreshing with toptype", toptype
     @args = URI(address).query  # preserve any query string (e.g. ?format=ttl)
@@ -122,7 +136,7 @@ class FDP
       warn "SKIPPING CACHE STORE for #{@address}: empty graph or unresolved " \
            "toptype after build (origin fetch likely failed) — preserving " \
            "any previously cached graph"
-      self.class.register_url(@address)
+      self.class.register_url(@address) if @register
     else
       cache_store             # step 4 — store enriched graph in memory
     end
@@ -561,7 +575,7 @@ class FDP
   def cache_store
     key = Digest::SHA256.hexdigest(@address)
     @@cache[key] = { graph: @graph, cached_at: Time.now }
-    self.class.register_url(@address)
+    self.class.register_url(@address) if @register
     File.write("/tmp/latestproxyoutput.ttl", @graph.dump(:turtle))
     warn "Cached graph for #{@address} (#{@graph.size} triples)"
   end
@@ -591,17 +605,63 @@ class FDP
     entry[:graph]
   end
 
-  # Adds +url+ to the in-process registry and persists the full list to
-  # {REGISTRY_PATH} as a JSON array.  No-ops if the URL is already registered.
+  # Reads the on-disk registry file.
+  #
+  # @return [Array<String>] registered URLs, or +[]+ if the file is missing
+  #   or unparseable
+  def self.registry_on_disk
+    return [] unless File.exist?(REGISTRY_PATH)
+
+    JSON.parse(File.read(REGISTRY_PATH))
+  rescue JSON::ParserError => e
+    warn "Could not parse URL registry: #{e.message}"
+    []
+  end
+
+  # Merges the on-disk registry into the in-process one (set union, disk
+  # entries first).  ALWAYS a union, never a replacement: after a process
+  # restart the in-process list starts empty, and the disk file is the only
+  # copy of every previously registered URL — it must never be discarded or
+  # overwritten with a shorter, process-local list.  (Exactly that happened
+  # twice in production: the first request that registered a new URL after a
+  # container restart rewrote the registry as a 1-element array, silently
+  # dropping ~190 addresses from the nightly ping.)
+  #
+  # Callers must hold @@registry_mutex.
+  #
+  # @return [void]
+  def self.hydrate_registry
+    @@url_registry = registry_on_disk | @@url_registry
+  end
+  private_class_method :hydrate_registry
+
+  # Writes the in-process registry to {REGISTRY_PATH} atomically (temp file +
+  # rename), so a crash mid-write can't leave a truncated/corrupt JSON file.
+  #
+  # Callers must hold @@registry_mutex.
+  #
+  # @return [void]
+  def self.persist_registry
+    FileUtils.mkdir_p(File.dirname(REGISTRY_PATH))
+    tmp = "#{REGISTRY_PATH}.tmp"
+    File.write(tmp, @@url_registry.to_json)
+    File.rename(tmp, REGISTRY_PATH)
+  end
+  private_class_method :persist_registry
+
+  # Adds +url+ to the registry and persists the merged (disk ∪ memory) list to
+  # {REGISTRY_PATH}.  No-ops if the URL is already registered.
   #
   # @param url [String] source DCAT URL to register
   # @return [void]
   def self.register_url(url)
-    return if @@url_registry.include?(url)
+    @@registry_mutex.synchronize do
+      hydrate_registry
+      next if @@url_registry.include?(url)
 
-    @@url_registry << url
-    FileUtils.mkdir_p("./cache")
-    File.write(REGISTRY_PATH, @@url_registry.to_json)
+      @@url_registry << url
+      persist_registry
+    end
   end
 
   # Re-fetches, re-enriches, and re-registers every URL in the registry with the
@@ -609,32 +669,37 @@ class FDP
   # in the Dockerfile, and +cron instructions+) so that the Index always holds
   # up-to-date metadata.
   #
-  # On a cold start (empty +@@url_registry+), reads {REGISTRY_PATH} from disk
-  # before processing begins, so the ping survives process restarts.  Errors for
-  # individual URLs are caught and logged; the remaining URLs are still processed.
+  # Merges the on-disk registry into the in-process list before processing, so
+  # the ping survives process restarts.  Errors for individual URLs are caught
+  # and logged; the remaining URLs are still processed.  Start/end summary
+  # lines make a partial or silently-short cycle visible in the container logs.
   #
   # @return [void]
   def self.ping
-    # Re-hydrate from disk when the in-process list is empty (e.g. after restart).
-    if @@url_registry.empty? && File.exist?(REGISTRY_PATH)
-      begin
-        @@url_registry = JSON.parse(File.read(REGISTRY_PATH))
-        warn "Loaded #{@@url_registry.size} URLs from registry"
-      rescue JSON::ParserError => e
-        warn "Could not parse URL registry: #{e.message}"
-        @@url_registry = []
-      end
+    urls = @@registry_mutex.synchronize do
+      hydrate_registry
+      @@url_registry.dup
     end
 
-    @@url_registry.each do |url|
+    warn "PING CYCLE START: #{urls.size} registered URLs"
+    succeeded = 0
+    failed = 0
+    urls.each do |url|
       @@cache.delete(Digest::SHA256.hexdigest(url))  # evict so a fresh graph is built
       begin
         FDP.new(address: url)
-        FDP.call_fdp_index(address: url)
+        if FDP.call_fdp_index(address: url)
+          succeeded += 1
+        else
+          failed += 1
+        end
       rescue StandardError => e
+        failed += 1
         warn "Error refreshing #{url}: #{e.message}"
       end
     end
+    warn "PING CYCLE COMPLETE: #{succeeded} succeeded, #{failed} failed, " \
+         "of #{urls.size} registered URLs"
   end
 
   # Looks up the original source URL for a given SHA-256 hex digest, by
@@ -644,13 +709,7 @@ class FDP
   # @param id [String] SHA-256 hex digest of a registered source URL
   # @return [String, nil] the matching source URL, or +nil+ if none found
   def self.address_for_id(id)
-    if @@url_registry.empty? && File.exist?(REGISTRY_PATH)
-      begin
-        @@url_registry = JSON.parse(File.read(REGISTRY_PATH))
-      rescue JSON::ParserError => e
-        warn "Could not parse URL registry: #{e.message}"
-      end
-    end
+    @@registry_mutex.synchronize { hydrate_registry }
 
     @@url_registry.find { |url| Digest::SHA256.hexdigest(url) == id }
   end

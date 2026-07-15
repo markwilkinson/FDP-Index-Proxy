@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-07-15
+
+### Fixed
+- **The registry-wipe bug** — the actual root cause of the recurring
+  "all Index entries flip to Inactive" incidents. `FDP.register_url`
+  persisted the registry by overwriting `cache/registry.json` with the
+  **in-process** `@@url_registry` list, without ever reading the disk file
+  first. Only `FDP.ping`/`FDP.address_for_id` hydrated the in-process list
+  from disk, and only when it was empty. So after any container restart
+  (`restart: always` makes these invisible), the first request that
+  registered a new address before a ping/id-lookup had run — a manual
+  `POST /proxy`, or even an automated scanner hitting `GET /proxy?url=junk`
+  (whose failed build still called `register_url`) — rewrote the registry
+  file as a 1-element array, silently dropping ~190 addresses from the
+  nightly ping. Confirmed in production on 2026-07-15: `registry.json` had
+  been reduced to ~4 addresses; the other 174 Index entries had received no
+  ping since 2026-07-07 (`modificationTime` frozen) and all showed Inactive.
+  All registry access now goes through a single mutex-guarded
+  read-**merge**-write path: `register_url` unions disk + memory before
+  appending, writes atomically (temp file + rename), and never shrinks the
+  on-disk list; `ping` and `address_for_id` hydrate by union instead of
+  replace-when-empty.
+- `GET /fdp-index-proxy/proxy` no longer registers addresses at all
+  (`FDP.new(register: false)` on its cache-miss rebuild path). Dereferencing
+  is read-only: legacy `?url=` callbacks and scanner probes (which pass the
+  URL-shape validation) could previously insert junk addresses into the
+  registry, which the nightly cron then dutifully registered with the FDP
+  Index forever (one such junk entry, first pinged 2026-07-12, is sitting
+  in the production Index as INVALID). Only `POST /proxy` and the cron ping
+  register addresses now.
+
+### Added
+- `FDP.ping` logs `PING CYCLE START: <n> registered URLs` and
+  `PING CYCLE COMPLETE: <ok> succeeded, <failed> failed, of <n>` so a
+  short or partially failing cycle is finally visible in `docker logs`
+  (previous "silently skipped" addresses had no trace at all).
+- Regression specs for the registry: merge-not-overwrite after a simulated
+  process restart; no file rewrite when the URL is already registered;
+  ping over the union of disk + memory; and `register: false` never
+  touching the registry on either the successful- or failed-build path.
+  The spec suite now points `FDP::REGISTRY_PATH` at a temp file (new
+  `FDP_REGISTRY_PATH` env override) instead of stubbing `File.write`
+  globally, so persistence behaviour is actually exercised.
+
+### Operational notes (production, 2026-07-15)
+- The FDP Index at `tools.ostrails.eu/fdp-index` had `ping.validDuration`
+  set to `PT24H` (not the 7-day default), so entries showed Inactive within
+  24 h of any missed ping. Raised to `PT168H` (7 days) via the settings API.
+- Production `cache/registry.json` must be restored from
+  `backups/merged_registry_2026-07-07.json` when deploying this release.
+
 ## [0.12.0] - 2026-07-07
 
 ### Fixed

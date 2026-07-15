@@ -103,6 +103,79 @@ RSpec.describe FDP do
     end
   end
 
+  describe "registry persistence (regression for the production registry wipe)" do
+    # The disk file is the only copy of previously registered URLs after a
+    # process restart (@@url_registry starts empty).  register_url used to
+    # overwrite the file with just the process-local list — so the first
+    # registration after a container restart rewrote a ~190-address registry
+    # as a 1-element array, and the nightly ping stopped refreshing everything
+    # else (all Index entries then flipped Inactive).
+    it "merges with the on-disk registry instead of overwriting it after a restart" do
+      File.write(FDP::REGISTRY_PATH,
+                 ["https://example.org/existing1", "https://example.org/existing2"].to_json)
+      # @@url_registry is reset to [] by spec_helper — i.e. a freshly booted process.
+
+      FDP.register_url("https://example.org/brand-new")
+
+      expect(JSON.parse(File.read(FDP::REGISTRY_PATH)))
+        .to contain_exactly("https://example.org/existing1",
+                            "https://example.org/existing2",
+                            "https://example.org/brand-new")
+    end
+
+    it "does not rewrite the file when the URL is already registered on disk" do
+      File.write(FDP::REGISTRY_PATH, ["https://example.org/existing1"].to_json)
+      mtime_before = File.mtime(FDP::REGISTRY_PATH)
+
+      FDP.register_url("https://example.org/existing1")
+
+      expect(JSON.parse(File.read(FDP::REGISTRY_PATH)))
+        .to eq(["https://example.org/existing1"])
+      expect(File.mtime(FDP::REGISTRY_PATH)).to eq(mtime_before)
+    end
+
+    it "pings the union of the on-disk and in-process registries" do
+      File.write(FDP::REGISTRY_PATH, ["https://example.org/from-disk"].to_json)
+      FDP.class_variable_set(:@@url_registry, ["https://example.org/in-memory"])
+      allow(FDP).to receive(:new)
+      allow(FDP).to receive(:call_fdp_index).and_return(true)
+
+      FDP.ping
+
+      expect(FDP).to have_received(:call_fdp_index)
+        .with(address: "https://example.org/from-disk")
+      expect(FDP).to have_received(:call_fdp_index)
+        .with(address: "https://example.org/in-memory")
+    end
+
+    # GET /proxy rebuilds pass register: false — a dereference (including a
+    # scanner probing ?url=) must never add to, or trigger a rewrite of, the
+    # persistent registry.  Both the successful-build and failed-build paths
+    # call register_url, so check both.
+    it "does not touch the registry when built with register: false (successful build)" do
+      ttl = <<~TURTLE
+        @prefix dcat: <http://www.w3.org/ns/dcat#> .
+        <http://example.org/dataset1> a dcat:Dataset .
+      TURTLE
+      allow(RestClient::Request).to receive(:execute).and_return(
+        instance_double(RestClient::Response, body: ttl.dup)
+      )
+
+      FDP.new(address: address, register: false)
+
+      expect(FDP.load_graph_from_cache(url: address)).not_to eq(false)
+      expect(File.exist?(FDP::REGISTRY_PATH)).to be false
+    end
+
+    it "does not touch the registry when built with register: false (failed build)" do
+      allow(RestClient::Request).to receive(:execute).and_raise(StandardError, "network down")
+
+      FDP.new(address: address, register: false)
+
+      expect(File.exist?(FDP::REGISTRY_PATH)).to be false
+    end
+  end
+
   describe "FTR core type recognition (regression)" do
     def graph_has_type?(graph, subject, type)
       graph.has_statement?(RDF::Statement(RDF::URI(subject), RDF.type, RDF::URI(type)))
