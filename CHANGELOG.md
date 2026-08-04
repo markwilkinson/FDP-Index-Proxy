@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.2] - 2026-08-04
+
+### Added
+- **Per-URL failure backoff.** A failed build now sets a `FAILURE_BACKOFF`
+  (default 300s, `FDP_FAILURE_BACKOFF`) cooldown for that URL; any new build
+  attempt within the window is refused without touching the network,
+  instead of falling straight back through to a live origin fetch.
+  Confirmed in production that, without this, a struggling origin
+  (`tests.ostrails.eu`, down for hours at a stretch) was hit far harder than
+  the once-daily cron implies: because a failed build is never cached
+  (0.13.0), every `GET /fdp-index-proxy/proxy` callback the Index sent for
+  an affected id — independent of, and far more frequent than, the ping
+  cycle — triggered its own synchronous rebuild attempt against the same
+  already-struggling origin (observed: 3 rebuild attempts for one URL
+  within seconds). `FDP.new` now takes a `bypass_backoff:` flag (default
+  `false`); `POST /proxy` (explicit publisher registration) passes `true`
+  so a human re-registering a just-fixed URL is never silently ignored —
+  only the cron ping and on-demand GET-triggered rebuilds respect the
+  backoff.
+
+## [0.13.1] - 2026-08-04
+
+### Fixed
+- **`self.ping` evicted a URL's cache entry *before* attempting to rebuild
+  it**, not after. `cache_store`'s "skip write, preserve any previously
+  cached graph" guard (added in 0.13.0 for failed/empty builds) had nothing
+  left to preserve, because `ping` had already deleted it a few lines
+  earlier. Confirmed against `tests.ostrails.eu` (actual backend
+  `128.131.169.190`), which has been going down intermittently for hours at
+  a stretch over the past two weeks: every ping cycle that landed during one
+  of those outages permanently wiped the last known-good cached graph for
+  every URL hosted there, turning a transient upstream blip into a sustained
+  "Unreachable" status on the Index (and missing results from Champion's
+  `Algorithm.list`) that outlived the actual outage. `cache_store` already
+  writes unconditionally under the same key on a successful rebuild, so
+  removing the premature `@@cache.delete` is sufficient — a failed rebuild
+  now leaves the previous good graph in place and still gets retried on
+  the next cycle.
+
 ## [0.13.0] - 2026-07-15
 
 ### Fixed

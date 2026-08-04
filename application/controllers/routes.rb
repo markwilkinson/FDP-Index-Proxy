@@ -135,7 +135,7 @@ def set_routes
 
     warn "Processing clientUrl: #{client_url}"
 
-    FDP.new(address: client_url)
+    FDP.new(address: client_url, bypass_backoff: true)
     result = FDP.call_fdp_index(address: client_url)
 
     halt 500, "Failed to register with FDP index" unless result

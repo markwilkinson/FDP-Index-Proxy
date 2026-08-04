@@ -28,6 +28,7 @@ RSpec.configure do |config|
   config.before do
     FDP.class_variable_set(:@@cache, {})
     FDP.class_variable_set(:@@url_registry, [])
+    FDP.class_variable_set(:@@failed_until, {})
     FileUtils.rm_f(FDP::REGISTRY_PATH)
   end
 end

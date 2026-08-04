@@ -45,6 +45,12 @@ class FDP
   # this needs a shared store (e.g. Redis/Mongo, or a properly-locked file).
   @@cache = {}         # { sha256 => { graph: RDF::Graph, cached_at: Time } }
   # @!visibility private
+  # Per-URL failure backoff: sha256 => Time before which a new build attempt
+  # is refused. Prevents a single struggling origin from being hammered by
+  # every ping cycle *and* every GET /proxy cache-miss callback the Index
+  # sends while that origin is down (see {.build_allowed?}).
+  @@failed_until = {}
+  # @!visibility private
   @@url_registry = [] # original DCAT URLs; persisted to REGISTRY_PATH for ping
   # @!visibility private
   # Serializes all read-merge-write access to @@url_registry/REGISTRY_PATH.
@@ -61,6 +67,12 @@ class FDP
   # Cache time-to-live in seconds.  Configurable via the +FDP_CACHE_TTL+
   # environment variable; defaults to +86_400+ (24 hours).
   CACHE_TTL = (ENV.fetch("FDP_CACHE_TTL", 86_400)).to_i
+
+  # How long, in seconds, to refuse new build attempts against a URL after a
+  # failed build, so a struggling origin isn't hit again by every subsequent
+  # ping cycle and Index poll while it's down. Configurable via
+  # +FDP_FAILURE_BACKOFF+; defaults to 300 (5 minutes).
+  FAILURE_BACKOFF = ENV.fetch("FDP_FAILURE_BACKOFF", 300).to_i
 
   # Maps the DCAT class names returned by {#query_toplevel} to the LDP predicate
   # used when building an +ldp:DirectContainer+ for that class.
@@ -111,12 +123,26 @@ class FDP
   #   so that arbitrary +?url=+ requests (legacy Index entries, but also
   #   automated scanners) can never insert junk into — or, on a freshly
   #   restarted process, wipe — the registry.
-  def initialize(address:, register: true)
+  # @param bypass_backoff [Boolean] skip the failure-backoff check below.
+  #   +true+ for explicit publisher registrations (POST /proxy) — a human
+  #   asking us to try a specific URL right now should never be silently
+  #   ignored because of an earlier failure; +false+ (the default) for the
+  #   cron ping and on-demand GET-triggered rebuilds, so a struggling origin
+  #   isn't hit again by every ping cycle and every Index poll while it's down.
+  def initialize(address:, register: true, bypass_backoff: false)
     @graph    = RDF::Graph.new
     @address  = address
     @register = register
     @called   = []   # guards against circular references when following links
     @toptype  = nil  # resolved by the first call to iterate_dcat_record
+
+    key = Digest::SHA256.hexdigest(address)
+    if !bypass_backoff && backing_off?(key)
+      warn "SKIPPING BUILD for #{@address}: still within failure backoff " \
+           "(retrying after #{@@failed_until[key]}) — preserving any previously cached graph"
+      self.class.register_url(@address) if @register
+      return
+    end
 
     warn "refreshing with toptype", toptype
     @args = URI(address).query  # preserve any query string (e.g. ?format=ttl)
@@ -131,13 +157,17 @@ class FDP
     # the same key — skip the cache write and keep serving the last good one.
     # Still register the URL either way, so a failed *first* build doesn't
     # drop the address from the registry and stop future cron pings from
-    # retrying it.
+    # retrying it. Also start a failure backoff so this struggling origin
+    # isn't retried again until it expires.
     if @graph.empty? || @toptype.nil?
+      @@failed_until[key] = Time.now + FAILURE_BACKOFF
       warn "SKIPPING CACHE STORE for #{@address}: empty graph or unresolved " \
-           "toptype after build (origin fetch likely failed) — preserving " \
-           "any previously cached graph"
+           "toptype after build (origin fetch likely failed) — backing off " \
+           "new attempts for #{FAILURE_BACKOFF}s, preserving any previously " \
+           "cached graph"
       self.class.register_url(@address) if @register
     else
+      @@failed_until.delete(key)
       cache_store             # step 4 — store enriched graph in memory
     end
   end
@@ -567,6 +597,15 @@ class FDP
 
   # ====================================================== CACHE AND UTILITY
 
+  # @param key [String] SHA-256 hex digest of a source URL
+  # @return [Boolean] +true+ if a build for +key+ recently failed and is
+  #   still within its {FAILURE_BACKOFF} window
+  def backing_off?(key)
+    retry_at = @@failed_until[key]
+    !!(retry_at && Time.now < retry_at)
+  end
+  private :backing_off?
+
   # Stores the enriched {#graph} in the in-process cache, registers {#address}
   # in the persistent URL registry, and writes a debug Turtle dump to
   # +/tmp/latestproxyoutput.ttl+ for inspection during development.
@@ -685,7 +724,6 @@ class FDP
     succeeded = 0
     failed = 0
     urls.each do |url|
-      @@cache.delete(Digest::SHA256.hexdigest(url))  # evict so a fresh graph is built
       begin
         FDP.new(address: url)
         if FDP.call_fdp_index(address: url)
