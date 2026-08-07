@@ -606,15 +606,33 @@ class FDP
   end
   private :backing_off?
 
-  # Stores the enriched {#graph} in the in-process cache, registers {#address}
-  # in the persistent URL registry, and writes a debug Turtle dump to
-  # +/tmp/latestproxyoutput.ttl+ for inspection during development.
+  # Registers {#address} in the persistent URL registry (if this build came
+  # from a registering caller), then stores the enriched {#graph} in the
+  # in-process cache — but only if {#address} is actually registered.
+  #
+  # That last check matters: +GET /fdp-index-proxy/proxy?url=...+ (the legacy
+  # fallback, register: false) will rebuild-and-serve *any* well-formed URL,
+  # including ones a scanner or bot is just probing and that were never
+  # registered. Without this guard, every such probe left a permanent,
+  # never-evicted entry in +@@cache+ — the actual driver of this cache's
+  # unbounded growth, since the ~200 legitimately registered URLs only grow
+  # through a deliberate registration action, not silent arbitrary traffic.
+  # A non-registered build is still served for that one request; it's just
+  # never persisted.
   #
   # @return [void]
   def cache_store
+    self.class.register_url(@address) if @register
+
+    unless self.class.registered?(@address)
+      warn "SKIPPING CACHE STORE for #{@address}: not a registered URL " \
+           "(likely a scanner probe or an ad-hoc legacy ?url= lookup) — " \
+           "not persisting, to keep the cache bounded to registered addresses"
+      return
+    end
+
     key = Digest::SHA256.hexdigest(@address)
     @@cache[key] = { graph: @graph, cached_at: Time.now }
-    self.class.register_url(@address) if @register
     File.write("/tmp/latestproxyoutput.ttl", @graph.dump(:turtle))
     warn "Cached graph for #{@address} (#{@graph.size} triples)"
   end
@@ -700,6 +718,15 @@ class FDP
 
       @@url_registry << url
       persist_registry
+    end
+  end
+
+  # @param url [String] a source DCAT URL
+  # @return [Boolean] +true+ if +url+ is currently in the registry (disk ∪ memory)
+  def self.registered?(url)
+    @@registry_mutex.synchronize do
+      hydrate_registry
+      @@url_registry.include?(url)
     end
   end
 

@@ -150,7 +150,7 @@ RSpec.describe FDP do
 
     # GET /proxy rebuilds pass register: false — a dereference (including a
     # scanner probing ?url=) must never add to, or trigger a rewrite of, the
-    # persistent registry.  Both the successful-build and failed-build paths
+    # persistent registry. Both the successful-build and failed-build paths
     # call register_url, so check both.
     it "does not touch the registry when built with register: false (successful build)" do
       ttl = <<~TURTLE
@@ -163,8 +163,42 @@ RSpec.describe FDP do
 
       FDP.new(address: address, register: false)
 
-      expect(FDP.load_graph_from_cache(url: address)).not_to eq(false)
       expect(File.exist?(FDP::REGISTRY_PATH)).to be false
+    end
+
+    # cache_store only persists to @@cache for addresses that are actually
+    # registered — an unregistered register: false build (a scanner probing
+    # ?url=, or any address that was never legitimately registered) is still
+    # served for that one request, but must never leave a permanent cache
+    # entry behind, since that was the actual driver of this cache's
+    # unbounded growth in production.
+    it "does not cache the result of an unregistered register: false build" do
+      ttl = <<~TURTLE
+        @prefix dcat: <http://www.w3.org/ns/dcat#> .
+        <http://example.org/dataset1> a dcat:Dataset .
+      TURTLE
+      allow(RestClient::Request).to receive(:execute).and_return(
+        instance_double(RestClient::Response, body: ttl.dup)
+      )
+
+      FDP.new(address: address, register: false)
+
+      expect(FDP.load_graph_from_cache(url: address)).to eq(false)
+    end
+
+    it "still caches a register: false build for an already-registered address" do
+      FDP.class_variable_set(:@@url_registry, [address])
+      ttl = <<~TURTLE
+        @prefix dcat: <http://www.w3.org/ns/dcat#> .
+        <http://example.org/dataset1> a dcat:Dataset .
+      TURTLE
+      allow(RestClient::Request).to receive(:execute).and_return(
+        instance_double(RestClient::Response, body: ttl.dup)
+      )
+
+      FDP.new(address: address, register: false)
+
+      expect(FDP.load_graph_from_cache(url: address)).not_to eq(false)
     end
 
     it "does not touch the registry when built with register: false (failed build)" do

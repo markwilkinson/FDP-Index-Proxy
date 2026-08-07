@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.3] - 2026-08-07
+
+### Fixed
+- `cache_store` persisted a built graph to `@@cache` unconditionally,
+  regardless of whether the address was actually registered. `GET
+  /fdp-index-proxy/proxy?url=...` (the legacy fallback, `register: false`)
+  will rebuild-and-serve any well-formed URL, including ones a scanner or
+  bot is just probing — every such probe left a permanent, never-evicted
+  entry in `@@cache`, the actual driver of the process's memory footprint
+  growing unbounded over time (observed at 913MB RSS on a host shared with
+  9 other containers). The ~200 legitimately registered URLs only grow
+  through a deliberate registration action; arbitrary inbound traffic
+  should never grow the cache. `cache_store` now checks the address against
+  the registry (new `FDP.registered?`) before persisting — a non-registered
+  build is still served for that one request, just never cached.
+
 ## [0.13.2] - 2026-08-04
 
 ### Added
